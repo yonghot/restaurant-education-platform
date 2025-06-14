@@ -1,0 +1,85 @@
+/* 전체 스타일 */
+body {
+    background-color: #f8f9fa;
+}
+
+/* 네비게이션 바 스타일 */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+/* 카드 스타일 */
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* 교육과정 카드 스타일 */
+.course-card {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.course-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* 퀴즈 스타일 */
+.quiz-option {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    background-color: #f8f9fa;
+}
+
+.quiz-option.selected {
+    background-color: #e9ecef;
+    border-color: #0d6efd;
+}
+
+/* 댓글 스타일 */
+.comment {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* 프로그레스 바 스타일 */
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+
+/* 모달 스타일 */
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        margin-bottom: 15px;
+    }
+} 

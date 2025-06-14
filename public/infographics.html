@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인포그래픽 - 요알남</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        html {
+            background-color: #1A1A1A;
+        }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #1A1A1A;
+            color: #E0E0E0;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        .swiper {
+            width: 100%;
+            padding: 50px 0;
+        }
+        .swiper-slide {
+            width: 300px;
+            height: 400px;
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #FF8C00;
+        }
+        .swiper-pagination-bullet-active {
+            background: #FF8C00;
+        }
+    </style>
+</head>
+<body class="bg-[#1A1A1A]">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-[#FF8C00] mb-4">인포그래픽</h1>
+            <p class="text-gray-400">외식업 창업과 운영에 필요한 핵심 정보를 시각적으로 만나보세요</p>
+        </header>
+
+        <!-- Swiper -->
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <!-- 인덕션 vs 하이라이트 -->
+                <div class="swiper-slide">
+                    <a href="/infographics/induction-vs-highlight.html" class="card bg-gray-800 rounded-xl overflow-hidden shadow-lg h-full">
+                        <div class="relative h-48">
+                            <img src="/images/infographic-thumb-1.jpg" alt="인덕션 vs 하이라이트" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#FF8C00]/80 to-[#FF4500]/80"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center text-white p-4">
+                                    <h2 class="text-2xl font-bold mb-2">인덕션 vs 하이라이트</h2>
+                                    <p class="text-sm text-gray-200">에너지 효율부터 요금까지, 당신의 선택을 위한 완벽 가이드</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-gray-400">에너지 효율</span>
+                                <span class="text-[#FF8C00]"><i class="fas fa-chart-line"></i></span>
+                            </div>
+                            <p class="text-gray-300 text-sm">인덕션과 하이라이트의 에너지 효율, 조리 속도, 비용을 비교하여 최적의 선택을 도와드립니다.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 전기 vs 도시가스 -->
+                <div class="swiper-slide">
+                    <a href="/infographics/energy-cost-comparison.html" class="card bg-gray-800 rounded-xl overflow-hidden shadow-lg h-full">
+                        <div class="relative h-48">
+                            <img src="/images/infographic-thumb-2.jpg" alt="전기 vs 도시가스" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#4CAF50]/80 to-[#2196F3]/80"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center text-white p-4">
+                                    <h2 class="text-2xl font-bold mb-2">전기 vs 도시가스</h2>
+                                    <p class="text-sm text-gray-200">당신의 지갑을 위한 진짜 에너지 승자는?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-gray-400">에너지 비용</span>
+                                <span class="text-[#4CAF50]"><i class="fas fa-bolt"></i></span>
+                            </div>
+                            <p class="text-gray-300 text-sm">전기와 도시가스의 요금 체계를 분석하고 실제 비용을 비교하여 가장 현명한 에너지 소비 전략을 제시합니다.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 불황기 외식업 트렌드 -->
+                <div class="swiper-slide">
+                    <a href="/infographics/recession-restaurant-trends.html" class="card bg-gray-800 rounded-xl overflow-hidden shadow-lg h-full">
+                        <div class="relative h-48">
+                            <img src="/images/infographic-thumb-3.jpg" alt="불황기 외식업 트렌드" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#9C27B0]/80 to-[#E91E63]/80"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center text-white p-4">
+                                    <h2 class="text-2xl font-bold mb-2">불황기 외식업 트렌드</h2>
+                                    <p class="text-sm text-gray-200">위기 속 기회: 불황을 이기는 외식업 생존 공식</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-gray-400">시장 분석</span>
+                                <span class="text-[#9C27B0]"><i class="fas fa-chart-bar"></i></span>
+                            </div>
+                            <p class="text-gray-300 text-sm">데이터로 보는 한국 외식 시장의 현재와 미래 전략을 분석합니다.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            // Optional parameters
+            slidesPerView: 1,
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            // Responsive breakpoints
+            breakpoints: {
+                // when window width is >= 640px
+                640: {
+                    slidesPerView: 2,
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 3,
+                }
+            },
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Pagination
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+</html> 

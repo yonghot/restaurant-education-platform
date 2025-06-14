@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전기 vs. 도시가스: 에너지 비용 인포그래픽 (다크모드)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 60vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -3px rgba(255, 152, 0, 0.15);
+        }
+        .text-gradient {
+            background-image: linear-gradient(to right, #ff9800, #ffb74d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        .kpi-value {
+            font-weight: 900;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            color: #ff9800;
+        }
+        .flowchart-step {
+            border: 2px solid #ff9800;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            position: relative;
+            background-color: #2a2a2a;
+        }
+        .flowchart-arrow::after {
+            content: '▼';
+            font-size: 1.5rem;
+            color: #ff9800;
+            position: absolute;
+            left: 50%;
+            bottom: -2rem;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <!-- 홈으로 돌아가기 링크 (상단) -->
+        <a href="/" class="inline-block mb-8 text-[#FF8C00] hover:text-[#FF4500] transition-colors duration-300">
+            <i class="fas fa-arrow-left mr-2"></i>홈으로 돌아가기
+        </a>
+
+        <header class="bg-black/50 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-6 py-4">
+                <h1 class="text-2xl md:text-3xl font-bold text-center text-gradient">전기 vs. 도시가스: 당신의 지갑을 위한 진짜 에너지 승자는?</h1>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-6 py-12">
+
+            <section id="intro" class="text-center mb-16">
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-400">
+                    한국 가정의 필수 에너지원, 전기와 도시가스. 매달 내는 공과금이지만, 과연 어떤 에너지원이 더 경제적일까요? 본 인포그래픽은 복잡한 요금 체계를 분석하고 실제 비용을 비교하여 가장 현명한 에너지 소비 전략을 제시합니다.
+                </p>
+            </section>
+
+            <section id="fee-system" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">핵심은 다른 요금 체계: 누진제 vs 단일 요금제</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4 text-center">⚡️ 전기: 사용량이 늘수록 비싸지는 <span class="text-gradient">계단식 구조</span></h3>
+                        <p class="text-center text-gray-400 mb-6">전기 요금은 '누진제'가 적용되어, 특정 사용량을 초과하면 kWh당 단가가 급격히 상승합니다. 에너지 절약을 유도하지만, 자칫하면 '요금 폭탄'을 맞을 수 있습니다.</p>
+                        <div class="space-y-8">
+                            <div class="flowchart-step flowchart-arrow">
+                                <p class="font-bold text-lg">1단계 (처음 200kWh)</p>
+                                <p class="text-xl font-bold text-green-400">120원/kWh</p>
+                            </div>
+                            <div class="flowchart-step flowchart-arrow">
+                                <p class="font-bold text-lg">2단계 (다음 200kWh)</p>
+                                <p class="text-xl font-bold text-yellow-400">214.6원/kWh</p>
+                            </div>
+                            <div class="flowchart-step">
+                                <p class="font-bold text-lg">3단계 (400kWh 초과)</p>
+                                <p class="text-xl font-bold text-red-400">307.3원/kWh</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4 text-center">*주택용 저압, 기타계절 기준 전력량 요금</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4 text-center">🔥 도시가스: 예측 가능한 <span class="text-gradient">단일 요금제</span></h3>
+                        <p class="text-center text-gray-400 mb-6">도시가스는 사용량에 관계없이 MJ당 요금이 거의 일정합니다. 특히 난방 등으로 사용량이 많은 겨울철에도 요금 예측이 쉬워 안정적인 비용 관리가 가능합니다.</p>
+                        <div class="flex flex-col items-center justify-center h-full pt-6">
+                             <div class="w-full bg-gray-900 p-6 rounded-lg text-center">
+                                <p class="text-lg font-bold">주택용 난방 요금 (서울시 기준)</p>
+                                <p class="kpi-value">~22.5원<span class="text-2xl font-normal">/MJ</span></p>
+                                <p class="text-gray-400 mt-2">사용량이 많아져도 이 단가는 거의 그대로 유지됩니다.</p>
+                            </div>
+                            <div class="w-full mt-8">
+                                 <div class="relative pt-1">
+                                    <div class="overflow-hidden h-4 text-xs flex rounded-full bg-cyan-800">
+                                        <div style="width: 100%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-cyan-500"></div>
+                                    </div>
+                                    <p class="text-center mt-2 font-bold">사용량 증가 →</p>
+                                </div>
+                                <p class="text-center mt-2 text-gray-400">단위당 요금 변동 거의 없음</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cost-comparison" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-4">정면승부: 사용량별 실질 에너지 단가 비교</h2>
+                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">모든 부가 요금을 포함한 실제 에너지 단위(kWh)당 비용을 비교했습니다. 결과는 명확합니다. 사용량이 많아질수록 도시가스의 비용 효율성이 압도적으로 높아집니다.</p>
+                <div class="card md:col-span-2">
+                    <div class="chart-container">
+                        <canvas id="costComparisonChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hidden-factors" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-10">가격 결정의 비밀: 정책의 힘 vs 시장의 논리</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card text-center">
+                        <div class="text-6xl mb-4">🏛️</div>
+                        <h3 class="text-2xl font-bold mb-2 text-orange-400">전기 요금: 정책적 통제</h3>
+                        <p class="text-gray-400">
+                            주택용 전기 요금은 서민 부담 완화를 위해 정부 정책으로 8분기 연속 동결되었습니다. 이는 한국전력의 막대한 적자에도 불구하고 유지되는 상황으로, 향후 요금 인상 압력이 매우 높은 상태입니다.
+                        </p>
+                    </div>
+                    <div class="card text-center">
+                        <div class="text-6xl mb-4">🌍</div>
+                        <h3 class="text-2xl font-bold mb-2 text-cyan-400">도시가스 요금: 시장과 연동</h3>
+                        <p class="text-gray-400">
+                            도시가스 요금은 국제 원자재 가격과 환율에 직접적인 영향을 받습니다. 최근 요금 인상도 이러한 시장 요인이 반영된 결과로, 가격 변동성은 크지만 실제 원가를 더 투명하게 반영하는 경향이 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="recommendations">
+                <h2 class="text-3xl font-bold text-center mb-10">소비자를 위한 스마트 에너지 전략</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card">
+                        <h3 class="font-bold text-xl mb-2 text-orange-400">1. 난방/온수는 도시가스</h3>
+                        <p class="text-gray-400">에너지 소비가 가장 큰 난방과 온수는 단위당 비용이 저렴한 도시가스 기반 시스템(가스 보일러 등)을 사용하는 것이 절대적으로 유리합니다.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="font-bold text-xl mb-2 text-orange-400">2. 누진 구간 경계하기</h3>
+                        <p class="text-gray-400">전기 사용량을 주기적으로 확인하고, 2단계(200kWh), 3단계(400kWh) 누진 구간을 넘지 않도록 여름철 냉방 등을 전략적으로 사용하세요.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="font-bold text-xl mb-2 text-orange-400">3. 고효율 가전제품 투자</h3>
+                        <p class="text-gray-400">에너지 소비 효율 1등급 가전제품으로 교체하는 것은 장기적으로 전기와 가스 요금 모두를 절약하는 가장 확실한 방법입니다.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="font-bold text-xl mb-2 text-orange-400">4. 정책 변화 주시하기</h3>
+                        <p class="text-gray-400">동결된 전기 요금은 언젠가 인상될 가능성이 높습니다. 정부의 에너지 정책 발표에 지속적으로 관심을 가지는 것이 중요합니다.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- 홈으로 돌아가기 섹션 -->
+        <section class="text-center mt-16 mb-8">
+            <a href="/" class="inline-flex items-center px-8 py-4 bg-[#FF8C00] text-white rounded-full shadow-lg hover:bg-[#FF4500] transition-colors duration-300 text-lg">
+                <i class="fas fa-home mr-2"></i>홈으로 돌아가기
+            </a>
+        </section>
+    </div>
+
+    <footer class="bg-black/80 text-gray-400 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>본 인포그래픽은 '한국 주택용 에너지원별 단가 분석' 보고서를 기반으로 제작되었습니다.</p>
+            <p class="text-sm text-gray-500 mt-2">© 2025 Energy Cost Analysis. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('costComparisonChart').getContext('2d');
+        const costComparisonChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['낮은 사용량', '평균 사용량', '높은 사용량'],
+                datasets: [
+                    {
+                        label: '전기 실질 단가 (원/kWh)',
+                        data: [159.25, 194.28, 254.57],
+                        backgroundColor: '#ff9800',
+                        borderColor: '#ffb74d',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '도시가스 실질 단가 (원/kWh)',
+                        data: [98.71, 91.15, 90.40],
+                        backgroundColor: '#00bcd4',
+                        borderColor: '#4dd0e1',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '사용량 시나리오별 에너지 단위당 실질 비용 (원/kWh)',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        color: '#e0e0e0',
+                        padding: {
+                            top: 10,
+                            bottom: 30
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#e0e0e0',
+                             font: {
+                                size: 14
+                            }
+                        }
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '실질 단가 (원 / kWh)',
+                            font: {
+                                weight: 'bold'
+                            },
+                             color: '#e0e0e0'
+                        },
+                        ticks: {
+                            color: '#e0e0e0'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                         title: {
+                            display: true,
+                            text: '가구 사용량 시나리오',
+                            font: {
+                                weight: 'bold'
+                            },
+                             color: '#e0e0e0'
+                        },
+                        ticks: {
+                            color: '#e0e0e0'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

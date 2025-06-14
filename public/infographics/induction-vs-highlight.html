@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인덕션 vs 하이라이트: 에너지 효율 완전 정복</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #1A1A1A; /* Dark background */
+            color: #E0E0E0; /* Light text */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-line {
+            position: relative;
+            width: 2px;
+            background-color: #FF8C00; /* Orange accent */
+            margin: 0 auto;
+            height: 2rem;
+        }
+        .flow-line::after {
+            content: '▼';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FF8C00; /* Orange accent */
+        }
+        .highlight-flow-line {
+            background-color: #FF4500; /* Darker orange accent */
+        }
+        .highlight-flow-line::after {
+            color: #FF4500; /* Darker orange accent */
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <!-- 홈으로 돌아가기 링크 (상단) -->
+        <a href="/" class="inline-block mb-8 text-[#FF8C00] hover:text-[#FF4500] transition-colors duration-300">
+            <i class="fas fa-arrow-left mr-2"></i>홈으로 돌아가기
+        </a>
+
+        <!-- 썸네일 이미지 -->
+        <div class="relative w-full h-48 md:h-64 mb-12 rounded-xl overflow-hidden shadow-lg">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#FF8C00] to-[#FF4500] opacity-90"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white">
+                    <h1 class="text-4xl md:text-6xl font-black mb-2">인덕션 vs 하이라이트</h1>
+                    <p class="text-xl md:text-2xl font-bold text-gray-200">에너지 효율부터 요금까지, 당신의 선택을 위한 완벽 가이드</p>
+                </div>
+            </div>
+        </div>
+
+        <main class="space-y-16">
+
+            <section id="mechanism">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">핵심 원리: 어떻게 열을 만드나?</h2>
+                    <p class="mt-2 text-lg text-gray-400">두 방식의 에너지 효율 차이는 근본적인 열 전달 방식에서 시작됩니다.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-t-8 border-[#FF8C00]">
+                        <h3 class="text-2xl font-bold mb-4 text-orange-400">인덕션: 용기 직접 가열 🍳</h3>
+                        <p class="mb-6 text-gray-300">전자기장을 이용해 조리 용기 자체를 직접 뜨겁게 만듭니다. 중간 과정 없이 에너지를 용기에 집중시켜 열 손실이 거의 없습니다.</p>
+                        <div class="space-y-2">
+                            <div class="bg-[#FF8C00]/20 p-3 rounded-lg text-gray-200">⚡ 전기 에너지</div>
+                            <div class="flow-line"></div>
+                            <div class="bg-[#FF8C00]/20 p-3 rounded-lg text-gray-200">🍳 조리 용기 가열</div>
+                            <div class="flow-line"></div>
+                            <div class="bg-[#FF8C00]/20 p-3 rounded-lg text-gray-200">🍲 음식 조리</div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg border-t-8 border-[#FF4500]">
+                        <h3 class="text-2xl font-bold mb-4 text-orange-400">하이라이트: 상판 간접 가열 🔥</h3>
+                        <p class="mb-6 text-gray-300">열선으로 뜨거워진 상판의 열이 용기로 전달됩니다. 상판을 데우는 과정에서 열이 공기 중으로 손실되어 효율이 떨어집니다.</p>
+                        <div class="space-y-2">
+                            <div class="bg-[#FF4500]/20 p-3 rounded-lg text-gray-200">⚡ 전기 에너지</div>
+                            <div class="flow-line highlight-flow-line"></div>
+                            <div class="bg-[#FF4500]/20 p-3 rounded-lg text-gray-200">🔥 상판 가열</div>
+                             <div class="flow-line highlight-flow-line"></div>
+                            <div class="bg-[#FF4500]/20 p-3 rounded-lg text-gray-200">🍳 조리 용기 가열</div>
+                            <div class="flow-line highlight-flow-line"></div>
+                            <div class="bg-[#FF4500]/20 p-3 rounded-lg text-gray-200">🍲 음식 조리</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="efficiency">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">에너지 효율 전격 비교</h2>
+                    <p class="mt-2 text-lg text-gray-400">소비된 에너지가 얼마나 효과적으로 조리에 사용되는지를 나타내는 '열효율'이 핵심입니다.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-center mb-4 text-orange-400">주요 조리기구 열효율 비교</h3>
+                        <p class="text-center text-gray-300 mb-4">인덕션의 열효율은 다른 조리기구에 비해 압도적으로 높습니다.</p>
+                        <div class="chart-container h-72 md:h-80"><canvas id="efficiencyBarChart"></canvas></div>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-center mb-4 text-orange-400">유효 에너지 vs 손실 에너지</h3>
+                        <p class="text-center text-gray-300 mb-4">인덕션은 에너지의 90% 이상을 조리에 사용합니다.</p>
+                         <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="chart-container h-48"><canvas id="inductionDonutChart"></canvas></div>
+                                <p class="mt-2 font-bold text-gray-200">인덕션</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="chart-container h-48"><canvas id="highlightDonutChart"></canvas></div>
+                                <p class="mt-2 font-bold text-gray-200">하이라이트</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="speed">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">속도와 화력: 체감 성능의 차이</h2>
+                    <p class="mt-2 text-lg text-gray-400">높은 효율은 곧 빠른 조리 속도로 이어집니다.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div class="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col justify-center items-center">
+                        <h3 class="text-2xl font-bold text-center mb-4 text-orange-400">인덕션이 하이라이트보다</h3>
+                        <p class="text-7xl md:text-8xl font-black text-[#FF8C00] mb-2">2.6배</p>
+                        <p class="text-2xl font-bold text-center text-gray-200">더 빠릅니다!</p>
+                        <p class="text-sm text-gray-500 mt-4">(물 500ml 90℃ 가열 기준)</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-center mb-4 text-orange-400">물 500ml 끓이는 시간 비교</h3>
+                        <p class="text-center text-gray-300 mb-4">동일한 양의 물을 끓일 때, 인덕션이 3분 이상 시간을 절약합니다.</p>
+                        <div class="chart-container h-72 md:h-80"><canvas id="speedBarChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="cost">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">월별 요금: 당신의 지갑에 미치는 영향</h2>
+                    <p class="mt-2 text-lg text-gray-400">효율적인 에너지 사용은 결국 전기 요금 절약으로 나타납니다.</p>
+                </div>
+                <div class="bg-gray-800 p-6 md:p-8 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold text-center mb-4 text-orange-400">평균 가구 기준 월 예상 조리 에너지 비용</h3>
+                    <p class="text-center text-gray-300 mb-4">인덕션은 하이라이트보다 월 2,350원, 연간 약 28,000원의 비용을 절감할 수 있습니다.</p>
+                    <div class="chart-container"><canvas id="costBarChart"></canvas></div>
+                </div>
+            </section>
+
+            <section id="pros-cons">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">장단점 및 최종 선택 가이드</h2>
+                    <p class="mt-2 text-lg text-gray-400">에너지 효율 외에도 고려해야 할 점들을 확인하고 최적의 선택을 하세요.</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-max text-left bg-gray-800 rounded-xl shadow-lg">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="p-4 text-xl font-bold text-[#FF8C00]">구분</th>
+                                <th class="p-4 text-xl font-bold text-orange-400">인덕션</th>
+                                <th class="p-4 text-xl font-bold text-orange-400">하이라이트</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-4 font-bold align-top text-gray-200">✅ 장점</td>
+                                <td class="p-4 align-top text-gray-300">
+                                    <ul class="list-none space-y-2">
+                                        <li>압도적으로 빠른 조리 속도</li>
+                                        <li>최고의 에너지 효율</li>
+                                        <li>안전성 (낮은 화상 위험)</li>
+                                        <li>유해가스 배출 없음</li>
+                                        <li>편리한 청소</li>
+                                    </ul>
+                                </td>
+                                <td class="p-4 align-top text-gray-300">
+                                    <ul class="list-none space-y-2">
+                                        <li>모든 용기 사용 가능</li>
+                                        <li>상대적으로 저렴한 초기 비용</li>
+                                        <li>잔열 활용 가능 (보온)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold align-top text-gray-200">❌ 단점</td>
+                                <td class="p-4 align-top text-gray-300">
+                                    <ul class="list-none space-y-2">
+                                        <li>높은 초기 구매 비용</li>
+                                        <li>전용 용기 필요</li>
+                                        <li>작동 시 소음 발생 가능성</li>
+                                    </ul>
+                                </td>
+                                <td class="p-4 align-top text-gray-300">
+                                    <ul class="list-none space-y-2">
+                                        <li>느린 조리 속도</li>
+                                        <li>낮은 에너지 효율 (높은 전기요금)</li>
+                                        <li>높은 화상 위험 (뜨거운 잔열)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+             <section id="conclusion">
+                <div class="text-center p-8 bg-gradient-to-r from-[#FF8C00] to-[#FF4500] rounded-xl shadow-lg text-white">
+                    <h2 class="text-3xl font-bold">결론: 당신을 위한 최적의 선택은?</h2>
+                    <div class="mt-6 text-lg space-y-4 text-left md:text-center max-w-3xl mx-auto">
+                        <p><strong class="text-white">🚀 최고의 효율과 속도를 원한다면?</strong><br> 초기 비용을 감수하더라도 장기적인 에너지 비용 절감, 빠른 조리 시간, 높은 안전성을 원한다면 단연 <strong class="font-bold">인덕션</strong>입니다.</p>
+                        <p><strong class="text-white">💡 초기 비용과 용기 호환성이 중요하다면?</strong><br> 다양한 종류의 기존 조리 용기를 그대로 사용하고 싶고, 초기 구매 비용을 낮추고 싶다면 <strong class="font-bold">하이라이트</strong>가 대안이 될 수 있습니다. 단, 느린 속도와 높은 운영 비용은 감수해야 합니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 홈으로 돌아가기 섹션 -->
+            <section class="text-center mt-16 mb-8">
+                <a href="/" class="inline-flex items-center px-8 py-4 bg-[#FF8C00] text-white rounded-full shadow-lg hover:bg-[#FF4500] transition-colors duration-300 text-lg">
+                    <i class="fas fa-home mr-2"></i>홈으로 돌아가기
+                </a>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const darkOrangePalette = {
+                orangeLight: '#FF8C00', /* Dark Orange */
+                orangeDark: '#FF4500', /* Orange Red */
+                grayBackground: '#1A1A1A',
+                grayCard: '#2D2D2D', /* Slightly lighter gray for cards */
+                grayText: '#E0E0E0',
+                grayAccent: '#A0A0A0'
+            };
+
+            const wrapLabel = (label, maxLength = 16) => {
+                if (label.length <= maxLength) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                }
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+            
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "'Noto Sans KR', sans-serif" },
+                            color: darkOrangePalette.grayText
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        titleFont: { size: 14, family: "'Noto Sans KR', sans-serif" },
+                        bodyFont: { size: 12, family: "'Noto Sans KR', sans-serif" },
+                        backgroundColor: 'rgba(0,0,0,0.7)', // Dark tooltip background
+                        titleColor: darkOrangePalette.grayText,
+                        bodyColor: darkOrangePalette.grayText
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { font: { family: "'Noto Sans KR', sans-serif", color: darkOrangePalette.grayText } },
+                        grid: { display: false, color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y: {
+                        ticks: { font: { family: "'Noto Sans KR', sans-serif", color: darkOrangePalette.grayText } },
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            };
+
+            const efficiencyBarCtx = document.getElementById('efficiencyBarChart');
+            if (efficiencyBarCtx) {
+                new Chart(efficiencyBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['인덕션', '하이라이트', '가스레인지'],
+                        datasets: [{
+                            label: '열효율 (%)',
+                            data: [91, 68, 48],
+                            backgroundColor: [darkOrangePalette.orangeLight, darkOrangePalette.orangeDark, darkOrangePalette.grayAccent],
+                            borderColor: '#1A1A1A',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: { ...defaultChartOptions }
+                });
+            }
+
+            const inductionDonutCtx = document.getElementById('inductionDonutChart');
+            if (inductionDonutCtx) {
+                new Chart(inductionDonutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['유효 에너지', '손실 에너지'],
+                        datasets: [{
+                            data: [91, 9],
+                            backgroundColor: [darkOrangePalette.orangeLight, darkOrangePalette.grayAccent],
+                            hoverOffset: 4
+                        }]
+                    },
+                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { title: tooltipTitleCallback } } } }
+                });
+            }
+
+            const highlightDonutCtx = document.getElementById('highlightDonutChart');
+            if (highlightDonutCtx) {
+                new Chart(highlightDonutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['유효 에너지', '손실 에너지'],
+                        datasets: [{
+                            data: [68, 32],
+                            backgroundColor: [darkOrangePalette.orangeDark, darkOrangePalette.grayAccent],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { title: tooltipTitleCallback } } } }
+                });
+            }
+            
+            const speedBarCtx = document.getElementById('speedBarChart');
+            if(speedBarCtx) {
+                new Chart(speedBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['인덕션', '하이라이트'],
+                        datasets: [{
+                            label: '시간 (초)',
+                            data: [125, 330], 
+                            backgroundColor: [darkOrangePalette.orangeLight, darkOrangePalette.orangeDark]
+                        }]
+                    },
+                    options: { 
+                        ...defaultChartOptions,
+                        indexAxis: 'y',
+                         plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { title: tooltipTitleCallback } }
+                        }
+                    }
+                });
+            }
+
+            const costBarCtx = document.getElementById('costBarChart');
+            if(costBarCtx) {
+                new Chart(costBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['하이라이트', '인덕션', '가스레인지'],
+                        datasets: [{
+                            label: '월 예상 비용 (원)',
+                            data: [12600, 10250, 4786],
+                            backgroundColor: [darkOrangePalette.orangeDark, darkOrangePalette.orangeLight, darkOrangePalette.grayAccent]
+                        }]
+                    },
+                    options: {
+                        ...defaultChartOptions,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { title: tooltipTitleCallback } }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
