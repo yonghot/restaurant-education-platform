@@ -3,49 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인포그래픽 - 요알남 외식업 교육 플랫폼</title>
+    <title>인포그래픽 - 요알남</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
     <style>
-        :root {
-            --color-primary: #FF6600;
-            --color-primary-dark: #FF4500;
-            --color-primary-light: #FF9933;
-            --color-background: #1A1A1A;
-            --color-surface: #2D2D2D;
-            --color-text: #FFFFFF;
-            --color-text-secondary: #A0A0A0;
-            --transition-normal: 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        body {
-            background-color: var(--color-background);
-            color: var(--color-text);
-            line-height: 1.6;
-        }
-
-        .infographics-section {
-            padding: 2rem;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
         .infographic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -107,21 +68,9 @@
             width: 3rem;
             height: 3rem;
         }
-
-        @media (max-width: 768px) {
-            .infographic-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.5rem;
-            }
-
-            .infographic-card {
-                margin-bottom: 1rem;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="/">요알남</a>
@@ -144,19 +93,12 @@
         </div>
     </nav>
 
-    <!-- 인포그래픽 섹션 -->
-    <section class="infographics-section">
-        <div class="container">
-            <div class="infographic-grid" id="infographicGrid">
-                <!-- 인포그래픽 카드들이 여기에 동적으로 추가됩니다 -->
-            </div>
-            <div class="loading-spinner" id="loadingSpinner">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
+    <div class="infographic-grid" id="infographicGrid"></div>
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
-    </section>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
