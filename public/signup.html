@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 - 요알남 외식업 교육 플랫폼</title>
+    <title>회원가입 - 요알남 외식업 교육 플랫폼</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
             line-height: 1.6;
         }
 
-        .login-section {
+        .signup-section {
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -46,7 +46,7 @@
             padding: 2rem;
         }
 
-        .login-section::before {
+        .signup-section::before {
             content: '';
             position: absolute;
             width: 200%;
@@ -56,7 +56,7 @@
             animation: rotate 30s linear infinite;
         }
 
-        .login-container {
+        .signup-container {
             width: 100%;
             max-width: 420px;
             padding: 2rem;
@@ -64,7 +64,7 @@
             z-index: 1;
         }
 
-        .login-card {
+        .signup-card {
             background: rgba(30, 30, 30, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 24px;
@@ -74,25 +74,25 @@
             animation: slideUp 0.5s ease-out;
         }
 
-        .login-header {
+        .signup-header {
             text-align: center;
             margin-bottom: 2.5rem;
         }
 
-        .login-logo {
+        .signup-logo {
             font-size: 2.5rem;
             color: var(--color-primary);
             margin-bottom: 1.5rem;
         }
 
-        .login-title {
+        .signup-title {
             font-size: 1.75rem;
             font-weight: 700;
             color: var(--color-text);
             margin-bottom: 0.75rem;
         }
 
-        .login-subtitle {
+        .signup-subtitle {
             color: var(--color-text-secondary);
             font-size: 1rem;
             font-weight: 400;
@@ -135,7 +135,7 @@
             font-size: 0.95rem;
         }
 
-        .btn-login {
+        .btn-signup {
             width: 100%;
             padding: 1rem;
             background: var(--color-primary);
@@ -149,18 +149,18 @@
             margin-top: 1rem;
         }
 
-        .btn-login:hover {
+        .btn-signup:hover {
             background: var(--color-primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
         }
 
-        .social-login {
+        .social-signup {
             margin-top: 2.5rem;
             text-align: center;
         }
 
-        .social-login-title {
+        .social-signup-title {
             color: var(--color-text-secondary);
             font-size: 0.95rem;
             margin-bottom: 1.25rem;
@@ -168,8 +168,8 @@
             font-weight: 500;
         }
 
-        .social-login-title::before,
-        .social-login-title::after {
+        .social-signup-title::before,
+        .social-signup-title::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -178,11 +178,11 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .social-login-title::before {
+        .social-signup-title::before {
             left: 0;
         }
 
-        .social-login-title::after {
+        .social-signup-title::after {
             right: 0;
         }
 
@@ -211,22 +211,45 @@
             box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
         }
 
-        .login-footer {
+        .signup-footer {
             text-align: center;
             margin-top: 2.5rem;
             color: var(--color-text-secondary);
             font-size: 0.95rem;
         }
 
-        .login-footer a {
+        .signup-footer a {
             color: var(--color-primary);
             text-decoration: none;
             font-weight: 500;
             transition: color var(--transition-normal);
         }
 
-        .login-footer a:hover {
+        .signup-footer a:hover {
             color: var(--color-primary-light);
+        }
+
+        .password-requirements {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        .password-requirements ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .password-requirements li {
+            margin-top: 0.25rem;
+        }
+
+        .password-requirements li.valid {
+            color: #4CAF50;
+        }
+
+        .password-requirements li.invalid {
+            color: #F44336;
         }
 
         @keyframes rotate {
@@ -245,70 +268,20 @@
             }
         }
 
-        .floating-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .shape {
-            position: absolute;
-            background: var(--color-primary);
-            opacity: 0.1;
-            animation: float 20s infinite linear;
-        }
-
-        .shape:nth-child(1) {
-            width: 120px;
-            height: 120px;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            width: 180px;
-            height: 180px;
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            top: 60%;
-            right: 10%;
-            animation-delay: -5s;
-        }
-
-        .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -50px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
-        }
-
         @media (max-width: 480px) {
-            .login-container {
+            .signup-container {
                 padding: 1rem;
             }
 
-            .login-card {
+            .signup-card {
                 padding: 2rem;
             }
 
-            .login-title {
+            .signup-title {
                 font-size: 1.5rem;
             }
 
-            .login-subtitle {
+            .signup-subtitle {
                 font-size: 0.9rem;
             }
 
@@ -317,7 +290,7 @@
                 font-size: 0.95rem;
             }
 
-            .btn-login {
+            .btn-signup {
                 padding: 0.875rem;
                 font-size: 1rem;
             }
@@ -345,38 +318,49 @@
         </div>
     </nav>
 
-    <!-- 로그인 섹션 -->
-    <section class="login-section">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-        
-        <div class="login-container">
-            <div class="login-card">
-                <div class="login-header">
-                    <div class="login-logo">
+    <!-- 회원가입 섹션 -->
+    <section class="signup-section">
+        <div class="signup-container">
+            <div class="signup-card">
+                <div class="signup-header">
+                    <div class="signup-logo">
                         <i class="fas fa-utensils"></i>
                     </div>
-                    <h1 class="login-title">요알남 외식업 교육 플랫폼</h1>
-                    <p class="login-subtitle">외식업의 성공을 위한 첫걸음</p>
+                    <h1 class="signup-title">요알남 외식업 교육 플랫폼</h1>
+                    <p class="signup-subtitle">외식업의 성공을 위한 첫걸음</p>
                 </div>
 
-                <form id="loginForm">
+                <form id="signupForm">
                     <div class="form-group">
                         <i class="fas fa-envelope"></i>
                         <input type="email" class="form-control" id="email" placeholder="이메일" required>
                     </div>
                     <div class="form-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="form-control" id="name" placeholder="이름" required>
+                    </div>
+                    <div class="form-group">
                         <i class="fas fa-lock"></i>
                         <input type="password" class="form-control" id="password" placeholder="비밀번호" required>
                     </div>
-                    <button type="submit" class="btn-login">로그인</button>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 확인" required>
+                    </div>
+                    <div class="password-requirements">
+                        <ul>
+                            <li id="length" class="invalid">8자 이상</li>
+                            <li id="uppercase" class="invalid">대문자 포함</li>
+                            <li id="lowercase" class="invalid">소문자 포함</li>
+                            <li id="number" class="invalid">숫자 포함</li>
+                            <li id="special" class="invalid">특수문자 포함</li>
+                        </ul>
+                    </div>
+                    <button type="submit" class="btn-signup">회원가입</button>
                 </form>
 
-                <div class="social-login">
-                    <p class="social-login-title">소셜 계정으로 로그인</p>
+                <div class="social-signup">
+                    <p class="social-signup-title">소셜 계정으로 가입</p>
                     <div class="social-buttons">
                         <a href="/api/auth/google" class="btn-social">
                             <i class="fab fa-google"></i>
@@ -390,9 +374,8 @@
                     </div>
                 </div>
 
-                <div class="login-footer">
-                    <p>계정이 없으신가요? <a href="/signup">회원가입</a></p>
-                    <p class="mt-2"><a href="/forgot-password">비밀번호를 잊으셨나요?</a></p>
+                <div class="signup-footer">
+                    <p>이미 계정이 있으신가요? <a href="/login">로그인</a></p>
                 </div>
             </div>
         </div>
@@ -400,33 +383,108 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // 로그인 폼 제출
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        // 비밀번호 유효성 검사
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const requirements = {
+            length: document.getElementById('length'),
+            uppercase: document.getElementById('uppercase'),
+            lowercase: document.getElementById('lowercase'),
+            number: document.getElementById('number'),
+            special: document.getElementById('special')
+        };
+
+        function validatePassword() {
+            const value = password.value;
+            
+            // 길이 검사
+            if (value.length >= 8) {
+                requirements.length.classList.remove('invalid');
+                requirements.length.classList.add('valid');
+            } else {
+                requirements.length.classList.remove('valid');
+                requirements.length.classList.add('invalid');
+            }
+
+            // 대문자 검사
+            if (/[A-Z]/.test(value)) {
+                requirements.uppercase.classList.remove('invalid');
+                requirements.uppercase.classList.add('valid');
+            } else {
+                requirements.uppercase.classList.remove('valid');
+                requirements.uppercase.classList.add('invalid');
+            }
+
+            // 소문자 검사
+            if (/[a-z]/.test(value)) {
+                requirements.lowercase.classList.remove('invalid');
+                requirements.lowercase.classList.add('valid');
+            } else {
+                requirements.lowercase.classList.remove('valid');
+                requirements.lowercase.classList.add('invalid');
+            }
+
+            // 숫자 검사
+            if (/[0-9]/.test(value)) {
+                requirements.number.classList.remove('invalid');
+                requirements.number.classList.add('valid');
+            } else {
+                requirements.number.classList.remove('valid');
+                requirements.number.classList.add('invalid');
+            }
+
+            // 특수문자 검사
+            if (/[!@#$%^&*]/.test(value)) {
+                requirements.special.classList.remove('invalid');
+                requirements.special.classList.add('valid');
+            } else {
+                requirements.special.classList.remove('valid');
+                requirements.special.classList.add('invalid');
+            }
+        }
+
+        password.addEventListener('input', validatePassword);
+
+        // 회원가입 폼 제출
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // 비밀번호 확인
+            if (password !== confirmPassword) {
+                alert('비밀번호가 일치하지 않습니다.');
+                return;
+            }
+
+            // 비밀번호 유효성 검사
+            if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/.test(password)) {
+                alert('비밀번호는 8자 이상이며, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.');
+                return;
+            }
 
             try {
-                const response = await fetch('/api/auth/login', {
+                const response = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, name, password })
                 });
 
                 const data = await response.json();
 
                 if (data.success) {
-                    // 토큰을 로컬 스토리지에 저장
-                    localStorage.setItem('token', data.token);
-                    window.location.href = '/';
+                    alert('회원가입이 완료되었습니다. 이메일 인증을 진행해주세요.');
+                    window.location.href = '/login';
                 } else {
                     alert(data.message);
                 }
             } catch (error) {
-                alert('로그인 중 오류가 발생했습니다.');
+                alert('회원가입 중 오류가 발생했습니다.');
             }
         });
     </script>

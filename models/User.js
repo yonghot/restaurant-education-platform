@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: function() {
-            return !this.googleId; // Google 로그인의 경우 비밀번호 불필요
+            return !this.googleId && !this.naverId && !this.appleId;
         }
     },
     name: {
@@ -25,7 +25,15 @@ const userSchema = new mongoose.Schema({
         default: 'user'
     },
     googleId: String,
+    naverId: String,
+    appleId: String,
     profileImage: String,
+    isEmailVerified: {
+        type: Boolean,
+        default: false
+    },
+    emailVerificationToken: String,
+    emailVerificationExpires: Date,
     learningProgress: [{
         courseId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -65,9 +73,13 @@ userSchema.pre('save', async function(next) {
     }
 });
 
-// 비밀번호 검증 메서드
+// 비밀번호 비교 메서드
 userSchema.methods.comparePassword = async function(candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password);
+    try {
+        return await bcrypt.compare(candidatePassword, this.password);
+    } catch (error) {
+        throw error;
+    }
 };
 
 // 학습 진행도 업데이트 메서드
