@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>인포그래픽 - 요알남 외식업 교육 플랫폼</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -46,20 +46,19 @@
             padding: 0 1rem;
         }
 
-        .infographics-grid {
+        .infographic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 2rem 0;
+            padding: 2rem;
         }
 
         .infographic-card {
-            background: var(--color-surface);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform var(--transition-normal);
-            cursor: pointer;
+            background: white;
+            border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
         .infographic-card:hover {
@@ -78,35 +77,20 @@
 
         .infographic-title {
             font-size: 1.25rem;
-            font-weight: 700;
+            font-weight: bold;
             margin-bottom: 0.5rem;
-            color: var(--color-text);
         }
 
         .infographic-description {
-            font-size: 0.95rem;
-            color: var(--color-text-secondary);
+            color: #666;
             margin-bottom: 1rem;
         }
 
         .infographic-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--color-text-secondary);
-        }
-
-        .infographic-date {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .infographic-views {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: #888;
+            font-size: 0.9rem;
         }
 
         .loading-spinner {
@@ -119,23 +103,13 @@
             display: block;
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--color-surface);
-            border-top: 4px solid var(--color-primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
         }
 
         @media (max-width: 768px) {
-            .infographics-grid {
+            .infographic-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 1.5rem;
             }
@@ -148,16 +122,24 @@
 </head>
 <body>
     <!-- 네비게이션 -->
-    <nav class="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a href="/" class="navbar-brand">
-                <i class="fas fa-utensils"></i>
-                <span>요알남</span>
-            </a>
-            <div class="nav-links">
-                <a href="/infographics" class="nav-link">인포그래픽</a>
-                <a href="/courses" class="nav-link">교육과정</a>
-                <a href="/quizzes" class="nav-link">퀴즈</a>
+            <a class="navbar-brand" href="/">요알남</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/infographics.html">인포그래픽</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/curriculum.html">커리큘럼</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/quiz.html">퀴즈</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -165,107 +147,95 @@
     <!-- 인포그래픽 섹션 -->
     <section class="infographics-section">
         <div class="container">
-            <div class="infographics-grid" id="infographicsGrid">
+            <div class="infographic-grid" id="infographicGrid">
                 <!-- 인포그래픽 카드들이 여기에 동적으로 추가됩니다 -->
             </div>
             <div class="loading-spinner" id="loadingSpinner">
-                <div class="spinner"></div>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // 인포그래픽 데이터
-        const infographics = [
+        let page = 1;
+        let loading = false;
+        const infographicGrid = document.getElementById('infographicGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // 임시 데이터 (실제로는 API에서 가져와야 함)
+        const mockInfographics = [
             {
                 id: 1,
-                title: "외식업 창업 시장 동향",
-                description: "2024년 외식업 창업 시장의 최신 동향과 전망을 분석합니다.",
-                image: "/images/infographic1.jpg",
-                date: "2024-03-15",
+                title: "외식업 창업 가이드",
+                description: "성공적인 외식업 창업을 위한 단계별 가이드",
+                image: "https://via.placeholder.com/300x200",
+                date: "2024-03-20",
                 views: 1234
             },
             {
                 id: 2,
-                title: "성공적인 메뉴 개발 전략",
-                description: "고객의 니즈를 충족시키는 메뉴 개발 방법을 알아봅니다.",
-                image: "/images/infographic2.jpg",
-                date: "2024-03-14",
+                title: "메뉴 개발 전략",
+                description: "고객을 사로잡는 메뉴 개발의 비결",
+                image: "https://via.placeholder.com/300x200",
+                date: "2024-03-19",
                 views: 987
             },
-            // 더 많은 인포그래픽 데이터...
+            {
+                id: 3,
+                title: "원가 관리 방법",
+                description: "수익성 높은 원가 관리 전략",
+                image: "https://via.placeholder.com/300x200",
+                date: "2024-03-18",
+                views: 756
+            }
         ];
 
-        // 페이지네이션 변수
-        let currentPage = 1;
-        const itemsPerPage = 6;
-        let isLoading = false;
-
-        // 인포그래픽 카드 생성 함수
         function createInfographicCard(infographic) {
             return `
-                <div class="infographic-card" data-aos="fade-up">
+                <div class="infographic-card">
                     <img src="${infographic.image}" alt="${infographic.title}" class="infographic-image">
                     <div class="infographic-content">
                         <h3 class="infographic-title">${infographic.title}</h3>
                         <p class="infographic-description">${infographic.description}</p>
                         <div class="infographic-meta">
-                            <div class="infographic-date">
-                                <i class="far fa-calendar"></i>
-                                <span>${infographic.date}</span>
-                            </div>
-                            <div class="infographic-views">
-                                <i class="far fa-eye"></i>
-                                <span>${infographic.views}</span>
-                            </div>
+                            <span>${infographic.date}</span>
+                            <span><i class="fas fa-eye"></i> ${infographic.views}</span>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // 인포그래픽 로드 함수
-        function loadInfographics() {
-            if (isLoading) return;
-            isLoading = true;
-
-            const loadingSpinner = document.getElementById('loadingSpinner');
+        async function loadInfographics() {
+            if (loading) return;
+            loading = true;
             loadingSpinner.classList.add('active');
 
-            // 실제 API 호출 대신 setTimeout으로 시뮬레이션
-            setTimeout(() => {
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                const pageInfographics = infographics.slice(start, end);
+            // API 호출 시뮬레이션
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            const newInfographics = mockInfographics.map(infographic => ({
+                ...infographic,
+                id: infographic.id + (page - 1) * 3
+            }));
 
-                if (pageInfographics.length > 0) {
-                    const infographicsGrid = document.getElementById('infographicsGrid');
-                    pageInfographics.forEach(infographic => {
-                        infographicsGrid.insertAdjacentHTML('beforeend', createInfographicCard(infographic));
-                    });
-                    currentPage++;
-                }
-
-                loadingSpinner.classList.remove('active');
-                isLoading = false;
-            }, 1000);
+            infographicGrid.innerHTML += newInfographics.map(createInfographicCard).join('');
+            page++;
+            loading = false;
+            loadingSpinner.classList.remove('active');
         }
-
-        // 스크롤 이벤트 리스너
-        window.addEventListener('scroll', () => {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
-                loadInfographics();
-            }
-        });
 
         // 초기 로드
         loadInfographics();
 
-        // AOS 초기화
-        AOS.init({
-            duration: 800,
-            once: true
+        // 스크롤 이벤트 처리
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+                loadInfographics();
+            }
         });
     </script>
 </body>
