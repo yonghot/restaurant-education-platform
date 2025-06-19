@@ -441,6 +441,77 @@ exports.handler = async (event, context) => {
             };
         }
 
+        // API 상태 확인 엔드포인트
+        if (path === '/api/status' && event.httpMethod === 'GET') {
+            const status = {
+                gemini: {
+                    available: !!process.env.GEMINI_API_KEY,
+                    keyLength: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0
+                },
+                pinecone: {
+                    available: !!(process.env.PINECONE_API_KEY && process.env.PINECONE_INDEX_NAME),
+                    apiKeyLength: process.env.PINECONE_API_KEY ? process.env.PINECONE_API_KEY.length : 0,
+                    indexName: process.env.PINECONE_INDEX_NAME || 'not_set'
+                },
+                data: {
+                    loadedItems: restaurantKnowledge.length,
+                    lastUpdated: new Date().toISOString()
+                }
+            };
+            
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({
+                    success: true,
+                    status: status
+                })
+            };
+        }
+
+        // Gemini API 테스트 엔드포인트
+        if (path === '/api/test-gemini' && event.httpMethod === 'POST') {
+            try {
+                if (!process.env.GEMINI_API_KEY) {
+                    return {
+                        statusCode: 400,
+                        headers,
+                        body: JSON.stringify({
+                            success: false,
+                            error: 'GEMINI_API_KEY가 설정되지 않았습니다.'
+                        })
+                    };
+                }
+
+                const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                
+                const result = await model.generateContent('안녕하세요. 간단한 테스트입니다.');
+                const response = await result.response;
+                
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        message: 'Gemini API 연결 성공',
+                        response: response.text()
+                    })
+                };
+            } catch (error) {
+                console.error('Gemini API 테스트 오류:', error);
+                return {
+                    statusCode: 500,
+                    headers,
+                    body: JSON.stringify({
+                        success: false,
+                        error: 'Gemini API 테스트 실패',
+                        details: error.message
+                    })
+                };
+            }
+        }
+
         // 404 에러
         return {
             statusCode: 404,
