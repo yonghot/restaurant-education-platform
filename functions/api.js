@@ -343,7 +343,7 @@ exports.handler = async (event, context) => {
         console.log('요청 본문:', event.body);
         
         // 챗봇 API - 직접 경로 매칭
-        if (path === '/chatbot/chat' && event.httpMethod === 'POST') {
+        if ((path === '/chatbot/chat' || path === '/api/chatbot/chat') && event.httpMethod === 'POST') {
             const body = JSON.parse(event.body);
             const { message } = body;
             
