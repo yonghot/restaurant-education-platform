@@ -58,12 +58,16 @@ class YoalnamChatbot {
     
     async callChatbotAPI(message) {
         try {
-            const response = await fetch('/api/chatbot/chat', {
+            const response = await fetch('/.netlify/functions/api', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ message })
+                body: JSON.stringify({ 
+                    path: '/chatbot/chat',
+                    httpMethod: 'POST',
+                    message: message 
+                })
             });
             
             if (!response.ok) {
