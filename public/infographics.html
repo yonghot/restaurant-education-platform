@@ -20,16 +20,24 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .infographic-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
         .infographic-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
         }
 
         .infographic-content {
@@ -40,11 +48,13 @@
             font-size: 1.25rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
+            color: #333;
         }
 
         .infographic-description {
             color: #666;
             margin-bottom: 1rem;
+            line-height: 1.5;
         }
 
         .infographic-meta {
@@ -52,6 +62,16 @@
             justify-content: space-between;
             color: #888;
             font-size: 0.9rem;
+        }
+
+        .infographic-category {
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            display: inline-block;
         }
 
         .loading-spinner {
@@ -67,6 +87,24 @@
         .spinner-border {
             width: 3rem;
             height: 3rem;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .header-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -87,6 +125,13 @@
         </div>
     </nav>
 
+    <div class="header-section">
+        <div class="container">
+            <h1>외식업 인포그래픽</h1>
+            <p>외식업 창업과 운영에 필요한 핵심 정보를 시각적으로 제공합니다</p>
+        </div>
+    </div>
+
     <div class="infographic-grid" id="infographicGrid"></div>
     <div class="loading-spinner" id="loadingSpinner">
         <div class="spinner-border text-primary" role="status">
@@ -96,48 +141,74 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let page = 1;
-        let loading = false;
-        const infographicGrid = document.getElementById('infographicGrid');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-
-        // 임시 데이터 (실제로는 API에서 가져와야 함)
-        const mockInfographics = [
+        // 실제 인포그래픽 데이터
+        const infographics = [
             {
                 id: 1,
-                title: "외식업 창업 가이드",
-                description: "성공적인 외식업 창업을 위한 단계별 가이드",
-                image: "https://via.placeholder.com/300x200",
-                date: "2024-03-20",
-                views: 1234
+                title: "칼국수 전문점 에너지 비용 비교",
+                description: "가스레인지 vs 인덕션의 월간 에너지 비용을 상세히 비교 분석한 인포그래픽입니다. 인덕션 사용 시 약 73만원의 월간 절감 효과를 확인할 수 있습니다.",
+                file: "infographics/칼국수 인덕션.html",
+                category: "에너지 효율",
+                date: "2025-01-19",
+                views: 1250,
+                icon: "🔥"
             },
             {
                 id: 2,
-                title: "메뉴 개발 전략",
-                description: "고객을 사로잡는 메뉴 개발의 비결",
-                image: "https://via.placeholder.com/300x200",
-                date: "2024-03-19",
-                views: 987
+                title: "외식업 성공 전략 가이드",
+                description: "외식업 창업부터 운영까지 성공적인 비즈니스를 위한 핵심 전략들을 시각적으로 정리했습니다.",
+                file: "infographics/restaurant-success-strategy.html",
+                category: "창업 전략",
+                date: "2025-01-18",
+                views: 1890,
+                icon: "📈"
             },
             {
                 id: 3,
-                title: "원가 관리 방법",
-                description: "수익성 높은 원가 관리 전략",
-                image: "https://via.placeholder.com/300x200",
-                date: "2024-03-18",
-                views: 756
+                title: "경기 침체기 외식업 트렌드",
+                description: "경기 침체기에 외식업이 어떻게 변화하고 있는지, 소비자 행동 변화와 대응 방안을 분석했습니다.",
+                file: "infographics/recession-restaurant-trends.html",
+                category: "시장 분석",
+                date: "2025-01-17",
+                views: 1560,
+                icon: "📊"
+            },
+            {
+                id: 4,
+                title: "에너지 비용 비교 분석",
+                description: "다양한 조리 기기의 에너지 효율성을 비교하여 비용 절감 방안을 제시합니다.",
+                file: "infographics/energy-cost-comparison.html",
+                category: "에너지 효율",
+                date: "2025-01-16",
+                views: 980,
+                icon: "⚡"
+            },
+            {
+                id: 5,
+                title: "인덕션 vs 하이라이트 비교",
+                description: "인덕션과 하이라이트의 성능, 비용, 안전성을 종합적으로 비교 분석한 자료입니다.",
+                file: "infographics/induction-vs-highlight.html",
+                category: "장비 비교",
+                date: "2025-01-15",
+                views: 1120,
+                icon: "🔧"
             }
         ];
 
+        const infographicGrid = document.getElementById('infographicGrid');
+
         function createInfographicCard(infographic) {
             return `
-                <div class="infographic-card">
-                    <img src="${infographic.image}" alt="${infographic.title}" class="infographic-image">
+                <div class="infographic-card" onclick="openInfographic('${infographic.file}')">
+                    <div class="infographic-image">
+                        <span>${infographic.icon}</span>
+                    </div>
                     <div class="infographic-content">
+                        <span class="infographic-category">${infographic.category}</span>
                         <h3 class="infographic-title">${infographic.title}</h3>
                         <p class="infographic-description">${infographic.description}</p>
                         <div class="infographic-meta">
-                            <span>${infographic.date}</span>
+                            <span><i class="fas fa-calendar"></i> ${infographic.date}</span>
                             <span><i class="fas fa-eye"></i> ${infographic.views}</span>
                         </div>
                     </div>
@@ -145,34 +216,16 @@
             `;
         }
 
-        async function loadInfographics() {
-            if (loading) return;
-            loading = true;
-            loadingSpinner.classList.add('active');
+        function openInfographic(filePath) {
+            window.open(filePath, '_blank');
+        }
 
-            // API 호출 시뮬레이션
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            const newInfographics = mockInfographics.map(infographic => ({
-                ...infographic,
-                id: infographic.id + (page - 1) * 3
-            }));
-
-            infographicGrid.innerHTML += newInfographics.map(createInfographicCard).join('');
-            page++;
-            loading = false;
-            loadingSpinner.classList.remove('active');
+        function loadInfographics() {
+            infographicGrid.innerHTML = infographics.map(createInfographicCard).join('');
         }
 
         // 초기 로드
         loadInfographics();
-
-        // 스크롤 이벤트 처리
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
-                loadInfographics();
-            }
-        });
     </script>
 </body>
 </html> 
