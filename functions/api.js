@@ -1,6 +1,28 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+// Pinecone 연동을 위한 패키지 (필요시 설치)
+// const { Pinecone } = require('@pinecone-database/pinecone');
+
+// Pinecone 설정 (환경변수에서 가져오기)
+// const pinecone = new Pinecone({
+//     apiKey: process.env.PINECONE_API_KEY,
+// });
+// const index = pinecone.index(process.env.PINECONE_INDEX_NAME);
+
+// 파일 기반 데이터 로딩 함수 (선택사항)
+// async function loadKnowledgeFromFile() {
+//     try {
+//         // JSON 파일에서 데이터 로드
+//         const fs = require('fs').promises;
+//         const data = await fs.readFile('./data/knowledge.json', 'utf8');
+//         return JSON.parse(data);
+//     } catch (error) {
+//         console.error('파일 로딩 오류:', error);
+//         return restaurantKnowledge; // 기본 데이터 반환
+//     }
+// }
 
 // 외식업 관련 지식 데이터베이스
+// 여기에 본인의 데이터를 추가하세요!
 const restaurantKnowledge = [
     {
         id: '1',
@@ -49,7 +71,29 @@ const restaurantKnowledge = [
         text: '칼국수 전문점의 에너지 비용은 일반적으로 월 50-100만원 정도입니다. 인덕션 사용 시 가스비 대비 30-40% 절약 효과가 있으며, 초기 설치비는 200-500만원 정도입니다.',
         category: '에너지',
         tags: ['에너지', '비용', '인덕션']
-    }
+    },
+    
+    // ===== 여기에 본인의 데이터를 추가하세요 =====
+    // 예시:
+    // {
+    //     id: '9',
+    //     text: '본인의 외식업 경험담이나 노하우를 여기에 작성하세요. 예: "우리 매장에서는 매주 월요일에 재고를 점검하고, 화요일에 주문을 넣는 시스템을 운영하고 있습니다. 이렇게 하면 식재료 신선도를 유지하면서도 비용을 절약할 수 있습니다."',
+    //     category: '운영노하우',
+    //     tags: ['재고관리', '비용절약', '운영시스템']
+    // },
+    // {
+    //     id: '10',
+    //     text: '전자책에서 발췌한 내용이나 보고서 내용을 여기에 추가하세요.',
+    //     category: '전자책내용',
+    //     tags: ['키워드1', '키워드2', '키워드3']
+    // },
+    // {
+    //     id: '11',
+    //     text: '구독자 Q&A 내용을 여기에 추가하세요.',
+    //     category: 'Q&A',
+    //     tags: ['질문유형', '답변내용', '관련키워드']
+    // }
+    // ===========================================
 ];
 
 // 키워드 추출 함수
