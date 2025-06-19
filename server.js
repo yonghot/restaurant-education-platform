@@ -7,8 +7,6 @@ const path = require('path');
 
 // 라우터 임포트
 const authRoutes = require('./routes/auth');
-const courseRoutes = require('./routes/courses');
-const quizRoutes = require('./routes/quizzes');
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
 
@@ -33,8 +31,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // API 라우트 설정
 app.use('/api/auth', authRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/quizzes', quizRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 
