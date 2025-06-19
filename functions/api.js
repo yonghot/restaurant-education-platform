@@ -328,8 +328,11 @@ exports.handler = async (event, context) => {
 
     try {
         const path = event.path.replace('/.netlify/functions/api', '');
+        console.log('요청된 경로:', path);
+        console.log('HTTP 메서드:', event.httpMethod);
+        console.log('원본 경로:', event.path);
         
-        // 챗봇 API
+        // 챗봇 API - 직접 경로 매칭
         if (path === '/chatbot/chat' && event.httpMethod === 'POST') {
             const body = JSON.parse(event.body);
             const { message } = body;
@@ -441,7 +444,7 @@ exports.handler = async (event, context) => {
             };
         }
 
-        // API 상태 확인 엔드포인트
+        // API 상태 확인 엔드포인트 - 직접 경로 매칭
         if (path === '/api/status' && event.httpMethod === 'GET') {
             const status = {
                 gemini: {
