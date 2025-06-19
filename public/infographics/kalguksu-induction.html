@@ -71,11 +71,11 @@
 <body class="bg-gray-900 text-gray-200">
 
     <div class="container mx-auto p-4 md:p-8">
-        <div class="text-right mb-4">
-            <a href="/" class="inline-block bg-[#FF6600] text-white px-6 py-2 rounded-lg hover:bg-[#FF9933] transition-colors duration-300">
-                홈으로 돌아가기
-            </a>
-        </div>
+
+        <!-- 홈으로 돌아가기 링크 (상단) -->
+        <a href="/" class="inline-block mb-8 text-[#FF8C00] hover:text-[#FF4500] transition-colors duration-300">
+            <i class="fas fa-arrow-left mr-2"></i>홈으로 돌아가기
+        </a>
 
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-black text-[#FF6600] mb-4">데이터로 보는 외식업 성공 전략</h1>
@@ -218,7 +218,14 @@
             </div>
         </section>
 
-        <footer class="text-center mt-16 pt-8 border-t border-gray-700">
+        <!-- 홈으로 돌아가기 섹션 -->
+        <section class="text-center mt-16 mb-8">
+            <a href="/" class="inline-flex items-center px-8 py-4 bg-[#FF8C00] text-white rounded-full shadow-lg hover:bg-[#FF4500] transition-colors duration-300 text-lg">
+                <i class="fas fa-home mr-2"></i>홈으로 돌아가기
+            </a>
+        </section>
+        
+        <footer class="text-center mt-12 text-gray-500 text-sm">
             <p class="text-gray-500">본 인포그래픽은 제공된 '외식업 성공 변수 분석 보고서'를 기반으로 제작되었습니다.</p>
             <p class="text-xs text-gray-600 mt-2">Data Visualization by Gemini</p>
         </footer>
