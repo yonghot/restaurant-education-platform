@@ -283,17 +283,10 @@ function getDefaultResponse(userMessage) {
 }
 
 // 챗봇 응답 생성 함수
-async function generateChatbotResponse(userMessage) {
+async function generateChatbotResponse(userMessage, relevantKnowledge) {
     try {
         console.log('Gemini API 호출 시작');
         console.log('사용자 메시지:', userMessage);
-        
-        // 사용자 메시지에서 키워드 추출
-        const keywords = extractKeywords(userMessage);
-        console.log('추출된 키워드:', keywords);
-        
-        // 관련 지식 검색
-        const relevantKnowledge = searchRelevantKnowledge(keywords, restaurantKnowledge);
         console.log('관련 지식 길이:', relevantKnowledge.length);
         
         // Gemini API 호출
@@ -374,7 +367,8 @@ exports.handler = async (event, context) => {
             }
 
             // 관련 지식 검색
-            const relevantKnowledge = searchRelevantKnowledge(message, restaurantKnowledge);
+            const keywords = extractKeywords(message);
+            const relevantKnowledge = searchRelevantKnowledge(keywords, restaurantKnowledge);
             
             // Gemini API로 응답 생성 (API 키가 있는 경우)
             let response;
@@ -383,7 +377,7 @@ exports.handler = async (event, context) => {
             
             if (process.env.GEMINI_API_KEY) {
                 console.log('Gemini API 호출 시도');
-                response = await generateChatbotResponse(message);
+                response = await generateChatbotResponse(message, relevantKnowledge);
             } else {
                 console.log('기본 응답 사용');
                 response = getDefaultResponse(message);
