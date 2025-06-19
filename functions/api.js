@@ -373,19 +373,35 @@ exports.handler = async (event, context) => {
         if (path === '/api/refresh-data' && event.httpMethod === 'POST') {
             console.log('데이터 새로고침 요청 받음');
             
-            // 데이터 재로드
-            restaurantKnowledge = await loadKnowledgeFromFiles();
-            
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify({
-                    success: true,
-                    message: '데이터가 성공적으로 새로고침되었습니다.',
-                    dataCount: restaurantKnowledge.length,
-                    timestamp: new Date().toISOString()
-                })
-            };
+            try {
+                // 데이터 재로드
+                restaurantKnowledge = await loadKnowledgeFromFiles();
+                
+                console.log(`데이터 새로고침 성공: ${restaurantKnowledge.length}개 항목`);
+                
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        message: '데이터가 성공적으로 새로고침되었습니다.',
+                        dataCount: restaurantKnowledge.length,
+                        timestamp: new Date().toISOString()
+                    })
+                };
+            } catch (error) {
+                console.error('데이터 새로고침 중 오류:', error);
+                return {
+                    statusCode: 500,
+                    headers,
+                    body: JSON.stringify({
+                        success: false,
+                        message: '데이터 새로고침 중 오류가 발생했습니다.',
+                        error: error.message,
+                        timestamp: new Date().toISOString()
+                    })
+                };
+            }
         }
 
         // 현재 로드된 데이터 정보 조회 엔드포인트
