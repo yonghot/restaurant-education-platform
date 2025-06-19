@@ -1,0 +1,9 @@
+{
+  "name": "restaurant-education-functions",
+  "version": "1.0.0",
+  "description": "요알남 외식업 교육 플랫폼 Netlify Functions",
+  "main": "api.js",
+  "dependencies": {
+    "@google/generative-ai": "^0.2.1"
+  }
+} 

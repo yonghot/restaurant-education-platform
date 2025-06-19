@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요알남 AI 챗봇 - 외식업 교육 플랫폼</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">요알남 외식업 교육</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="infographics.html">인포그래픽</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="chatbot.html">AI 챗봇</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chatbot-header">
+                    <h1><i class="fas fa-robot text-primary"></i> 요알남 AI 챗봇</h1>
+                    <p class="text-muted">외식업 창업과 운영에 대한 모든 질문에 답변해드립니다</p>
+                </div>
+                
+                <div class="chatbot-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                <div class="bot-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="message-text">
+                                    안녕하세요! 저는 요알남 AI 챗봇입니다. 
+                                    외식업 창업과 운영에 관한 질문이 있으시면 언제든 물어보세요. 
+                                    예비 창업자분들을 위해 최신 외식업 트렌드, 비용 분석, 
+                                    성공 전략 등을 제공해드립니다.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div class="input-group">
+                            <input type="text" id="messageInput" class="form-control" 
+                                   placeholder="외식업에 대해 궁금한 점을 물어보세요..." 
+                                   maxlength="500">
+                            <button class="btn btn-primary" id="sendButton" type="button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chatbot-info mt-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="info-card">
+                                <i class="fas fa-book text-primary"></i>
+                                <h5>전자책 기반 지식</h5>
+                                <p>외식업 관련 전자책과 보고서를 학습하여 정확한 정보를 제공합니다.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-card">
+                                <i class="fas fa-chart-line text-success"></i>
+                                <h5>실시간 트렌드</h5>
+                                <p>최신 외식업 트렌드와 시장 동향을 반영한 답변을 제공합니다.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-card">
+                                <i class="fas fa-users text-warning"></i>
+                                <h5>구독자 Q&A</h5>
+                                <p>실제 구독자들의 질문과 답변을 학습하여 실용적인 조언을 제공합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html> 

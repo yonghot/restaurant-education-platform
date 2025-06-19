@@ -9,6 +9,7 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
+const chatbotRoutes = require('./routes/chatbot');
 
 const app = express();
 
@@ -33,6 +34,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // 프론트엔드 라우트 - API 라우트 다음에 위치
 app.get('/', (req, res) => {
