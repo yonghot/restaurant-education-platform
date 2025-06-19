@@ -207,4 +207,124 @@ class YoalnamChatbot {
 // 챗봇 초기화
 document.addEventListener('DOMContentLoaded', () => {
     const chatbot = new YoalnamChatbot();
+});
+
+// 데이터 새로고침 함수
+async function refreshData() {
+    try {
+        const response = await fetch('/.netlify/functions/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                path: '/api/refresh-data',
+                httpMethod: 'POST'
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('데이터가 성공적으로 새로고침되었습니다!', 'success');
+            console.log(`총 ${result.dataCount}개 항목 로드됨`);
+        } else {
+            showNotification('데이터 새로고침에 실패했습니다.', 'error');
+        }
+    } catch (error) {
+        console.error('데이터 새로고침 오류:', error);
+        showNotification('데이터 새로고침 중 오류가 발생했습니다.', 'error');
+    }
+}
+
+// 알림 표시 함수
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // 스타일 설정
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    if (type === 'success') {
+        notification.style.backgroundColor = '#28a745';
+    } else if (type === 'error') {
+        notification.style.backgroundColor = '#dc3545';
+    } else {
+        notification.style.backgroundColor = '#17a2b8';
+    }
+    
+    document.body.appendChild(notification);
+    
+    // 3초 후 자동 제거
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// CSS 애니메이션 추가
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// 페이지 로드 시 데이터 새로고침 버튼 추가
+document.addEventListener('DOMContentLoaded', function() {
+    // 데이터 새로고침 버튼 생성
+    const refreshButton = document.createElement('button');
+    refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i> 데이터 새로고침';
+    refreshButton.className = 'btn btn-outline-warning btn-sm';
+    refreshButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        border-radius: 25px;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    `;
+    
+    refreshButton.addEventListener('click', refreshData);
+    document.body.appendChild(refreshButton);
+    
+    // 툴팁 추가
+    refreshButton.title = 'data 폴더의 새로운 텍스트 파일을 AI 챗봇에 반영합니다';
 }); 
