@@ -432,7 +432,43 @@
         </div>
     </div>
 
+    <!-- 데이터 새로고침 버튼 -->
+    <button id="refreshDataBtn" class="btn btn-outline-warning" 
+            style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; border-radius: 25px; padding: 10px 15px; font-size: 0.9rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <i class="fas fa-sync-alt"></i> 데이터 새로고침
+    </button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/chatbot.js"></script>
+    
+    <script>
+        // 데이터 새로고침 버튼 이벤트 리스너
+        document.getElementById('refreshDataBtn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/.netlify/functions/api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        path: '/api/refresh-data',
+                        httpMethod: 'POST'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('데이터가 성공적으로 새로고침되었습니다!');
+                    console.log(`총 ${result.dataCount}개 항목 로드됨`);
+                } else {
+                    alert('데이터 새로고침에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('데이터 새로고침 오류:', error);
+                alert('데이터 새로고침 중 오류가 발생했습니다.');
+            }
+        });
+    </script>
 </body>
 </html> 
