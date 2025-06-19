@@ -219,10 +219,13 @@ function extractKeywords(text) {
 function searchRelevantKnowledge(keywords, knowledge) {
     try {
         // 키워드가 없으면 기본 지식 반환
-        if (!keywords || keywords.length === 0) {
+        if (!keywords || !Array.isArray(keywords) || keywords.length === 0) {
             console.log('키워드가 없어 기본 지식 반환');
             return knowledge[0] ? knowledge[0].text : '외식업에 대한 기본 정보입니다.';
         }
+        
+        console.log('검색할 키워드:', keywords);
+        console.log('지식 데이터 개수:', knowledge.length);
         
         const relevantDocs = knowledge.filter(doc => 
             keywords.some(keyword => 
@@ -231,6 +234,8 @@ function searchRelevantKnowledge(keywords, knowledge) {
                 (doc.category && doc.category.includes(keyword))
             )
         );
+        
+        console.log('관련 문서 개수:', relevantDocs.length);
         
         // 관련도 순으로 정렬 (키워드 매칭 개수 기준)
         relevantDocs.sort((a, b) => {
@@ -293,7 +298,7 @@ async function generateChatbotResponse(userMessage) {
         
         // Gemini API 호출
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
         
         const prompt = `
 당신은 외식업 전문가 AI 어시스턴트입니다. 다음 정보를 바탕으로 사용자의 질문에 답변해주세요.
@@ -515,7 +520,7 @@ exports.handler = async (event, context) => {
                 }
 
                 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
                 
                 const result = await model.generateContent('안녕하세요. 간단한 테스트입니다.');
                 const response = await result.response;
