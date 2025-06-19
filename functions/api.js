@@ -337,6 +337,9 @@ exports.handler = async (event, context) => {
             const body = JSON.parse(event.body);
             const { message } = body;
             
+            console.log('요청 본문:', body);
+            console.log('추출된 메시지:', message);
+            
             if (!message) {
                 return {
                     statusCode: 400,
