@@ -71,163 +71,175 @@
 <body class="bg-gray-900 text-gray-200">
 
     <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <!-- 홈으로 돌아가기 링크 (상단) -->
         <a href="/" class="inline-block mb-8 text-[#FF8C00] hover:text-[#FF4500] transition-colors duration-300">
             <i class="fas fa-arrow-left mr-2"></i>홈으로 돌아가기
         </a>
 
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-black text-[#FF6600] mb-4">데이터로 보는 외식업 성공 전략</h1>
-            <p class="text-lg text-gray-400 max-w-3xl mx-auto">성장하는 시장, 그러나 치열한 경쟁. 데이터 분석을 통해 외식업 창업의 성공 가능성을 높이는 핵심 요소를 알아봅니다.</p>
-        </header>
-
-        <section id="market-overview" class="mb-16">
-            <h2 class="text-3xl font-bold text-center text-[#FF6600] mb-8">한국 외식 시장의 두 얼굴</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
-                    <p class="text-xl font-semibold text-gray-300 mb-2">2022년 국내 외식업 매출액</p>
-                    <p class="text-6xl font-black text-[#FF9933]">177조원</p>
-                    <p class="text-gray-500 mt-2">연평균 6.9% 성장 (2016-2022)</p>
-                </div>
-
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
-                     <p class="text-xl font-semibold text-gray-300 mb-2">2032년 시장 규모 전망</p>
-                    <p class="text-6xl font-black text-[#FF9933]">3,901억$</p>
-                    <p class="text-gray-500 mt-2">연평균 17.5% 성장 전망 (2022-2032)</p>
-                </div>
-
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-center text-gray-200 mb-4">창업 동기: 현실과 이상의 차이</h3>
-                    <div class="chart-container h-64">
-                        <canvas id="motivationChart"></canvas>
-                    </div>
-                     <p class="text-xs text-gray-500 text-center mt-2">대부분의 창업이 성공 가능성보다 생계유지를 위해 시작되고 있어, 철저한 전략 수립이 더욱 중요합니다.</p>
+        <!-- 썸네일 이미지 -->
+        <div class="relative w-full h-48 md:h-64 mb-12 rounded-xl overflow-hidden shadow-lg">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#FF8C00] to-[#FF4500] opacity-90"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white">
+                    <h1 class="text-4xl md:text-6xl font-black mb-2">데이터로 보는 외식업 성공 전략</h1>
+                    <p class="text-xl md:text-2xl font-bold text-gray-200">성장하는 시장, 그러나 치열한 경쟁. 데이터 분석을 통해 외식업 창업의 성공 가능성을 높이는 핵심 요소를 알아봅니다.</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="success-factors" class="mb-16">
-             <h2 class="text-3xl font-bold text-center text-[#FF6600] mb-8">외식업 성공을 위한 5단계 핵심 변수</h2>
-             <p class="text-center text-gray-400 max-w-3xl mx-auto mb-8">외식업 성공은 여러 요소의 복합적인 작용으로 이루어집니다. 보고서 분석 결과, 성공에 미치는 영향력과 선행 관계를 고려한 핵심 변수의 중요도 순위는 다음과 같습니다. 가장 기본적인 '품질'에서 시작하여 '브랜딩'으로 확장되는 구조입니다.</p>
-             <div class="max-w-2xl mx-auto">
-                <div class="pyramid">
-                    <div class="pyramid-level pyramid-level-1" style="background-color: #FF6600;">
-                        <span class="text-xl md:text-2xl">1. 제품 및 서비스 품질</span>
+        <main class="space-y-16">
+
+            <section id="market-overview">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">한국 외식 시장의 두 얼굴</h2>
+                    <p class="mt-2 text-lg text-gray-400">성장하는 시장과 치열한 경쟁이 공존하는 외식업의 현실을 데이터로 확인해보세요.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                        <p class="text-xl font-semibold text-gray-300 mb-2">2022년 국내 외식업 매출액</p>
+                        <p class="text-6xl font-black text-[#FF9933]">177조원</p>
+                        <p class="text-gray-500 mt-2">연평균 6.9% 성장 (2016-2022)</p>
                     </div>
-                    <div class="pyramid-level pyramid-level-2" style="background-color: #FF8C00;">
-                        <span class="text-lg md:text-xl">2. 창업자 역량 및 경영관리</span>
+
+                    <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                         <p class="text-xl font-semibold text-gray-300 mb-2">2032년 시장 규모 전망</p>
+                        <p class="text-6xl font-black text-[#FF9933]">3,901억$</p>
+                        <p class="text-gray-500 mt-2">연평균 17.5% 성장 전망 (2022-2032)</p>
                     </div>
-                    <div class="pyramid-level pyramid-level-3" style="background-color: #FFB366;">
-                        <span class="text-base md:text-lg">3. 시장 및 입지 전략</span>
-                    </div>
-                    <div class="pyramid-level pyramid-level-4" style="background-color: #FFCC99;">
-                        <span class="text-sm md:text-base">4. 재무 및 원가 관리</span>
-                    </div>
-                    <div class="pyramid-level pyramid-level-5" style="background-color: #FFE6CC;">
-                         <span class="text-xs md:text-sm" style="color: #333;">5. 마케팅 및 브랜딩</span>
+
+                    <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-center text-gray-200 mb-4">창업 동기: 현실과 이상의 차이</h3>
+                        <div class="chart-container h-64">
+                            <canvas id="motivationChart"></canvas>
+                        </div>
+                         <p class="text-xs text-gray-500 text-center mt-2">대부분의 창업이 성공 가능성보다 생계유지를 위해 시작되고 있어, 철저한 전략 수립이 더욱 중요합니다.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <section id="deep-dive" class="mb-12">
-            <h2 class="text-3xl font-bold text-center text-[#FF6600] mb-8">핵심 변수 심층 분석</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">실패 원인, 누구의 관점인가?</h3>
-                    <p class="text-sm text-gray-400 mb-4">고객, 종업원, 경영자는 레스토랑 실패 요인을 다르게 인식합니다. 특히 고객은 '음식'을 가장 중요한 실패 요인으로 꼽아, 제품 품질의 중요성을 명확히 보여줍니다.</p>
-                    <div class="chart-container">
-                        <canvas id="failureFactorChart"></canvas>
-                    </div>
-                </div>
+            </section>
 
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">만능 창업가의 역량 모델</h3>
-                    <p class="text-sm text-gray-400 mb-4">창업자의 개인적 특성은 사업 전반에 영향을 미칩니다. 신뢰성, 자기효능감, 대처능력, 성취동기가 높을수록 운영, 서비스, 고객, 수익 관리 등 다방면에서 높은 성과를 기대할 수 있습니다.</p>
-                    <div class="chart-container">
-                        <canvas id="founderCompetenceChart"></canvas>
-                    </div>
+            <section id="success-factors">
+                 <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">외식업 성공을 위한 5단계 핵심 변수</h2>
+                    <p class="mt-2 text-lg text-gray-400">외식업 성공은 여러 요소의 복합적인 작용으로 이루어집니다. 가장 기본적인 '품질'에서 시작하여 '브랜딩'으로 확장되는 구조입니다.</p>
                 </div>
-
-                 <div class="bg-gray-800 rounded-xl shadow-lg p-6 md:col-span-2">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">시장을 이끄는 4가지 메가 트렌드</h3>
-                     <p class="text-sm text-gray-400 mb-6">외식 시장은 끊임없이 변화합니다. 현재 시장을 주도하는 주요 트렌드에 민첩하게 대응하는 것이 시장 적합성을 높이는 길입니다.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">👤</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">인구/사회 변화</h4>
-                            <p class="text-xs text-gray-400">1인 가구, 여성 경제활동 인구 증가로 간편식, 배달/테이크아웃, 개인 맞춤형 서비스 수요 증가</p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="pyramid">
+                        <div class="pyramid-level pyramid-level-1" style="background-color: #FF6600;">
+                            <span class="text-xl md:text-2xl">1. 제품 및 서비스 품질</span>
                         </div>
-                        <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">💰</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">가성비 경제</h4>
-                            <p class="text-xs text-gray-400">고물가/고금리로 외식비 부담 가중. 합리적 가격의 '가성비' 메뉴, 원가 절감 노력 필수</p>
+                        <div class="pyramid-level pyramid-level-2" style="background-color: #FF8C00;">
+                            <span class="text-lg md:text-xl">2. 창업자 역량 및 경영관리</span>
                         </div>
-                         <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">🤖</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">푸드테크 확산</h4>
-                            <p class="text-xs text-gray-400">키오스크, 서빙/조리 로봇 도입으로 운영 효율성 증대 및 인건비 부담 경감</p>
+                        <div class="pyramid-level pyramid-level-3" style="background-color: #FFB366;">
+                            <span class="text-base md:text-lg">3. 시장 및 입지 전략</span>
                         </div>
-                         <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">🌱</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">새로운 소비 가치</h4>
-                            <p class="text-xs text-gray-400">건강, 지속가능성, 비건 등 세분화된 가치에 부응하는 메뉴와 경험 제공으로 차별화</p>
+                        <div class="pyramid-level pyramid-level-4" style="background-color: #FFCC99;">
+                            <span class="text-sm md:text-base">4. 재무 및 원가 관리</span>
+                        </div>
+                        <div class="pyramid-level pyramid-level-5" style="background-color: #FFE6CC;">
+                             <span class="text-xs md:text-sm" style="color: #333;">5. 마케팅 및 브랜딩</span>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">수익성을 위협하는 비용 상승</h3>
-                    <p class="text-sm text-gray-400 mb-4">'3고(고물가, 고금리, 고환율)' 현상으로 식자재비와 인건비가 지속적으로 상승하고 있습니다. 효율적인 원가 관리가 없다면 수익성 악화는 불가피합니다.</p>
-                    <div class="chart-container">
-                        <canvas id="costTrendChart"></canvas>
-                    </div>
+            <section id="deep-dive">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[#FF8C00]">핵심 변수 심층 분석</h2>
+                    <p class="mt-2 text-lg text-gray-400">각 변수의 세부 내용과 성공에 미치는 영향을 자세히 살펴봅니다.</p>
                 </div>
-                
-                 <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">성공을 이끄는 브랜드 선순환 구조</h3>
-                    <p class="text-sm text-gray-400 mb-6">성공적인 마케팅과 브랜딩은 일회성 이벤트가 아닌, 고객 충성도를 높이고 신규 고객을 유치하는 선순환 구조를 만듭니다.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="bg-[#FF6600] text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">1</div>
-                            <div class="p-3 bg-gray-700 rounded-lg w-full flow-arrow">
-                                <h4 class="font-bold text-gray-200">매력적인 브랜드 구축</h4>
-                                <p class="text-xs text-gray-400">독창적 가치와 철학 전달</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-200 mb-2">실패 원인, 누구의 관점인가?</h3>
+                        <p class="text-sm text-gray-400 mb-4">고객, 종업원, 경영자는 레스토랑 실패 요인을 다르게 인식합니다. 특히 고객은 '음식'을 가장 중요한 실패 요인으로 꼽아, 제품 품질의 중요성을 명확히 보여줍니다.</p>
+                        <div class="chart-container">
+                            <canvas id="failureFactorChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-200 mb-2">만능 창업가의 역량 모델</h3>
+                        <p class="text-sm text-gray-400 mb-4">창업자의 개인적 특성은 사업 전반에 영향을 미칩니다. 신뢰성, 자기효능감, 대처능력, 성취동기가 높을수록 높은 성과를 기대할 수 있습니다.</p>
+                        <div class="chart-container">
+                            <canvas id="founderCompetenceChart"></canvas>
+                        </div>
+                    </div>
+
+                     <div class="bg-gray-800 rounded-xl shadow-lg p-6 md:col-span-2">
+                        <h3 class="text-xl font-bold text-gray-200 mb-2">시장을 이끄는 4가지 메가 트렌드</h3>
+                         <p class="text-sm text-gray-400 mb-6">외식 시장은 끊임없이 변화합니다. 현재 시장을 주도하는 주요 트렌드에 민첩하게 대응하는 것이 시장 적합성을 높이는 길입니다.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
+                                <span class="text-5xl text-[#FF9933]">👤</span>
+                                <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">인구/사회 변화</h4>
+                                <p class="text-xs text-gray-400">1인 가구, 여성 경제활동 인구 증가로 간편식, 배달/테이크아웃, 개인 맞춤형 서비스 수요 증가</p>
                             </div>
-                        </div>
-                         <div class="flex items-center">
-                            <div class="bg-[#FF9933] text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">2</div>
-                            <div class="p-3 bg-gray-700 rounded-lg w-full flow-arrow">
-                                <h4 class="font-bold text-gray-200">고객 인지도 & 재방문율 향상</h4>
-                                <p class="text-xs text-gray-400">긍정적 경험 제공, 피드백 반영</p>
+                            <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
+                                <span class="text-5xl text-[#FF9933]">💰</span>
+                                <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">가성비 경제</h4>
+                                <p class="text-xs text-gray-400">고물가/고금리로 외식비 부담 가중. 합리적 가격의 '가성비' 메뉴, 원가 절감 노력 필수</p>
                             </div>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="bg-[#FFCC99] text-gray-900 rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">3</div>
-                            <div class="p-3 bg-gray-700 rounded-lg w-full">
-                                <h4 class="font-bold text-gray-200">긍정적 입소문 & 신규고객 창출</h4>
-                                <p class="text-xs text-gray-400">SNS, 리뷰를 통한 자연스러운 홍보</p>
+                             <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
+                                <span class="text-5xl text-[#FF9933]">🤖</span>
+                                <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">푸드테크 확산</h4>
+                                <p class="text-xs text-gray-400">키오스크, 서빙/조리 로봇 도입으로 운영 효율성 증대 및 인건비 부담 경감</p>
+                            </div>
+                             <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
+                                <span class="text-5xl text-[#FF9933]">🌱</span>
+                                <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">새로운 소비 가치</h4>
+                                <p class="text-xs text-gray-400">건강, 지속가능성, 비건 등 세분화된 가치에 부응하는 메뉴와 경험 제공으로 차별화</p>
                             </div>
                         </div>
                     </div>
+
+                    <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-200 mb-2">수익성을 위협하는 비용 상승</h3>
+                        <p class="text-sm text-gray-400 mb-4">'3고(고물가, 고금리, 고환율)' 현상으로 식자재비와 인건비가 지속적으로 상승하고 있습니다. 효율적인 원가 관리가 없다면 수익성 악화는 불가피합니다.</p>
+                        <div class="chart-container">
+                            <canvas id="costTrendChart"></canvas>
+                        </div>
+                    </div>
+                    
+                     <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center">
+                        <h3 class="text-xl font-bold text-gray-200 mb-2">성공을 이끄는 브랜드 선순환 구조</h3>
+                        <p class="text-sm text-gray-400 mb-6">성공적인 마케팅과 브랜딩은 일회성 이벤트가 아닌, 고객 충성도를 높이고 신규 고객을 유치하는 선순환 구조를 만듭니다.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="bg-[#FF6600] text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">1</div>
+                                <div class="p-3 bg-gray-700 rounded-lg w-full flow-arrow">
+                                    <h4 class="font-bold text-gray-200">매력적인 브랜드 구축</h4>
+                                    <p class="text-xs text-gray-400">독창적 가치와 철학 전달</p>
+                                </div>
+                            </div>
+                             <div class="flex items-center">
+                                <div class="bg-[#FF9933] text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">2</div>
+                                <div class="p-3 bg-gray-700 rounded-lg w-full flow-arrow">
+                                    <h4 class="font-bold text-gray-200">고객 인지도 & 재방문율 향상</h4>
+                                    <p class="text-xs text-gray-400">긍정적 경험 제공, 피드백 반영</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-[#FFCC99] text-gray-900 rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">3</div>
+                                <div class="p-3 bg-gray-700 rounded-lg w-full">
+                                    <h4 class="font-bold text-gray-200">긍정적 입소문 & 신규고객 창출</h4>
+                                    <p class="text-xs text-gray-400">SNS, 리뷰를 통한 자연스러운 홍보</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-            </div>
-        </section>
+            <!-- 홈으로 돌아가기 섹션 -->
+            <section class="text-center mt-16 mb-8">
+                <a href="/" class="inline-flex items-center px-8 py-4 bg-[#FF8C00] text-white rounded-full shadow-lg hover:bg-[#FF4500] transition-colors duration-300 text-lg">
+                    <i class="fas fa-home mr-2"></i>홈으로 돌아가기
+                </a>
+            </section>
 
-        <!-- 홈으로 돌아가기 섹션 -->
-        <section class="text-center mt-16 mb-8">
-            <a href="/" class="inline-flex items-center px-8 py-4 bg-[#FF8C00] text-white rounded-full shadow-lg hover:bg-[#FF4500] transition-colors duration-300 text-lg">
-                <i class="fas fa-home mr-2"></i>홈으로 돌아가기
-            </a>
-        </section>
-
-        <footer class="text-center mt-16 pt-8 border-t border-gray-700">
-            <p class="text-gray-500">본 인포그래픽은 제공된 '외식업 성공 변수 분석 보고서'를 기반으로 제작되었습니다.</p>
-            <p class="text-xs text-gray-600 mt-2">Data Visualization by Gemini</p>
-        </footer>
-
+        </main>
     </div>
 
     <script>
@@ -272,13 +284,12 @@
                     return label;
                 }
             };
-            
+
             const defaultChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom',
                         labels: {
                             font: {
                                 family: "'Noto Sans KR', sans-serif",
@@ -296,9 +307,7 @@
                             family: "'Noto Sans KR', sans-serif",
                             color: darkOrangePalette.text
                         },
-                        callbacks: {
-                            title: tooltipTitleCallback
-                        },
+                        callbacks: { title: tooltipTitleCallback },
                         backgroundColor: darkOrangePalette.card,
                         borderColor: darkOrangePalette.secondary,
                         borderWidth: 1

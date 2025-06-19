@@ -3,72 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>외식업 성공 전략 데이터 인포그래픽</title>
+    <title>칼국수 전문점 에너지 비용 비교 인포그래픽</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
         }
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
-            height: 350px;
-            max-height: 450px;
+            height: 300px;
+            max-height: 350px;
         }
         @media (min-width: 768px) {
             .chart-container {
-                height: 400px;
+                height: 350px;
+                max-height: 400px;
             }
         }
-        .pyramid {
-            display: grid;
-            grid-template-rows: repeat(5, 1fr);
-            gap: 4px;
-        }
-        .pyramid-level {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
-            transition: all 0.3s ease-in-out;
-            color: white;
+        .kpi-card {
+            background-color: #2a2a2a;
+            border-radius: 1rem;
+            padding: 2rem;
             text-align: center;
-            padding: 8px;
-            font-weight: 700;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3a3a3a;
         }
-        .pyramid-level:hover {
-            transform: scale(1.05);
-            z-index: 10;
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff7c43;
         }
-        .pyramid-level-5 { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
-        .pyramid-level-4 { clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%); }
-        .pyramid-level-3 { clip-path: polygon(10% 0, 90% 0, 95% 100%, 5% 100%); }
-        .pyramid-level-2 { clip-path: polygon(15% 0, 85% 0, 90% 100%, 10% 100%); }
-        .pyramid-level-1 { clip-path: polygon(20% 0, 80% 0, 85% 100%, 15% 100%); }
-
-        .flow-arrow {
-            position: relative;
-            padding-right: 20px;
+         .kpi-label {
+            font-size: 1.125rem;
+            color: #d0d0d0;
+            margin-top: 0.5rem;
         }
-        .flow-arrow::after {
-            content: '→';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            color: #FF9933;
+        .card-bg {
+            background-color: #2a2a2a;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3a3a3a;
+        }
+        table {
+            color: #f0f0f0;
+        }
+        th, td {
+            border-color: #3a3a3a;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200">
+<body class="text-gray-100">
 
     <div class="container mx-auto p-4 md:p-8">
 
@@ -78,146 +72,92 @@
         </a>
 
         <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-black text-[#FF6600] mb-4">데이터로 보는 외식업 성공 전략</h1>
-            <p class="text-lg text-gray-400 max-w-3xl mx-auto">성장하는 시장, 그러나 치열한 경쟁. 데이터 분석을 통해 외식업 창업의 성공 가능성을 높이는 핵심 요소를 알아봅니다.</p>
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4">주방의 심장, 가스 vs 인덕션</h1>
+            <p class="text-xl md:text-2xl text-gray-300">칼국수 전문점 월간 에너지 비용 전격 비교</p>
         </header>
 
-        <section id="market-overview" class="mb-16">
-            <h2 class="text-3xl font-bold text-center text-[#FF6600] mb-8">한국 외식 시장의 두 얼굴</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
-                    <p class="text-xl font-semibold text-gray-300 mb-2">2022년 국내 외식업 매출액</p>
-                    <p class="text-6xl font-black text-[#FF9933]">177조원</p>
-                    <p class="text-gray-500 mt-2">연평균 6.9% 성장 (2016-2022)</p>
-                </div>
+        <section id="intro" class="mb-16">
+            <div class="kpi-card max-w-3xl mx-auto">
+                <p class="kpi-label">인덕션 사용 시 예상 월간 절감액</p>
+                <p class="kpi-value">약 730,958원</p>
+                <p class="mt-4 text-gray-300">동일한 조리 시간(월 300시간) 기준, 인덕션은 가스레인지 대비 압도적인 비용 효율을 보여줍니다. 초기 투자 비용을 상쇄하고도 남는 장기적인 이점을 확인해보세요.</p>
+            </div>
+        </section>
 
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
-                     <p class="text-xl font-semibold text-gray-300 mb-2">2032년 시장 규모 전망</p>
-                    <p class="text-6xl font-black text-[#FF9933]">3,901억$</p>
-                    <p class="text-gray-500 mt-2">연평균 17.5% 성장 전망 (2022-2032)</p>
-                </div>
-
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-center text-gray-200 mb-4">창업 동기: 현실과 이상의 차이</h3>
-                    <div class="chart-container h-64">
-                        <canvas id="motivationChart"></canvas>
-                    </div>
-                     <p class="text-xs text-gray-500 text-center mt-2">대부분의 창업이 성공 가능성보다 생계유지를 위해 시작되고 있어, 철저한 전략 수립이 더욱 중요합니다.</p>
+        <section id="comparison" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">월간 에너지 비용 비교</h2>
+            <div class="card-bg p-6 md:p-8">
+                <p class="text-center text-gray-300 mb-6">가스레인지와 인덕션의 월간 총 에너지 비용을 비교한 결과입니다. 인덕션의 운영 비용이 현저히 낮은 것을 확인할 수 있습니다.</p>
+                <div class="chart-container" style="max-width: 800px; height: 400px;">
+                    <canvas id="mainComparisonChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <section id="success-factors" class="mb-16">
-             <h2 class="text-3xl font-bold text-center text-[#FF6600] mb-8">외식업 성공을 위한 5단계 핵심 변수</h2>
-             <p class="text-center text-gray-400 max-w-3xl mx-auto mb-8">외식업 성공은 여러 요소의 복합적인 작용으로 이루어집니다. 보고서 분석 결과, 성공에 미치는 영향력과 선행 관계를 고려한 핵심 변수의 중요도 순위는 다음과 같습니다. 가장 기본적인 '품질'에서 시작하여 '브랜딩'으로 확장되는 구조입니다.</p>
-             <div class="max-w-2xl mx-auto">
-                <div class="pyramid">
-                    <div class="pyramid-level pyramid-level-1" style="background-color: #FF6600;">
-                        <span class="text-xl md:text-2xl">1. 제품 및 서비스 품질</span>
-                    </div>
-                    <div class="pyramid-level pyramid-level-2" style="background-color: #FF8C00;">
-                        <span class="text-lg md:text-xl">2. 창업자 역량 및 경영관리</span>
-                    </div>
-                    <div class="pyramid-level pyramid-level-3" style="background-color: #FFB366;">
-                        <span class="text-base md:text-lg">3. 시장 및 입지 전략</span>
-                    </div>
-                    <div class="pyramid-level pyramid-level-4" style="background-color: #FFCC99;">
-                        <span class="text-sm md:text-base">4. 재무 및 원가 관리</span>
-                    </div>
-                    <div class="pyramid-level pyramid-level-5" style="background-color: #FFE6CC;">
-                         <span class="text-xs md:text-sm" style="color: #333;">5. 마케팅 및 브랜딩</span>
+        <section id="breakdown" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">에너지 요금 구조 분석</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="card-bg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-4">🔥 가스레인지 비용 구조</h3>
+                    <p class="text-center text-gray-300 mb-6">상업용 도시가스는 기본요금 없이 오직 사용량에 따라 요금이 부과되어 구조가 매우 단순합니다.</p>
+                    <div class="chart-container">
+                        <canvas id="gasBreakdownChart"></canvas>
                     </div>
                 </div>
+
+                <div class="card-bg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-4">⚡ 인덕션 비용 구조</h3>
+                    <p class="text-center text-gray-300 mb-6">전기요금은 고정적인 기본요금과 사용량 요금, 그리고 다양한 부가금으로 구성되어 복잡한 구조를 가집니다.</p>
+                    <div class="chart-container">
+                        <canvas id="inductionBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="qualitative" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">비용 그 이상의 가치: 다각적 비교</h2>
+            <div class="card-bg p-6 md:p-8 overflow-x-auto">
+                <table class="w-full text-center">
+                    <thead>
+                        <tr class="border-b-2 border-gray-700">
+                            <th class="p-4 text-lg font-bold">항목</th>
+                            <th class="p-4 text-lg font-bold">🔥 가스레인지</th>
+                            <th class="p-4 text-lg font-bold">⚡ 인덕션</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">주방 환경 🌡️</td>
+                            <td class="p-4 text-gray-300">높은 폐열로 실내 온도 상승, 덥고 불쾌한 환경</td>
+                            <td class="p-4 text-gray-300">열 손실이 적어 쾌적한 주방 환경 유지</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">안전성 🛡️</td>
+                            <td class="p-4 text-gray-300">화재 및 화상 위험, 가스 누출 및 유해물질 발생 우려</td>
+                            <td class="p-4 text-gray-300">직접 가열 방식으로 화재 위험 낮고 안전함</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">환기 🌬️</td>
+                            <td class="p-4 text-gray-300">유해 가스 및 폐열 배출을 위한 강력한 환기 시스템 필수</td>
+                            <td class="p-4 text-gray-300">환기 시스템 부담 감소, 관련 비용 절감 가능</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">초기 비용 💰</td>
+                            <td class="p-4 text-emerald-400 font-bold">낮음</td>
+                            <td class="p-4 text-red-400 font-bold">높음 (기기 및 전기 공사)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold">유지보수 🧹</td>
+                            <td class="p-4 text-gray-300">버너, 삼발이 등 구조가 복잡해 청소 어려움</td>
+                            <td class="p-4 text-gray-300">평평한 상판으로 청소가 매우 용이함</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
         
-        <section id="deep-dive" class="mb-12">
-            <h2 class="text-3xl font-bold text-center text-[#FF6600] mb-8">핵심 변수 심층 분석</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">실패 원인, 누구의 관점인가?</h3>
-                    <p class="text-sm text-gray-400 mb-4">고객, 종업원, 경영자는 레스토랑 실패 요인을 다르게 인식합니다. 특히 고객은 '음식'을 가장 중요한 실패 요인으로 꼽아, 제품 품질의 중요성을 명확히 보여줍니다.</p>
-                    <div class="chart-container">
-                        <canvas id="failureFactorChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">만능 창업가의 역량 모델</h3>
-                    <p class="text-sm text-gray-400 mb-4">창업자의 개인적 특성은 사업 전반에 영향을 미칩니다. 신뢰성, 자기효능감, 대처능력, 성취동기가 높을수록 운영, 서비스, 고객, 수익 관리 등 다방면에서 높은 성과를 기대할 수 있습니다.</p>
-                    <div class="chart-container">
-                        <canvas id="founderCompetenceChart"></canvas>
-                    </div>
-                </div>
-
-                 <div class="bg-gray-800 rounded-xl shadow-lg p-6 md:col-span-2">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">시장을 이끄는 4가지 메가 트렌드</h3>
-                     <p class="text-sm text-gray-400 mb-6">외식 시장은 끊임없이 변화합니다. 현재 시장을 주도하는 주요 트렌드에 민첩하게 대응하는 것이 시장 적합성을 높이는 길입니다.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">👤</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">인구/사회 변화</h4>
-                            <p class="text-xs text-gray-400">1인 가구, 여성 경제활동 인구 증가로 간편식, 배달/테이크아웃, 개인 맞춤형 서비스 수요 증가</p>
-                        </div>
-                        <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">💰</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">가성비 경제</h4>
-                            <p class="text-xs text-gray-400">고물가/고금리로 외식비 부담 가중. 합리적 가격의 '가성비' 메뉴, 원가 절감 노력 필수</p>
-                        </div>
-                         <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">🤖</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">푸드테크 확산</h4>
-                            <p class="text-xs text-gray-400">키오스크, 서빙/조리 로봇 도입으로 운영 효율성 증대 및 인건비 부담 경감</p>
-                        </div>
-                         <div class="text-center p-4 border border-gray-700 rounded-lg bg-gray-700">
-                            <span class="text-5xl text-[#FF9933]">🌱</span>
-                            <h4 class="font-bold mt-3 mb-1 text-[#FF6600]">새로운 소비 가치</h4>
-                            <p class="text-xs text-gray-400">건강, 지속가능성, 비건 등 세분화된 가치에 부응하는 메뉴와 경험 제공으로 차별화</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">수익성을 위협하는 비용 상승</h3>
-                    <p class="text-sm text-gray-400 mb-4">'3고(고물가, 고금리, 고환율)' 현상으로 식자재비와 인건비가 지속적으로 상승하고 있습니다. 효율적인 원가 관리가 없다면 수익성 악화는 불가피합니다.</p>
-                    <div class="chart-container">
-                        <canvas id="costTrendChart"></canvas>
-                    </div>
-                </div>
-                
-                 <div class="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col justify-center">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">성공을 이끄는 브랜드 선순환 구조</h3>
-                    <p class="text-sm text-gray-400 mb-6">성공적인 마케팅과 브랜딩은 일회성 이벤트가 아닌, 고객 충성도를 높이고 신규 고객을 유치하는 선순환 구조를 만듭니다.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="bg-[#FF6600] text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">1</div>
-                            <div class="p-3 bg-gray-700 rounded-lg w-full flow-arrow">
-                                <h4 class="font-bold text-gray-200">매력적인 브랜드 구축</h4>
-                                <p class="text-xs text-gray-400">독창적 가치와 철학 전달</p>
-                            </div>
-                        </div>
-                         <div class="flex items-center">
-                            <div class="bg-[#FF9933] text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">2</div>
-                            <div class="p-3 bg-gray-700 rounded-lg w-full flow-arrow">
-                                <h4 class="font-bold text-gray-200">고객 인지도 & 재방문율 향상</h4>
-                                <p class="text-xs text-gray-400">긍정적 경험 제공, 피드백 반영</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="bg-[#FFCC99] text-gray-900 rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4">3</div>
-                            <div class="p-3 bg-gray-700 rounded-lg w-full">
-                                <h4 class="font-bold text-gray-200">긍정적 입소문 & 신규고객 창출</h4>
-                                <p class="text-xs text-gray-400">SNS, 리뷰를 통한 자연스러운 홍보</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
         <!-- 홈으로 돌아가기 섹션 -->
         <section class="text-center mt-16 mb-8">
             <a href="/" class="inline-flex items-center px-8 py-4 bg-[#FF8C00] text-white rounded-full shadow-lg hover:bg-[#FF4500] transition-colors duration-300 text-lg">
@@ -226,281 +166,161 @@
         </section>
         
         <footer class="text-center mt-12 text-gray-500 text-sm">
-            <p class="text-gray-500">본 인포그래픽은 제공된 '외식업 성공 변수 분석 보고서'를 기반으로 제작되었습니다.</p>
-            <p class="text-xs text-gray-600 mt-2">Data Visualization by Gemini</p>
+            <p>본 분석은 서울 지역, 월 300시간 사용, 2025년 상반기 요금 기준 등 특정 가정 하에 산출되었습니다.</p>
+            <p>실제 비용은 운영 환경, 계약 전력, 계절별 요금 변동에 따라 달라질 수 있습니다.</p>
+            <p class="mt-4 text-gray-400">이 인포그래픽은 Google Gemini의 딥리서치 기능을 활용하여 작성되었습니다.</p>
+            <p class="text-gray-400">보고서 작성에 이용된 자료 출처: 한국전력공사, 한국가스공사, 상업용 주방기기 효율 연구 보고서, 요식업 에너지 비용 분석 자료, 주방 환경 개선 사례 연구</p>
+            <p class="text-gray-400">총 자료 갯수: 5개</p>
+            <p class="text-gray-400">작성 일자: 2025년 6월 19일</p>
         </footer>
-
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        const formatNumber = (num) => new Intl.NumberFormat('ko-KR').format(num) + '원';
 
-            const darkOrangePalette = {
-                primary: '#FF6600',
-                secondary: '#FF9933',
-                accent1: '#FFB366',
-                accent2: '#FFCC99',
-                light: '#FFE6CC',
-                background: '#1a202c',
-                card: '#2d3748',
-                text: '#e2e8f0',
-                softText: '#a0aec0'
-            };
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
 
-            const wrapLabel = (label, maxLength = 16) => {
-                if (label.length <= maxLength) {
-                    return label;
-                }
-                const words = label.split(' ');
-                const lines = [];
-                let currentLine = '';
-                for (const word of words) {
-                    if ((currentLine + word).length > maxLength) {
-                        lines.push(currentLine.trim());
-                        currentLine = '';
+        const chartColors = {
+            gas: '#f95d6a', // Reddish orange
+            induction: '#ff7c43', // Primary orange
+            baseFee: '#ffa600', // Yellowish orange
+            usageFee: '#a05195', // Purple for contrast
+            surcharges: '#665191', // Deeper purple for contrast
+            text: '#f0f0f0' // Light text for dark background
+        };
+
+        const mainComparisonData = {
+            labels: ['가스레인지', '인덕션'],
+            datasets: [{
+                label: '월간 총 에너지 비용',
+                data: [1249500, 518542],
+                backgroundColor: [chartColors.gas, chartColors.induction],
+                borderColor: [chartColors.gas, chartColors.induction],
+                borderWidth: 1,
+                borderRadius: 8,
+            }]
+        };
+        new Chart(document.getElementById('mainComparisonChart'), {
+            type: 'bar',
+            data: mainComparisonData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: (value) => formatNumber(value),
+                            color: chartColors.text
+                        },
+                        grid: {
+                            color: '#3a3a3a' // Darker grid lines
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: chartColors.text
+                        },
+                        grid: {
+                            color: '#3a3a3a'
+                        }
                     }
-                    currentLine += word + ' ';
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => formatNumber(context.raw),
+                            title: tooltipTitleCallback
+                        },
+                        titleColor: '#f0f0f0',
+                        bodyColor: '#f0f0f0',
+                        backgroundColor: 'rgba(0,0,0,0.8)'
+                    }
                 }
-                lines.push(currentLine.trim());
-                return lines;
-            };
+            }
+        });
 
-            const tooltipTitleCallback = (tooltipItems) => {
-                const item = tooltipItems[0];
-                let label = item.chart.data.labels[item.dataIndex];
-                if (Array.isArray(label)) {
-                    return label.join(' ');
-                } else {
-                    return label;
-                }
-            };
-            
-            const defaultChartOptions = {
+        const gasBreakdownData = {
+            labels: ['사용량 요금'],
+            datasets: [{
+                data: [1135500],
+                backgroundColor: [chartColors.gas],
+                hoverOffset: 4
+            }]
+        };
+        new Chart(document.getElementById('gasBreakdownChart'), {
+            type: 'doughnut',
+            data: gasBreakdownData,
+            options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
+                    legend: { 
                         position: 'bottom',
                         labels: {
-                            font: {
-                                family: "'Noto Sans KR', sans-serif",
-                                color: darkOrangePalette.text
-                            },
-                            color: darkOrangePalette.text
+                            color: chartColors.text
                         }
                     },
                     tooltip: {
-                        titleFont: {
-                            family: "'Noto Sans KR', sans-serif",
-                            color: darkOrangePalette.text
-                        },
-                        bodyFont: {
-                            family: "'Noto Sans KR', sans-serif",
-                            color: darkOrangePalette.text
-                        },
                         callbacks: {
+                           label: (context) => `${context.label}: ${formatNumber(context.raw)}`,
+                           title: tooltipTitleCallback
+                        },
+                        titleColor: '#f0f0f0',
+                        bodyColor: '#f0f0f0',
+                        backgroundColor: 'rgba(0,0,0,0.8)'
+                    }
+                }
+            }
+        });
+        
+        const inductionBreakdownData = {
+            labels: [
+                '기본요금', 
+                '전력량 요금', 
+                '각종 부가금'
+            ],
+            datasets: [{
+                data: [123200, 289485, 58717], 
+                backgroundColor: [chartColors.baseFee, chartColors.usageFee, chartColors.surcharges],
+                hoverOffset: 4
+            }]
+        };
+        new Chart(document.getElementById('inductionBreakdownChart'), {
+            type: 'doughnut',
+            data: inductionBreakdownData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'bottom',
+                        labels: {
+                            color: chartColors.text
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.label}: ${formatNumber(context.raw)}`,
                             title: tooltipTitleCallback
                         },
-                        backgroundColor: darkOrangePalette.card,
-                        borderColor: darkOrangePalette.secondary,
-                        borderWidth: 1
+                        titleColor: '#f0f0f0',
+                        bodyColor: '#f0f0f0',
+                        backgroundColor: 'rgba(0,0,0,0.8)'
                     }
-                },
-                scales: {
-                     x: { 
-                         ticks: { 
-                             font: { 
-                                 family: "'Noto Sans KR', sans-serif",
-                                 color: darkOrangePalette.softText
-                             },
-                             color: darkOrangePalette.softText
-                         },
-                         grid: {
-                             color: 'rgba(255, 255, 255, 0.1)'
-                         }
-                     },
-                     y: { 
-                         ticks: { 
-                             font: { 
-                                 family: "'Noto Sans KR', sans-serif",
-                                 color: darkOrangePalette.softText
-                             },
-                             color: darkOrangePalette.softText
-                         },
-                         grid: {
-                             color: 'rgba(255, 255, 255, 0.1)'
-                         }
-                     }
                 }
-            };
-
-            const motivationCtx = document.getElementById('motivationChart');
-            if(motivationCtx) {
-                new Chart(motivationCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['생계유지', '성공 가능성', '기타'],
-                        datasets: [{
-                            label: '창업 동기',
-                            data: [82.6, 14.3, 3.1],
-                            backgroundColor: [darkOrangePalette.primary, darkOrangePalette.secondary, darkOrangePalette.accent1],
-                            borderColor: darkOrangePalette.card,
-                            borderWidth: 2
-                        }]
-                    },
-                    options: { ...defaultChartOptions,
-                        cutout: '60%',
-                        plugins: { ...defaultChartOptions.plugins,
-                            legend: { display: true, position: 'right', labels: { color: darkOrangePalette.softText } }
-                        }
-                    }
-                });
             }
-
-            const failureFactorCtx = document.getElementById('failureFactorChart');
-            if(failureFactorCtx) {
-                new Chart(failureFactorCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['음식', '경영관리', '내부고객(직원)', '환경', '분위기'].map(l => wrapLabel(l)),
-                        datasets: [
-                            {
-                                label: '고객 인식',
-                                data: [5, 2, 1, 1, 1],
-                                backgroundColor: darkOrangePalette.primary,
-                                 borderColor: darkOrangePalette.primary,
-                                borderWidth: 1
-                            },
-                            {
-                                label: '종업원 인식',
-                                data: [2, 5, 3, 2, 1],
-                                backgroundColor: darkOrangePalette.secondary,
-                                borderColor: darkOrangePalette.secondary,
-                                borderWidth: 1
-                            },
-                            {
-                                label: '경영자 인식',
-                                data: [1, 3, 4, 5, 4],
-                                backgroundColor: darkOrangePalette.accent1,
-                                borderColor: darkOrangePalette.accent1,
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: { ...defaultChartOptions,
-                        scales: {
-                            y: { 
-                                beginAtZero: true, 
-                                title: { 
-                                    display: true, 
-                                    text: '실패 요인 인식 순위 (1위=5점)',
-                                    color: darkOrangePalette.softText
-                                } 
-                            }
-                        }
-                    }
-                });
-            }
-
-            const founderCompetenceCtx = document.getElementById('founderCompetenceChart');
-            if(founderCompetenceCtx) {
-                new Chart(founderCompetenceCtx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['운영 관리', '서비스 관리', '고객 관리', '수익 관리', '위기 대처'],
-                        datasets: [{
-                            label: '만능 창업가',
-                            data: [5, 4.5, 5, 4, 4.8],
-                            backgroundColor: 'rgba(255, 153, 51, 0.2)',
-                            borderColor: darkOrangePalette.secondary,
-                            pointBackgroundColor: darkOrangePalette.secondary,
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: darkOrangePalette.secondary
-                        }]
-                    },
-                    options: { ...defaultChartOptions,
-                         scales: {
-                            r: {
-                                beginAtZero: true,
-                                max: 5,
-                                pointLabels: { 
-                                    font: { 
-                                        size: 12, 
-                                        family: "'Noto Sans KR', sans-serif",
-                                        color: darkOrangePalette.softText
-                                    },
-                                    color: darkOrangePalette.softText
-                                },
-                                ticks: { 
-                                    backdropColor: darkOrangePalette.card,
-                                    color: darkOrangePalette.softText
-                                },
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-            const costTrendCtx = document.getElementById('costTrendChart');
-            if(costTrendCtx) {
-                new Chart(costTrendCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['2020', '2021', '2022', '2023', '2024 (전망)'],
-                        datasets: [
-                            {
-                                label: '식자재비 지수',
-                                data: [100, 105, 115, 128, 135],
-                                borderColor: darkOrangePalette.primary,
-                                backgroundColor: 'rgba(255, 102, 0, 0.1)',
-                                fill: true,
-                                tension: 0.3
-                            },
-                            {
-                                label: '최저임금 상승률(%)',
-                                data: [2.9, 1.5, 5.1, 5.0, 2.5],
-                                borderColor: darkOrangePalette.secondary,
-                                backgroundColor: 'rgba(255, 153, 51, 0.1)',
-                                fill: false,
-                                tension: 0.3,
-                                yAxisID: 'y1'
-                            }
-                        ]
-                    },
-                    options: { ...defaultChartOptions,
-                        scales: {
-                            y: {
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                                title: { 
-                                    display: true, 
-                                    text: '식자재비 지수',
-                                    color: darkOrangePalette.softText
-                                }
-                            },
-                            y1: {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
-                                title: { 
-                                    display: true, 
-                                    text: '임금 상승률 (%)',
-                                    color: darkOrangePalette.softText
-                                },
-                                grid: {
-                                    drawOnChartArea: false, 
-                                },
-                            },
-                        }
-                    }
-                });
-            }
-
         });
     </script>
 </body>
