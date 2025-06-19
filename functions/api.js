@@ -28,7 +28,7 @@ async function loadKnowledgeFromFiles() {
         // data 디렉토리 존재 확인
         try {
             await fs.access(dataDir);
-            console.log('데이터 디렉토리 접근 성공');
+            console.log('public/data 디렉토리 접근 성공');
         } catch (error) {
             console.log('public/data 디렉토리가 없습니다. 기본 데이터만 사용합니다.');
             return knowledgeData;
@@ -74,6 +74,20 @@ async function loadKnowledgeFromFiles() {
         }
         
         console.log(`총 ${knowledgeData.length}개 지식 항목 로드됨`);
+        
+        // 로드된 데이터 요약 출력
+        const categoryCount = {};
+        const sourceCount = {};
+        knowledgeData.forEach(item => {
+            categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;
+            if (item.source) {
+                sourceCount[item.source] = (sourceCount[item.source] || 0) + 1;
+            }
+        });
+        
+        console.log('카테고리별 항목 수:', categoryCount);
+        console.log('소스별 항목 수:', sourceCount);
+        
         return knowledgeData;
         
     } catch (error) {
@@ -327,9 +341,9 @@ ${relevantKnowledge}
 
         console.log('Gemini API 프롬프트 전송');
         
-        // 타임아웃 설정 (8초)
+        // 타임아웃 설정 (25초)
         const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('API 호출 타임아웃')), 8000);
+            setTimeout(() => reject(new Error('API 호출 타임아웃')), 25000);
         });
         
         const apiPromise = model.generateContent(prompt);
