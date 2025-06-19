@@ -13,19 +13,31 @@ const path = require('path');
 // 텍스트 파일에서 데이터 자동 로드 함수
 async function loadKnowledgeFromFiles() {
     const knowledgeData = [];
-    const dataDir = path.join(__dirname, '..', 'public', 'data');
     
     try {
+        // 기본 데이터 먼저 로드
+        const defaultKnowledge = getDefaultKnowledge();
+        knowledgeData.push(...defaultKnowledge);
+        
+        console.log('기본 데이터 로드 완료:', defaultKnowledge.length, '개');
+        
+        // public/data 디렉토리 경로 설정
+        const dataDir = path.join(__dirname, '..', 'public', 'data');
+        console.log('데이터 디렉토리 경로:', dataDir);
+        
         // data 디렉토리 존재 확인
         try {
             await fs.access(dataDir);
-        } catch {
-            console.log('public/data 디렉토리가 없습니다. 기본 데이터를 사용합니다.');
-            return getDefaultKnowledge();
+            console.log('데이터 디렉토리 접근 성공');
+        } catch (error) {
+            console.log('public/data 디렉토리가 없습니다. 기본 데이터만 사용합니다.');
+            return knowledgeData;
         }
 
         // data 디렉토리의 모든 텍스트 파일 읽기
         const files = await fs.readdir(dataDir);
+        console.log('발견된 파일들:', files);
+        
         const textFiles = files.filter(file => 
             file.endsWith('.txt') || file.endsWith('.md')
         );
@@ -35,7 +47,10 @@ async function loadKnowledgeFromFiles() {
         for (const file of textFiles) {
             try {
                 const filePath = path.join(dataDir, file);
+                console.log(`파일 읽기 시도: ${filePath}`);
+                
                 const content = await fs.readFile(filePath, 'utf8');
+                console.log(`파일 ${file} 읽기 성공, 크기: ${content.length}자`);
                 
                 // 파일 내용을 청크로 분할 (각 청크는 최대 1000자)
                 const chunks = splitIntoChunks(content, 1000);
@@ -57,16 +72,13 @@ async function loadKnowledgeFromFiles() {
                 console.error(`파일 ${file} 읽기 오류:`, error);
             }
         }
-
-        // 기본 데이터와 병합
-        const defaultKnowledge = getDefaultKnowledge();
-        const combinedKnowledge = [...defaultKnowledge, ...knowledgeData];
         
-        console.log(`총 ${combinedKnowledge.length}개 지식 항목 로드됨`);
-        return combinedKnowledge;
+        console.log(`총 ${knowledgeData.length}개 지식 항목 로드됨`);
+        return knowledgeData;
         
     } catch (error) {
         console.error('데이터 로딩 오류:', error);
+        // 오류 발생 시에도 기본 데이터는 반환
         return getDefaultKnowledge();
     }
 }
