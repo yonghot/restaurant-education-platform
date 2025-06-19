@@ -13,14 +13,14 @@ const path = require('path');
 // 텍스트 파일에서 데이터 자동 로드 함수
 async function loadKnowledgeFromFiles() {
     const knowledgeData = [];
-    const dataDir = path.join(__dirname, '..', 'data');
+    const dataDir = path.join(__dirname, '..', 'public', 'data');
     
     try {
         // data 디렉토리 존재 확인
         try {
             await fs.access(dataDir);
         } catch {
-            console.log('data 디렉토리가 없습니다. 기본 데이터를 사용합니다.');
+            console.log('public/data 디렉토리가 없습니다. 기본 데이터를 사용합니다.');
             return getDefaultKnowledge();
         }
 
