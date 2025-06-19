@@ -129,7 +129,7 @@ function extractTagsFromContent(content) {
         '창업', '위치', '메뉴', '원가', '가격', '인력', '직원', '교육',
         '마케팅', 'SNS', '배달', '트렌드', '재무', '투자', '수익',
         '위생', '안전', 'HACCP', '에너지', '비용', '인덕션',
-        '칼국수', '외식업', '음식점', '운영', '관리', '고객', '서비스'
+        '칼국수', '외식업', '음식점', '운영', '관리', '마라탕', '중국음식'
     ];
     
     return commonTags.filter(tag => content.includes(tag));
@@ -207,39 +207,49 @@ function extractKeywords(text) {
         '창업', '위치', '메뉴', '원가', '가격', '인력', '직원', '교육',
         '마케팅', 'SNS', '배달', '트렌드', '재무', '투자', '수익',
         '위생', '안전', 'HACCP', '에너지', '비용', '인덕션',
-        '칼국수', '외식업', '음식점', '운영', '관리'
+        '칼국수', '외식업', '음식점', '운영', '관리', '마라탕', '중국음식'
     ];
     
-    return keywords.filter(keyword => text.includes(keyword));
+    const extracted = keywords.filter(keyword => text.includes(keyword));
+    console.log('키워드 추출 결과:', extracted);
+    return extracted;
 }
 
 // 관련 지식 검색 함수
 function searchRelevantKnowledge(keywords, knowledge) {
     try {
+        // 키워드가 없으면 기본 지식 반환
+        if (!keywords || keywords.length === 0) {
+            console.log('키워드가 없어 기본 지식 반환');
+            return knowledge[0] ? knowledge[0].text : '외식업에 대한 기본 정보입니다.';
+        }
+        
         const relevantDocs = knowledge.filter(doc => 
             keywords.some(keyword => 
                 doc.text.includes(keyword) || 
-                doc.tags.includes(keyword) ||
-                doc.category.includes(keyword)
+                (doc.tags && doc.tags.includes(keyword)) ||
+                (doc.category && doc.category.includes(keyword))
             )
         );
         
         // 관련도 순으로 정렬 (키워드 매칭 개수 기준)
         relevantDocs.sort((a, b) => {
             const aScore = keywords.filter(k => 
-                a.text.includes(k) || a.tags.includes(k) || a.category.includes(k)
+                a.text.includes(k) || (a.tags && a.tags.includes(k)) || (a.category && a.category.includes(k))
             ).length;
             const bScore = keywords.filter(k => 
-                b.text.includes(k) || b.tags.includes(k) || b.category.includes(k)
+                b.text.includes(k) || (b.tags && b.tags.includes(k)) || (b.category && b.category.includes(k))
             ).length;
             return bScore - aScore;
         });
         
-        return relevantDocs.slice(0, 3).map(doc => doc.text).join('\n\n');
+        const result = relevantDocs.slice(0, 3).map(doc => doc.text).join('\n\n');
+        console.log('관련 지식 검색 결과 길이:', result.length);
+        return result;
         
     } catch (error) {
         console.error('지식 검색 오류:', error);
-        return restaurantKnowledge[0].text; // 기본 지식 반환
+        return knowledge[0] ? knowledge[0].text : '외식업에 대한 기본 정보입니다.';
     }
 }
 
