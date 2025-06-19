@@ -270,11 +270,16 @@ function getDefaultResponse(userMessage) {
 // 챗봇 응답 생성 함수
 async function generateChatbotResponse(userMessage) {
     try {
+        console.log('Gemini API 호출 시작');
+        console.log('사용자 메시지:', userMessage);
+        
         // 사용자 메시지에서 키워드 추출
         const keywords = extractKeywords(userMessage);
+        console.log('추출된 키워드:', keywords);
         
         // 관련 지식 검색
         const relevantKnowledge = searchRelevantKnowledge(keywords, restaurantKnowledge);
+        console.log('관련 지식 길이:', relevantKnowledge.length);
         
         // Gemini API 호출
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -286,7 +291,7 @@ async function generateChatbotResponse(userMessage) {
 사용자 질문: "${userMessage}"
 
 참고할 외식업 지식:
-${relevantKnowledge.map(k => `- ${k.text}`).join('\n')}
+${relevantKnowledge}
 
 답변 요구사항:
 1. 한국어로 답변
@@ -298,9 +303,13 @@ ${relevantKnowledge.map(k => `- ${k.text}`).join('\n')}
 
 답변:`;
 
+        console.log('Gemini API 프롬프트 전송');
         const result = await model.generateContent(prompt);
         const response = await result.response;
-        return response.text();
+        const responseText = response.text();
+        
+        console.log('Gemini API 응답 받음, 길이:', responseText.length);
+        return responseText;
         
     } catch (error) {
         console.error('챗봇 응답 생성 오류:', error);
@@ -354,9 +363,14 @@ exports.handler = async (event, context) => {
             
             // Gemini API로 응답 생성 (API 키가 있는 경우)
             let response;
+            console.log('Gemini API 키 확인:', !!process.env.GEMINI_API_KEY);
+            console.log('Gemini API 키 길이:', process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0);
+            
             if (process.env.GEMINI_API_KEY) {
+                console.log('Gemini API 호출 시도');
                 response = await generateChatbotResponse(message);
             } else {
+                console.log('기본 응답 사용');
                 response = getDefaultResponse(message);
             }
             
