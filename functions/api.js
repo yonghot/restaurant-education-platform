@@ -331,6 +331,7 @@ exports.handler = async (event, context) => {
         console.log('요청된 경로:', path);
         console.log('HTTP 메서드:', event.httpMethod);
         console.log('원본 경로:', event.path);
+        console.log('요청 본문:', event.body);
         
         // 챗봇 API - 직접 경로 매칭
         if (path === '/chatbot/chat' && event.httpMethod === 'POST') {
@@ -369,24 +370,34 @@ exports.handler = async (event, context) => {
             };
         }
         
-        // 지식 데이터베이스 조회 API
-        if (path === '/chatbot/knowledge' && event.httpMethod === 'GET') {
-            const { category } = event.queryStringParameters || {};
-            
-            let filteredKnowledge = restaurantKnowledge;
-            if (category) {
-                filteredKnowledge = restaurantKnowledge.filter(doc => 
-                    doc.category === category
-                );
-            }
+        // API 상태 확인 엔드포인트 - 직접 경로 매칭
+        if (path === '/api/status' && event.httpMethod === 'GET') {
+            const status = {
+                gemini: {
+                    available: !!process.env.GEMINI_API_KEY,
+                    keyLength: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0
+                },
+                pinecone: {
+                    available: !!(process.env.PINECONE_API_KEY && process.env.PINECONE_INDEX_NAME),
+                    apiKeyLength: process.env.PINECONE_API_KEY ? process.env.PINECONE_API_KEY.length : 0,
+                    indexName: process.env.PINECONE_INDEX_NAME || 'not_set'
+                },
+                data: {
+                    loadedItems: restaurantKnowledge.length,
+                    lastUpdated: new Date().toISOString()
+                }
+            };
             
             return {
                 statusCode: 200,
                 headers,
-                body: JSON.stringify({ knowledge: filteredKnowledge })
+                body: JSON.stringify({
+                    success: true,
+                    status: status
+                })
             };
         }
-
+        
         // 데이터 새로고침 엔드포인트
         if (path === '/api/refresh-data' && event.httpMethod === 'POST') {
             console.log('데이터 새로고침 요청 받음');
@@ -421,6 +432,24 @@ exports.handler = async (event, context) => {
                 };
             }
         }
+        
+        // 지식 데이터베이스 조회 API
+        if (path === '/chatbot/knowledge' && event.httpMethod === 'GET') {
+            const { category } = event.queryStringParameters || {};
+            
+            let filteredKnowledge = restaurantKnowledge;
+            if (category) {
+                filteredKnowledge = restaurantKnowledge.filter(doc => 
+                    doc.category === category
+                );
+            }
+            
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({ knowledge: filteredKnowledge })
+            };
+        }
 
         // 현재 로드된 데이터 정보 조회 엔드포인트
         if (path === '/api/data-info' && event.httpMethod === 'GET') {
@@ -443,34 +472,6 @@ exports.handler = async (event, context) => {
                     categories: categoryCount,
                     sources: sourceCount,
                     lastUpdated: new Date().toISOString()
-                })
-            };
-        }
-
-        // API 상태 확인 엔드포인트 - 직접 경로 매칭
-        if (path === '/api/status' && event.httpMethod === 'GET') {
-            const status = {
-                gemini: {
-                    available: !!process.env.GEMINI_API_KEY,
-                    keyLength: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0
-                },
-                pinecone: {
-                    available: !!(process.env.PINECONE_API_KEY && process.env.PINECONE_INDEX_NAME),
-                    apiKeyLength: process.env.PINECONE_API_KEY ? process.env.PINECONE_API_KEY.length : 0,
-                    indexName: process.env.PINECONE_INDEX_NAME || 'not_set'
-                },
-                data: {
-                    loadedItems: restaurantKnowledge.length,
-                    lastUpdated: new Date().toISOString()
-                }
-            };
-            
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify({
-                    success: true,
-                    status: status
                 })
             };
         }
@@ -519,6 +520,7 @@ exports.handler = async (event, context) => {
         }
 
         // 404 에러
+        console.log('매칭되는 엔드포인트가 없음');
         return {
             statusCode: 404,
             headers,
