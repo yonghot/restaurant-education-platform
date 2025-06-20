@@ -1,4 +1,4 @@
-import pandas as pd
+배포import pandas as pd
 import os
 
 def analyze_excel_file():
