@@ -10,7 +10,8 @@ const path = require('path');
 // });
 // const index = pinecone.index(process.env.PINECONE_INDEX_NAME);
 
-// 텍스트 파일에서 데이터 자동 로드 함수
+// 텍스트 파일에서 데이터 자동 로드 함수 (현재 사용하지 않음)
+/*
 async function loadKnowledgeFromFiles() {
     const knowledgeData = [];
     
@@ -97,7 +98,7 @@ async function loadKnowledgeFromFiles() {
     }
 }
 
-// 텍스트를 청크로 분할
+// 텍스트를 청크로 분할 (현재 사용하지 않음)
 function splitIntoChunks(text, maxLength) {
     const sentences = text.split(/[.!?。！？\n]+/).filter(s => s.trim().length > 0);
     const chunks = [];
@@ -119,7 +120,7 @@ function splitIntoChunks(text, maxLength) {
     return chunks;
 }
 
-// 파일명에서 카테고리 추출
+// 파일명에서 카테고리 추출 (현재 사용하지 않음)
 function getCategoryFromFilename(filename) {
     const name = filename.toLowerCase();
     
@@ -137,19 +138,20 @@ function getCategoryFromFilename(filename) {
     return '기타';
 }
 
-// 내용에서 태그 추출
+// 내용에서 태그 추출 (현재 사용하지 않음)
 function extractTagsFromContent(content) {
     const commonTags = [
+        '마라탕', '중국음식', // 마라탕 관련 태그를 우선순위로
         '창업', '위치', '메뉴', '원가', '가격', '인력', '직원', '교육',
         '마케팅', 'SNS', '배달', '트렌드', '재무', '투자', '수익',
         '위생', '안전', 'HACCP', '에너지', '비용', '인덕션',
-        '칼국수', '외식업', '음식점', '운영', '관리', '마라탕', '중국음식'
+        '칼국수', '외식업', '음식점', '운영', '관리'
     ];
     
     return commonTags.filter(tag => content.includes(tag));
 }
 
-// 기본 지식 데이터
+// 기본 지식 데이터 (현재 사용하지 않음)
 function getDefaultKnowledge() {
     return [
         {
@@ -198,27 +200,31 @@ function getDefaultKnowledge() {
             id: '8',
             text: '칼국수 전문점의 에너지 비용은 일반적으로 월 50-100만원 정도입니다. 인덕션 사용 시 가스비 대비 30-40% 절약 효과가 있으며, 초기 설치비는 200-500만원 정도입니다.',
             category: '에너지',
-            tags: ['에너지', '비용', '인덕션']
+            tags: ['에너지', '비용', '인덕션', '칼국수']
         },
         {
             id: '9',
-            text: '마라탕은 최근 한국에서 인기 있는 중국 음식으로, 매운 맛과 다양한 재료 선택이 특징입니다. 마라탕집 창업 시에는 신선한 재료 공급망 확보, 매운맛 조절 옵션 제공, 배달 서비스 연동이 중요합니다. 특히 젊은 층을 타겟으로 하는 경우 SNS 마케팅과 포장 서비스가 필수적입니다.',
+            text: '마라탕집 창업 시 초기 투자비는 3,000-5,000만원 정도이며, 월 매출 목표는 1,500-3,000만원입니다. 신선한 재료 공급망 확보, 매운맛 단계별 조절 시스템, 배달 서비스 연동이 성공의 핵심입니다. 특히 젊은 층을 타겟으로 하는 경우 SNS 마케팅과 포장 서비스가 필수적입니다.',
             category: '창업',
-            tags: ['마라탕', '중국음식', '창업', '메뉴', '마케팅']
+            tags: ['마라탕', '창업', '투자', '매출', '재료', '배달']
         },
         {
             id: '10',
-            text: '중국음식점 운영의 핵심은 원재료의 신선도와 조리법의 일관성입니다. 마라탕, 탕수육, 짜장면 등 인기 메뉴의 표준화된 레시피를 구축하고, 정기적인 직원 교육을 통해 품질을 유지해야 합니다. 또한 한국인의 입맛에 맞는 현지화도 고려해야 합니다.',
+            text: '마라탕 메뉴 구성은 기본 국물과 다양한 재료 선택이 핵심입니다. 고기류, 해산물, 채소류를 균형있게 구성하고, 매운맛 5단계 조절 시스템을 구축하세요. 원가율은 35-45%를 유지하며, 포장 서비스와 배달 연동으로 매출을 증대시킬 수 있습니다.',
             category: '운영',
-            tags: ['중국음식', '운영', '품질관리', '레시피']
+            tags: ['마라탕', '메뉴', '원가', '포장', '배달']
         }
     ];
 }
+*/
 
-// 동적 지식 데이터 로드
+// 동적 지식 데이터 로드 (현재 사용하지 않음)
+/*
 let restaurantKnowledge = [];
+*/
 
-// 초기 데이터 로드
+// 초기 데이터 로드 (현재 사용하지 않음)
+/*
 async function initializeKnowledge() {
     restaurantKnowledge = await loadKnowledgeFromFiles();
     console.log('지식 데이터 초기화 완료');
@@ -226,22 +232,27 @@ async function initializeKnowledge() {
 
 // 서버 시작 시 데이터 로드
 initializeKnowledge().catch(console.error);
+*/
 
-// 키워드 추출 함수
+// 키워드 추출 함수 (현재 사용하지 않음)
+/*
 function extractKeywords(text) {
     const keywords = [
+        '마라탕', '중국음식', // 마라탕 관련 키워드를 우선순위로
         '창업', '위치', '메뉴', '원가', '가격', '인력', '직원', '교육',
         '마케팅', 'SNS', '배달', '트렌드', '재무', '투자', '수익',
         '위생', '안전', 'HACCP', '에너지', '비용', '인덕션',
-        '칼국수', '외식업', '음식점', '운영', '관리', '마라탕', '중국음식'
+        '칼국수', '외식업', '음식점', '운영', '관리'
     ];
     
     const extracted = keywords.filter(keyword => text.includes(keyword));
     console.log('키워드 추출 결과:', extracted);
     return extracted;
 }
+*/
 
-// 관련 지식 검색 함수
+// 관련 지식 검색 함수 (현재 사용하지 않음)
+/*
 function searchRelevantKnowledge(keywords, knowledge) {
     try {
         // 키워드가 없으면 기본 지식 반환
@@ -283,6 +294,7 @@ function searchRelevantKnowledge(keywords, knowledge) {
         return knowledge[0] ? knowledge[0].text : '외식업에 대한 기본 정보입니다.';
     }
 }
+*/
 
 // 기본 응답 함수
 function getDefaultResponse(userMessage) {
@@ -297,10 +309,20 @@ function getDefaultResponse(userMessage) {
         '칼국수': '칼국수 전문점 운영 시에는 메뉴 다양화와 계절별 메뉴 개발이 중요합니다. 또한 배달 서비스와 포장 서비스를 적극 활용하여 매출을 증대시킬 수 있습니다.',
         '위치': '위치 선정은 외식업 성공의 핵심입니다. 유동인구, 경쟁업체, 접근성, 주차 공간을 종합적으로 분석하여 최적의 위치를 선택하세요.',
         '원가': '원가 관리는 수익성 향상의 핵심입니다. 식재료 원가율을 30-40%로 유지하고, 정기적인 원가 분석을 통해 가격 경쟁력을 확보하세요.',
-        '마라탕': '마라탕은 최근 한국에서 인기 있는 중국 음식으로, 매운 맛과 다양한 재료 선택이 특징입니다. 마라탕집 창업 시에는 신선한 재료 공급망 확보, 매운맛 조절 옵션 제공, 배달 서비스 연동이 중요합니다. 특히 젊은 층을 타겟으로 하는 경우 SNS 마케팅과 포장 서비스가 필수적입니다.',
+        '마라탕': '마라탕집 창업의 핵심은 신선한 재료 공급망 확보와 매운맛 조절 시스템입니다. 초기 투자비는 3,000-5,000만원 정도이며, 월 매출 1,500-3,000만원을 목표로 할 수 있습니다. 특히 젊은 층을 타겟으로 하는 경우 SNS 마케팅과 배달 서비스 연동이 필수적입니다. 매운맛 단계별 옵션 제공과 다양한 재료 선택으로 고객 만족도를 높이세요.',
         '중국음식': '중국음식점 운영의 핵심은 원재료의 신선도와 조리법의 일관성입니다. 마라탕, 탕수육, 짜장면 등 인기 메뉴의 표준화된 레시피를 구축하고, 정기적인 직원 교육을 통해 품질을 유지해야 합니다. 또한 한국인의 입맛에 맞는 현지화도 고려해야 합니다.'
     };
     
+    // 키워드 매칭 우선순위 설정
+    const priorityKeywords = ['마라탕', '중국음식', '창업', '비용', '메뉴', '마케팅'];
+    
+    for (const keyword of priorityKeywords) {
+        if (userMessage.includes(keyword)) {
+            return responses[keyword];
+        }
+    }
+    
+    // 일반 키워드 매칭
     for (const [keyword, response] of Object.entries(responses)) {
         if (userMessage.includes(keyword)) {
             return response;
@@ -311,39 +333,33 @@ function getDefaultResponse(userMessage) {
 }
 
 // 챗봇 응답 생성 함수
-async function generateChatbotResponse(userMessage, relevantKnowledge) {
+async function generateChatbotResponse(userMessage) {
     try {
         console.log('Gemini API 호출 시작');
         console.log('사용자 메시지:', userMessage);
-        console.log('관련 지식 길이:', relevantKnowledge.length);
         
         // Gemini API 호출
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash", // 더 빠른 응답을 위해 flash 모델 사용
+            generationConfig: {
+                maxOutputTokens: 500, // 토큰 수 제한으로 응답 속도 향상
+                temperature: 0.7
+            }
+        });
         
-        const prompt = `
-당신은 외식업 전문가 AI 어시스턴트입니다. 다음 정보를 바탕으로 사용자의 질문에 답변해주세요.
+        // 간단하고 명확한 프롬프트
+        const prompt = `당신은 외식업 전문가입니다. 다음 질문에 대해 실용적이고 도움이 되는 답변을 한국어로 200-300자 내외로 해주세요.
 
-사용자 질문: "${userMessage}"
-
-참고할 외식업 지식:
-${relevantKnowledge}
-
-답변 요구사항:
-1. 한국어로 답변
-2. 구체적이고 실용적인 조언 제공
-3. 필요시 실제 사례나 예시 포함
-4. 친근하고 도움이 되는 톤 유지
-5. 답변 길이는 200-400자 정도
-6. 외식업 창업자나 운영자가 실무에서 활용할 수 있는 내용으로 구성
+질문: "${userMessage}"
 
 답변:`;
 
         console.log('Gemini API 프롬프트 전송');
         
-        // 타임아웃 설정 (25초)
+        // 타임아웃 설정 (8초)
         const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => reject(new Error('API 호출 타임아웃')), 25000);
+            setTimeout(() => reject(new Error('API 호출 타임아웃')), 8000);
         });
         
         const apiPromise = model.generateContent(prompt);
@@ -357,6 +373,13 @@ ${relevantKnowledge}
         
     } catch (error) {
         console.error('챗봇 응답 생성 오류:', error);
+        
+        // 타임아웃 오류인 경우 기본 응답으로 대체
+        if (error.message.includes('타임아웃')) {
+            console.log('타임아웃 발생, 기본 응답으로 대체');
+            return getDefaultResponse(userMessage);
+        }
+        
         return "죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
     }
 }
@@ -402,10 +425,6 @@ exports.handler = async (event, context) => {
                 };
             }
 
-            // 관련 지식 검색
-            const keywords = extractKeywords(message);
-            const relevantKnowledge = searchRelevantKnowledge(keywords, restaurantKnowledge);
-            
             // Gemini API로 응답 생성 (API 키가 있는 경우)
             let response;
             console.log('Gemini API 키 확인:', !!process.env.GEMINI_API_KEY);
@@ -413,7 +432,7 @@ exports.handler = async (event, context) => {
             
             if (process.env.GEMINI_API_KEY) {
                 console.log('Gemini API 호출 시도');
-                response = await generateChatbotResponse(message, relevantKnowledge);
+                response = await generateChatbotResponse(message);
             } else {
                 console.log('기본 응답 사용');
                 response = getDefaultResponse(message);
@@ -424,7 +443,7 @@ exports.handler = async (event, context) => {
                 headers,
                 body: JSON.stringify({ 
                     response,
-                    knowledge: relevantKnowledge
+                    timestamp: new Date().toISOString()
                 })
             };
         }
@@ -441,10 +460,7 @@ exports.handler = async (event, context) => {
                     apiKeyLength: process.env.PINECONE_API_KEY ? process.env.PINECONE_API_KEY.length : 0,
                     indexName: process.env.PINECONE_INDEX_NAME || 'not_set'
                 },
-                data: {
-                    loadedItems: restaurantKnowledge.length,
-                    lastUpdated: new Date().toISOString()
-                }
+                timestamp: new Date().toISOString()
             };
             
             return {
@@ -457,60 +473,8 @@ exports.handler = async (event, context) => {
             };
         }
         
-        // 데이터 새로고침 엔드포인트
-        if (path === '/api/refresh-data' && event.httpMethod === 'POST') {
-            console.log('데이터 새로고침 요청 받음');
-            
-            try {
-                // 데이터 재로드
-                restaurantKnowledge = await loadKnowledgeFromFiles();
-                
-                console.log(`데이터 새로고침 성공: ${restaurantKnowledge.length}개 항목`);
-                
-                return {
-                    statusCode: 200,
-                    headers,
-                    body: JSON.stringify({
-                        success: true,
-                        message: '데이터가 성공적으로 새로고침되었습니다.',
-                        dataCount: restaurantKnowledge.length,
-                        timestamp: new Date().toISOString()
-                    })
-                };
-            } catch (error) {
-                console.error('데이터 새로고침 중 오류:', error);
-                return {
-                    statusCode: 500,
-                    headers,
-                    body: JSON.stringify({
-                        success: false,
-                        message: '데이터 새로고침 중 오류가 발생했습니다.',
-                        error: error.message,
-                        timestamp: new Date().toISOString()
-                    })
-                };
-            }
-        }
-        
-        // 지식 데이터베이스 조회 API
-        if (path === '/chatbot/knowledge' && event.httpMethod === 'GET') {
-            const { category } = event.queryStringParameters || {};
-            
-            let filteredKnowledge = restaurantKnowledge;
-            if (category) {
-                filteredKnowledge = restaurantKnowledge.filter(doc => 
-                    doc.category === category
-                );
-            }
-            
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify({ knowledge: filteredKnowledge })
-            };
-        }
-
-        // 현재 로드된 데이터 정보 조회 엔드포인트
+        // 현재 로드된 데이터 정보 조회 엔드포인트 (현재 사용하지 않음)
+        /*
         if (path === '/api/data-info' && event.httpMethod === 'GET') {
             const categoryCount = {};
             const sourceCount = {};
@@ -534,6 +498,7 @@ exports.handler = async (event, context) => {
                 })
             };
         }
+        */
 
         // Gemini API 테스트 엔드포인트
         if (path === '/api/test-gemini' && event.httpMethod === 'POST') {
