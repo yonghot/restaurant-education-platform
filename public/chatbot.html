@@ -87,6 +87,48 @@
             z-index: 2;
         }
 
+        .beta-badge {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 1rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(255, 107, 53, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            }
+        }
+
+        .beta-notice {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 140, 66, 0.1));
+            border: 1px solid var(--primary-orange);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .beta-notice strong {
+            color: var(--primary-orange);
+        }
+
         .chatbot-header p {
             color: var(--text-secondary);
             font-size: 1.2rem;
@@ -362,7 +404,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="chatbot.html">
-                            <i class="fas fa-robot me-1"></i>요알남 AI 챗봇
+                            <i class="fas fa-robot me-1"></i>요알남 AI 챗봇 <span class="beta-badge" style="font-size: 0.6rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Beta</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -376,11 +418,16 @@
     </nav>
 
     <div class="chatbot-header" style="padding-top: 100px;">
-        <h1><i class="fas fa-robot me-3"></i>요알남 AI 챗봇</h1>
+        <h1><i class="fas fa-robot me-3"></i>요알남 AI 챗봇<span class="beta-badge">Beta</span></h1>
         <p>외식업 창업과 운영에 대한 모든 질문에 답변해드립니다</p>
     </div>
     
     <div class="container">
+        <div class="beta-notice">
+            <strong>Beta 버전 안내:</strong> 현재 요알남 AI 챗봇은 베타 버전으로, 답변 품질이 지속적으로 개선되고 있습니다. 
+            더 정확한 정보를 원하시면 추가적인 검증을 권장드립니다.
+        </div>
+        
         <div class="chatbot-container">
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot-message">
@@ -442,89 +489,7 @@
         </div>
     </div>
 
-    <!-- 데이터 새로고침 버튼 -->
-    <button id="refreshDataBtn" class="btn btn-outline-warning" 
-            style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; border-radius: 25px; padding: 10px 15px; font-size: 0.9rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-        <i class="fas fa-sync-alt"></i> 데이터 새로고침
-    </button>
-
-    <!-- API 상태 확인 버튼 -->
-    <button id="apiStatusBtn" class="btn btn-outline-info" 
-            style="position: fixed; bottom: 20px; right: 200px; z-index: 1000; border-radius: 25px; padding: 10px 15px; font-size: 0.9rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-        <i class="fas fa-info-circle"></i> API 상태
-    </button>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/chatbot.js"></script>
-    
-    <script>
-        // 데이터 새로고침 버튼 이벤트 리스너
-        document.getElementById('refreshDataBtn').addEventListener('click', async function() {
-            try {
-                const response = await fetch('/.netlify/functions/api', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        path: '/api/refresh-data',
-                        httpMethod: 'POST'
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('데이터가 성공적으로 새로고침되었습니다!');
-                    console.log(`총 ${result.dataCount}개 항목 로드됨`);
-                } else {
-                    alert('데이터 새로고침에 실패했습니다.');
-                }
-            } catch (error) {
-                console.error('데이터 새로고침 오류:', error);
-                alert('데이터 새로고침 중 오류가 발생했습니다.');
-            }
-        });
-
-        // API 상태 확인 버튼 이벤트 리스너
-        document.getElementById('apiStatusBtn').addEventListener('click', async function() {
-            try {
-                const response = await fetch('/.netlify/functions/api', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        path: '/api/status',
-                        httpMethod: 'GET'
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    const status = result.status;
-                    let message = 'API 상태:\n\n';
-                    message += `Gemini API: ${status.gemini.available ? '✅ 사용 가능' : '❌ 사용 불가'}\n`;
-                    message += `Pinecone DB: ${status.pinecone.available ? '✅ 사용 가능' : '❌ 사용 불가'}\n`;
-                    message += `로드된 데이터: ${status.data.loadedItems}개\n`;
-                    
-                    if (!status.gemini.available) {
-                        message += '\n⚠️ Gemini API 키가 설정되지 않았습니다.';
-                    }
-                    if (!status.pinecone.available) {
-                        message += '\n⚠️ Pinecone 설정이 완료되지 않았습니다.';
-                    }
-                    
-                    alert(message);
-                } else {
-                    alert('API 상태 확인에 실패했습니다.');
-                }
-            } catch (error) {
-                console.error('API 상태 확인 오류:', error);
-                alert('API 상태 확인 중 오류가 발생했습니다.');
-            }
-        });
-    </script>
 </body>
 </html> 

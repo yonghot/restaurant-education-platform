@@ -216,6 +216,33 @@
             color: var(--text-muted);
         }
 
+        .beta-badge {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 1rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(255, 107, 53, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            }
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -291,7 +318,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="chatbot.html">
-                            <i class="fas fa-robot me-1"></i>요알남 AI 챗봇
+                            <i class="fas fa-robot me-1"></i>요알남 AI 챗봇 <span class="beta-badge" style="font-size: 0.6rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Beta</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -313,7 +340,7 @@
                     <i class="fas fa-chart-pie me-2"></i>인포그래픽
                 </a>
                 <a href="chatbot.html" class="btn-secondary-custom">
-                    <i class="fas fa-robot me-2"></i>요알남 AI 챗봇
+                    <i class="fas fa-robot me-2"></i>요알남 AI 챗봇 <span class="beta-badge" style="font-size: 0.6rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Beta</span>
                 </a>
                 <a href="calculator/" class="btn-secondary-custom">
                     <i class="fas fa-calculator me-2"></i>창업 비용 계산기
@@ -342,7 +369,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                        <div class="feature-title">AI 챗봇</div>
+                        <div class="feature-title">AI 챗봇 <span class="beta-badge" style="font-size: 0.6rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Beta</span></div>
                         <div class="feature-description">전자책, Q&A, 보고서 기반의 외식업 전문 AI 챗봇이 실시간으로 궁금증을 해결해드립니다.</div>
                     </div>
                 </div>
