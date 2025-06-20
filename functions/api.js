@@ -15,17 +15,39 @@ async function loadKnowledgeFromFiles() {
     const knowledgeData = [];
     
     try {
-        // public/data 디렉토리 경로 설정
-        const dataDir = path.join(__dirname, '..', 'public', 'data');
+        // Netlify Functions 환경에서 올바른 경로 설정
+        let dataDir;
+        if (process.env.NETLIFY_DEV) {
+            // 로컬 개발 환경
+            dataDir = path.join(__dirname, '..', 'public', 'data');
+        } else {
+            // Netlify Functions 환경
+            dataDir = path.join(process.cwd(), 'public', 'data');
+        }
+        
         console.log('데이터 디렉토리 경로:', dataDir);
+        console.log('현재 작업 디렉토리:', process.cwd());
+        console.log('__dirname:', __dirname);
         
         // data 디렉토리 존재 확인
         try {
             await fs.access(dataDir);
             console.log('public/data 디렉토리 접근 성공');
         } catch (error) {
-            console.log('public/data 디렉토리가 없습니다. 기본 데이터만 사용합니다.');
-            return knowledgeData;
+            console.log('public/data 디렉토리가 없습니다. 다른 경로 시도...');
+            
+            // 대체 경로 시도
+            const altDataDir = path.join(process.cwd(), '..', 'public', 'data');
+            console.log('대체 경로 시도:', altDataDir);
+            
+            try {
+                await fs.access(altDataDir);
+                console.log('대체 경로 접근 성공');
+                dataDir = altDataDir;
+            } catch (altError) {
+                console.log('대체 경로도 실패. 기본 데이터만 사용합니다.');
+                return knowledgeData;
+            }
         }
 
         // data 디렉토리의 모든 텍스트 파일 읽기
@@ -197,12 +219,14 @@ async function generateChatbotResponse(userMessage) {
     try {
         console.log('Gemini API 호출 시작');
         console.log('사용자 메시지:', userMessage);
+        console.log('현재 로드된 지식 데이터 개수:', restaurantKnowledge.length);
         
         // 관련 지식 검색
         const keywords = extractKeywords(userMessage);
         const relevantKnowledge = searchRelevantKnowledge(keywords, restaurantKnowledge);
         
         console.log('관련 지식 길이:', relevantKnowledge.length);
+        console.log('관련 지식 미리보기:', relevantKnowledge.substring(0, 200) + '...');
         
         // Gemini API 호출
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -231,6 +255,7 @@ ${relevantKnowledge}
 답변:`;
 
         console.log('Gemini API 프롬프트 전송');
+        console.log('프롬프트 길이:', prompt.length);
         
         // 타임아웃 설정 (8초)
         const timeoutPromise = new Promise((_, reject) => {
