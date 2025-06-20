@@ -346,6 +346,79 @@
             .calculator-container { background: white !important; border: 1px solid #ddd !important; }
             .no-print { display: none !important; }
         }
+
+        /* 툴팁 스타일 */
+        .tooltip-container {
+            position: relative;
+            cursor: help;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tooltip-container .fa-info-circle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip-container:hover .fa-info-circle {
+            opacity: 1;
+            color: var(--primary-orange) !important;
+        }
+
+        /* 참조표 스타일 */
+        .reference-table {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(145deg, var(--card-bg), #222);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .reference-table h4 {
+            color: var(--primary-orange);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .reference-table .table {
+            margin-bottom: 0;
+        }
+
+        .reference-table .table th {
+            background: var(--darker-bg) !important;
+            color: var(--primary-orange) !important;
+            border-color: var(--card-border) !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.75rem !important;
+        }
+
+        .reference-table .table td {
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--card-border) !important;
+            font-size: 0.85rem;
+            padding: 0.75rem !important;
+            vertical-align: middle;
+        }
+
+        .reference-table .table tbody tr:hover {
+            background: rgba(255, 124, 67, 0.05) !important;
+        }
+
+        .reference-table .table tbody tr:hover td {
+            background: rgba(255, 124, 67, 0.05) !important;
+        }
+
+        /* 숫자 포맷팅 스타일 */
+        .currency-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
