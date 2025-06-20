@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>창업 비용 계산기 - 요알남 외식업 교육 플랫폼</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-orange: #ff7c43;
+            --secondary-orange: #ff6b35;
+            --dark-orange: #e55a2b;
+            --light-orange: #ff9d6b;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #1a1a1a;
+            --card-border: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --accent-orange: #ff8c42;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(26, 26, 26, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            color: var(--primary-orange) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-secondary) !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-orange) !important;
+        }
+
+        .calculator-header {
+            text-align: center;
+            padding: 3rem 0 2rem 0;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            border-bottom: 2px solid var(--primary-orange);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculator-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 124, 67, 0.1) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .calculator-header h1 {
+            color: var(--primary-orange);
+            text-shadow: 0 0 20px rgba(255, 124, 67, 0.5);
+            font-weight: 900;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .calculator-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .calculator-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: linear-gradient(145deg, var(--card-bg), #222);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-section {
+            padding: 2rem;
+            background: var(--card-bg);
+        }
+
+        .form-card {
+            background: linear-gradient(145deg, var(--darker-bg), #222);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 30px rgba(255, 124, 67, 0.1);
+        }
+
+        .form-label {
+            color: var(--primary-orange);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-control, .form-select {
+            background: var(--darker-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: var(--darker-bg);
+            border-color: var(--primary-orange);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 0.2rem rgba(255, 124, 67, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 124, 67, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 124, 67, 0.4);
+            color: white;
+        }
+
+        .btn-secondary-custom {
+            background: transparent;
+            border: 2px solid var(--primary-orange);
+            color: var(--primary-orange);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary-custom:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 124, 67, 0.3);
+        }
+
+        .result-section {
+            padding: 2rem;
+            background: var(--darker-bg);
+            border-top: 1px solid var(--card-border);
+        }
+
+        .result-card {
+            background: linear-gradient(145deg, var(--card-bg), #222);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 30px rgba(255, 124, 67, 0.1);
+        }
+
+        .result-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .table-custom {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table-custom th {
+            background: var(--darker-bg);
+            color: var(--primary-orange);
+            border-bottom: 1px solid var(--card-border);
+            font-weight: 600;
+        }
+
+        .table-custom td {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .table-custom tr:hover {
+            background: rgba(255, 124, 67, 0.05);
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner-border {
+            color: var(--primary-orange);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* 스크롤바 스타일링 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-orange);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .calculator-header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-container {
+                margin: 1rem;
+            }
+            
+            .form-section, .result-section {
+                padding: 1rem;
+            }
+        }
+
+        @media print {
+            body { background: white !important; color: black !important; }
+            .calculator-container { background: white !important; border: 1px solid #ddd !important; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-fire me-2"></i>요알남
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home me-1"></i>홈
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/infographics.html">
+                            <i class="fas fa-chart-line me-1"></i>인포그래픽
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chatbot.html">
+                            <i class="fas fa-robot me-1"></i>요알남 AI 챗봇 <span class="beta-badge" style="font-size: 0.6rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Beta</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/calculator/">
+                            <i class="fas fa-calculator me-1"></i>창업 비용 계산기
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="calculator-header" style="padding-top: 100px;">
+        <h1><i class="fas fa-calculator me-3"></i>창업 비용 계산기</h1>
+        <p>외식업 창업에 필요한 투자비용과 수익성을 분석해드립니다</p>
+    </div>
+    
+    <div class="container">
+        <div class="calculator-container">
+            <div class="form-section">
+                <form id="calculatorForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-card">
+                                <label for="location" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>상권
+                                </label>
+                                <select id="location" class="form-select" required>
+                                    <option value="고급 상권">고급 상권</option>
+                                    <option value="일반 상권">일반 상권</option>
+                                    <option value="저렴 상권">저렴 상권</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-card">
+                                <label for="businessType" class="form-label">
+                                    <i class="fas fa-store me-2"></i>업종
+                                </label>
+                                <select id="businessType" class="form-select" required>
+                                    <option value="카페">카페</option>
+                                    <option value="음식점">음식점</option>
+                                    <option value="기타">기타</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-card">
+                                <label for="size" class="form-label">
+                                    <i class="fas fa-ruler-combined me-2"></i>규모(평)
+                                </label>
+                                <input type="number" id="size" class="form-control" value="30" min="10" max="200" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-card">
+                                <label for="floor" class="form-label">
+                                    <i class="fas fa-building me-2"></i>층수
+                                </label>
+                                <select id="floor" class="form-select" required>
+                                    <option value="1" selected>1층</option>
+                                    <option value="2">2층</option>
+                                    <option value="3">3층 이상</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" id="calculateBtn" class="btn-primary-custom">
+                            <i class="fas fa-calculator me-2"></i>계산하기
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">계산 중...</span>
+                </div>
+            </div>
+            
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="result-card">
+                            <div class="result-title">총 투자비용</div>
+                            <div class="result-value" id="totalCost">0원</div>
+                            <div class="result-description">창업에 필요한 모든 비용의 합계</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="result-card">
+                            <div class="result-title">월 운영비용</div>
+                            <div class="result-value" id="monthlyCost">0원</div>
+                            <div class="result-description">매월 발생하는 운영 비용</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-title">상세 비용 분석</div>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>금액</th>
+                                    <th>설명</th>
+                                </tr>
+                            </thead>
+                            <tbody id="costBreakdown">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button id="downloadBtn" class="btn-secondary-custom me-2">
+                        <i class="fas fa-download me-2"></i>PDF 다운로드
+                    </button>
+                    <button id="resetBtn" class="btn-secondary-custom">
+                        <i class="fas fa-redo me-2"></i>다시 계산
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

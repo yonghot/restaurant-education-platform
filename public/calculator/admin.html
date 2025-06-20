@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요알남 외식업 계산기 - 관리자 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .section h2 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .preview h3 {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .preview p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">요알남 외식업 계산기 - 관리자 페이지</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 기본 설정 -->
+            <div class="section">
+                <h2>기본 설정</h2>
+                <div class="input-group">
+                    <label>월 평균 영업일수</label>
+                    <input type="number" id="businessDaysPerMonth" min="1" max="31" step="1">
+                </div>
+                <div class="input-group">
+                    <label>평균 좌석당 면적 (㎡)</label>
+                    <input type="number" id="seatsPerPyeong" min="1" step="0.1">
+                </div>
+            </div>
+
+            <!-- 회전율 설정 -->
+            <div class="section">
+                <h2>회전율 설정</h2>
+                <div class="input-group">
+                    <label>카페 회전율 (회/일)</label>
+                    <input type="number" id="turnoverCafe" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>음식점 회전율 (회/일)</label>
+                    <input type="number" id="turnoverRestaurant" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>기타 회전율 (회/일)</label>
+                    <input type="number" id="turnoverOther" min="0" step="0.1">
+                </div>
+            </div>
+
+            <!-- 객단가 설정 -->
+            <div class="section">
+                <h2>객단가 설정</h2>
+                <div class="input-group">
+                    <label>카페 객단가 (원)</label>
+                    <input type="number" id="priceCafe" min="0" step="1000">
+                </div>
+                <div class="input-group">
+                    <label>음식점 객단가 (원)</label>
+                    <input type="number" id="priceRestaurant" min="0" step="1000">
+                </div>
+                <div class="input-group">
+                    <label>기타 객단가 (원)</label>
+                    <input type="number" id="priceOther" min="0" step="1000">
+                </div>
+            </div>
+
+            <!-- 배달 설정 -->
+            <div class="section">
+                <h2>배달 설정</h2>
+                <div class="input-group">
+                    <label>카페 배달 비율 (%)</label>
+                    <input type="number" id="deliveryRatioCafe" min="0" max="100" step="1">
+                </div>
+                <div class="input-group">
+                    <label>음식점 배달 비율 (%)</label>
+                    <input type="number" id="deliveryRatioRestaurant" min="0" max="100" step="1">
+                </div>
+                <div class="input-group">
+                    <label>기타 배달 비율 (%)</label>
+                    <input type="number" id="deliveryRatioOther" min="0" max="100" step="1">
+                </div>
+                <div class="input-group">
+                    <label>일일 배달 주문수 (건)</label>
+                    <input type="number" id="deliveryOrdersPerDay" min="0" step="1">
+                </div>
+            </div>
+
+            <!-- 상권 가중치 설정 -->
+            <div class="section">
+                <h2>상권 가중치 설정</h2>
+                <div class="input-group">
+                    <label>고급 상권 투자 가중치</label>
+                    <input type="number" id="locationHighInvestment" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>고급 상권 지출 가중치</label>
+                    <input type="number" id="locationHighExpense" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>일반 상권 투자 가중치</label>
+                    <input type="number" id="locationMediumInvestment" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>일반 상권 지출 가중치</label>
+                    <input type="number" id="locationMediumExpense" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>저렴 상권 투자 가중치</label>
+                    <input type="number" id="locationLowInvestment" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>저렴 상권 지출 가중치</label>
+                    <input type="number" id="locationLowExpense" min="0" step="0.1">
+                </div>
+            </div>
+
+            <!-- 층수 가중치 설정 -->
+            <div class="section">
+                <h2>층수 가중치 설정</h2>
+                <div class="input-group">
+                    <label>1층 투자 가중치</label>
+                    <input type="number" id="floor1Investment" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>1층 지출 가중치</label>
+                    <input type="number" id="floor1Expense" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>2층 투자 가중치</label>
+                    <input type="number" id="floor2Investment" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>2층 지출 가중치</label>
+                    <input type="number" id="floor2Expense" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>3층 투자 가중치</label>
+                    <input type="number" id="floor3Investment" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>3층 지출 가중치</label>
+                    <input type="number" id="floor3Expense" min="0" step="0.1">
+                </div>
+            </div>
+
+            <!-- 기본 비용 설정 -->
+            <div class="section">
+                <h2>기본 비용 설정</h2>
+                <div class="input-group">
+                    <label>기본 임대료 (원/월)</label>
+                    <input type="number" id="baseRent" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>기본 인건비 (원/월)</label>
+                    <input type="number" id="baseLaborCost" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>기본 원재료비 (원/월)</label>
+                    <input type="number" id="baseRawMaterialCost" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>기타 경비 (원/월)</label>
+                    <input type="number" id="baseOtherExpenses" min="0" step="100000">
+                </div>
+            </div>
+
+            <!-- 초기 투자비 설정 -->
+            <div class="section">
+                <h2>초기 투자비 설정</h2>
+                <div class="input-group">
+                    <label>기본 보증금 (원)</label>
+                    <input type="number" id="baseDeposit" min="0" step="1000000">
+                </div>
+                <div class="input-group">
+                    <label>기본 권리금 (원)</label>
+                    <input type="number" id="baseGoodwill" min="0" step="1000000">
+                </div>
+                <div class="input-group">
+                    <label>기본 인테리어 비용 (원/평)</label>
+                    <input type="number" id="baseInterior" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>기본 설비비 (원/평)</label>
+                    <input type="number" id="baseEquipment" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>사전 임대료 (원)</label>
+                    <input type="number" id="basePreRent" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>사전 인건비 (원)</label>
+                    <input type="number" id="basePreLabor" min="0" step="100000">
+                </div>
+                <div class="input-group">
+                    <label>기타 초기 비용 (원)</label>
+                    <input type="number" id="baseOther" min="0" step="100000">
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+            <button id="saveButton" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+                설정 저장
+            </button>
+        </div>
+
+        <!-- 미리보기 섹션 -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-4">설정 미리보기</h2>
+            <div class="preview">
+                <h3>월 매출 계산식</h3>
+                <p id="salesFormulaPreview"></p>
+            </div>
+            <div class="preview">
+                <h3>월 지출 계산식</h3>
+                <p id="expensesFormulaPreview"></p>
+            </div>
+            <div class="preview">
+                <h3>초기 투자비 계산식</h3>
+                <p id="investmentFormulaPreview"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html> 
