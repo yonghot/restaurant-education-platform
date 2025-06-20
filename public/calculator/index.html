@@ -228,26 +228,59 @@
         }
 
         .table-custom {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--card-bg) !important;
+            border: 1px solid var(--card-border) !important;
             border-radius: 10px;
             overflow: hidden;
         }
 
         .table-custom th {
-            background: var(--darker-bg);
-            color: var(--primary-orange);
-            border-bottom: 1px solid var(--card-border);
+            background: var(--darker-bg) !important;
+            color: var(--primary-orange) !important;
+            border-bottom: 1px solid var(--card-border) !important;
             font-weight: 600;
+            padding: 1rem !important;
         }
 
         .table-custom td {
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--card-border);
+            color: var(--text-primary) !important;
+            border-bottom: 1px solid var(--card-border) !important;
+            background: var(--card-bg) !important;
+            padding: 1rem !important;
         }
 
         .table-custom tr:hover {
-            background: rgba(255, 124, 67, 0.05);
+            background: rgba(255, 124, 67, 0.05) !important;
+        }
+
+        .table-custom tr:hover td {
+            background: rgba(255, 124, 67, 0.05) !important;
+        }
+
+        /* Bootstrap 테이블 스타일 오버라이드 */
+        .table {
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .table th {
+            background: var(--darker-bg) !important;
+            color: var(--primary-orange) !important;
+            border-color: var(--card-border) !important;
+        }
+
+        .table td {
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--card-border) !important;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255, 124, 67, 0.05) !important;
+        }
+
+        .table tbody tr:hover td {
+            background: rgba(255, 124, 67, 0.05) !important;
         }
 
         .loading-spinner {
