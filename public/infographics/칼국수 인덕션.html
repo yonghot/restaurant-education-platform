@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>칼국수 전문점 에너지 비용 비교 인포그래픽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .kpi-card {
+            background-color: #2a2a2a;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3a3a3a;
+        }
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff7c43;
+        }
+         .kpi-label {
+            font-size: 1.125rem;
+            color: #d0d0d0;
+            margin-top: 0.5rem;
+        }
+        .card-bg {
+            background-color: #2a2a2a;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3a3a3a;
+        }
+        table {
+            color: #f0f0f0;
+        }
+        th, td {
+            border-color: #3a3a3a;
+        }
+    </style>
+</head>
+<body class="text-gray-100">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4">주방의 심장, 가스 vs 인덕션</h1>
+            <p class="text-xl md:text-2xl text-gray-300">칼국수 전문점 월간 에너지 비용 전격 비교</p>
+        </header>
+
+        <section id="intro" class="mb-16">
+            <div class="kpi-card max-w-3xl mx-auto">
+                <p class="kpi-label">인덕션 사용 시 예상 월간 절감액</p>
+                <p class="kpi-value">약 730,958원</p>
+                <p class="mt-4 text-gray-300">동일한 조리 시간(월 300시간) 기준, 인덕션은 가스레인지 대비 압도적인 비용 효율을 보여줍니다. 초기 투자 비용을 상쇄하고도 남는 장기적인 이점을 확인해보세요.</p>
+            </div>
+        </section>
+
+        <section id="comparison" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">월간 에너지 비용 비교</h2>
+            <div class="card-bg p-6 md:p-8">
+                <p class="text-center text-gray-300 mb-6">가스레인지와 인덕션의 월간 총 에너지 비용을 비교한 결과입니다. 인덕션의 운영 비용이 현저히 낮은 것을 확인할 수 있습니다.</p>
+                <div class="chart-container" style="max-width: 800px; height: 400px;">
+                    <canvas id="mainComparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="breakdown" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">에너지 요금 구조 분석</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="card-bg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-4">🔥 가스레인지 비용 구조</h3>
+                    <p class="text-center text-gray-300 mb-6">상업용 도시가스는 기본요금 없이 오직 사용량에 따라 요금이 부과되어 구조가 매우 단순합니다.</p>
+                    <div class="chart-container">
+                        <canvas id="gasBreakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card-bg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-4">⚡ 인덕션 비용 구조</h3>
+                    <p class="text-center text-gray-300 mb-6">전기요금은 고정적인 기본요금과 사용량 요금, 그리고 다양한 부가금으로 구성되어 복잡한 구조를 가집니다.</p>
+                    <div class="chart-container">
+                        <canvas id="inductionBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="qualitative" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">비용 그 이상의 가치: 다각적 비교</h2>
+            <div class="card-bg p-6 md:p-8 overflow-x-auto">
+                <table class="w-full text-center">
+                    <thead>
+                        <tr class="border-b-2 border-gray-700">
+                            <th class="p-4 text-lg font-bold">항목</th>
+                            <th class="p-4 text-lg font-bold">🔥 가스레인지</th>
+                            <th class="p-4 text-lg font-bold">⚡ 인덕션</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">주방 환경 🌡️</td>
+                            <td class="p-4 text-gray-300">높은 폐열로 실내 온도 상승, 덥고 불쾌한 환경</td>
+                            <td class="p-4 text-gray-300">열 손실이 적어 쾌적한 주방 환경 유지</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">안전성 🛡️</td>
+                            <td class="p-4 text-gray-300">화재 및 화상 위험, 가스 누출 및 유해물질 발생 우려</td>
+                            <td class="p-4 text-gray-300">직접 가열 방식으로 화재 위험 낮고 안전함</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">환기 🌬️</td>
+                            <td class="p-4 text-gray-300">유해 가스 및 폐열 배출을 위한 강력한 환기 시스템 필수</td>
+                            <td class="p-4 text-gray-300">환기 시스템 부담 감소, 관련 비용 절감 가능</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="p-4 font-semibold">초기 비용 💰</td>
+                            <td class="p-4 text-emerald-400 font-bold">낮음</td>
+                            <td class="p-4 text-red-400 font-bold">높음 (기기 및 전기 공사)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold">유지보수 🧹</td>
+                            <td class="p-4 text-gray-300">버너, 삼발이 등 구조가 복잡해 청소 어려움</td>
+                            <td class="p-4 text-gray-300">평평한 상판으로 청소가 매우 용이함</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <footer class="text-center mt-12 text-gray-500 text-sm">
+            <p>본 분석은 서울 지역, 월 300시간 사용, 2025년 상반기 요금 기준 등 특정 가정 하에 산출되었습니다.</p>
+            <p>실제 비용은 운영 환경, 계약 전력, 계절별 요금 변동에 따라 달라질 수 있습니다.</p>
+            <p class="mt-4 text-gray-400">이 인포그래픽은 Google Gemini의 딥리서치 기능을 활용하여 작성되었습니다.</p>
+            <p class="text-gray-400">보고서 작성에 이용된 자료 출처: 한국전력공사, 한국가스공사, 상업용 주방기기 효율 연구 보고서, 요식업 에너지 비용 분석 자료, 주방 환경 개선 사례 연구</p>
+            <p class="text-gray-400">총 자료 갯수: 5개</p>
+            <p class="text-gray-400">작성 일자: 2025년 6월 19일</p>
+        </footer>
+    </div>
+
+    <script>
+        const formatNumber = (num) => new Intl.NumberFormat('ko-KR').format(num) + '원';
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const chartColors = {
+            gas: '#f95d6a', // Reddish orange
+            induction: '#ff7c43', // Primary orange
+            baseFee: '#ffa600', // Yellowish orange
+            usageFee: '#a05195', // Purple for contrast
+            surcharges: '#665191', // Deeper purple for contrast
+            text: '#f0f0f0' // Light text for dark background
+        };
+
+        const mainComparisonData = {
+            labels: ['가스레인지', '인덕션'],
+            datasets: [{
+                label: '월간 총 에너지 비용',
+                data: [1249500, 518542],
+                backgroundColor: [chartColors.gas, chartColors.induction],
+                borderColor: [chartColors.gas, chartColors.induction],
+                borderWidth: 1,
+                borderRadius: 8,
+            }]
+        };
+        new Chart(document.getElementById('mainComparisonChart'), {
+            type: 'bar',
+            data: mainComparisonData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: (value) => formatNumber(value),
+                            color: chartColors.text
+                        },
+                        grid: {
+                            color: '#3a3a3a' // Darker grid lines
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: chartColors.text
+                        },
+                        grid: {
+                            color: '#3a3a3a'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => formatNumber(context.raw),
+                            title: tooltipTitleCallback
+                        },
+                        titleColor: '#f0f0f0',
+                        bodyColor: '#f0f0f0',
+                        backgroundColor: 'rgba(0,0,0,0.8)'
+                    }
+                }
+            }
+        });
+
+        const gasBreakdownData = {
+            labels: ['사용량 요금'],
+            datasets: [{
+                data: [1135500],
+                backgroundColor: [chartColors.gas],
+                hoverOffset: 4
+            }]
+        };
+        new Chart(document.getElementById('gasBreakdownChart'), {
+            type: 'doughnut',
+            data: gasBreakdownData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'bottom',
+                        labels: {
+                            color: chartColors.text
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                           label: (context) => `${context.label}: ${formatNumber(context.raw)}`,
+                           title: tooltipTitleCallback
+                        },
+                        titleColor: '#f0f0f0',
+                        bodyColor: '#f0f0f0',
+                        backgroundColor: 'rgba(0,0,0,0.8)'
+                    }
+                }
+            }
+        });
+        
+        const inductionBreakdownData = {
+            labels: [
+                '기본요금', 
+                '전력량 요금', 
+                '각종 부가금'
+            ],
+            datasets: [{
+                data: [123200, 289485, 58717], 
+                backgroundColor: [chartColors.baseFee, chartColors.usageFee, chartColors.surcharges],
+                hoverOffset: 4
+            }]
+        };
+        new Chart(document.getElementById('inductionBreakdownChart'), {
+            type: 'doughnut',
+            data: inductionBreakdownData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'bottom',
+                        labels: {
+                            color: chartColors.text
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.label}: ${formatNumber(context.raw)}`,
+                            title: tooltipTitleCallback
+                        },
+                        titleColor: '#f0f0f0',
+                        bodyColor: '#f0f0f0',
+                        backgroundColor: 'rgba(0,0,0,0.8)'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
