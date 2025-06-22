@@ -52,7 +52,7 @@ class YoalnamChatbot {
         } catch (error) {
             console.error('챗봇 API 호출 오류:', error);
             this.hideTypingIndicator();
-            this.addBotMessage('죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            this.addBotMessage('죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주시기 바랍니다.');
         }
     }
     
@@ -182,16 +182,16 @@ class YoalnamChatbot {
     // 개발용 모의 응답 (API 오류 시 사용)
     getMockResponse(userMessage) {
         const responses = {
-            '창업': '외식업 창업을 고려하고 계시는군요! 먼저 시장 조사부터 시작하는 것이 좋습니다. 유동인구, 경쟁업체, 타겟 고객층을 분석해보세요. 초기 투자비용과 운영비용도 꼼꼼히 계산해보시기 바랍니다.',
-            '비용': '외식업 비용은 크게 초기 투자비와 운영비로 나뉩니다. 초기 투자비에는 임대보증금, 인테리어, 설비 구매비가 포함되고, 운영비에는 임대료, 인건비, 재료비, 공과금이 있습니다.',
-            '메뉴': '메뉴 구성은 원가 계산이 핵심입니다. 식재료 원가율을 30-40%로 유지하고, 인건비와 운영비를 고려한 적정 가격을 설정하세요. 시즌별 메뉴 변경도 고려해보세요.',
-            '마케팅': '외식업 마케팅은 온라인과 오프라인을 병행하는 것이 효과적입니다. SNS 마케팅, 배달 플랫폼 활용, 지역 커뮤니티 참여 등을 통해 브랜드 인지도를 높여보세요.',
-            '인력': '직원 채용 시에는 업무 경험과 인성을 모두 고려하세요. 체계적인 교육 프로그램을 마련하고, 적절한 보상 체계를 구축하여 이직률을 낮추는 것이 중요합니다.',
-            '에너지': '에너지 비용 절약을 위해서는 인덕션 도입을 고려해보세요. 가스비 대비 30-40% 절약 효과가 있으며, 초기 설치비는 200-500만원 정도입니다.',
-            '위생': '식품위생 관리는 HACCP 시스템 도입과 정기적인 위생 교육이 핵심입니다. 식재료 보관, 조리 과정, 위생 관리 체크리스트를 구축하세요.',
+            '창업': '외식업 창업을 고려하고 계시는군요. 시장 조사부터 시작하시는 것을 권장드립니다. 유동인구, 경쟁업체, 타겟 고객층 분석이 우선되어야 합니다. 초기 투자비용과 운영비용도 꼼꼼히 계산해보시기 바랍니다.',
+            '비용': '외식업 비용은 초기 투자비와 운영비로 구분됩니다. 초기 투자비에는 임대보증금, 인테리어, 설비 구매비가 포함되고, 운영비에는 임대료, 인건비, 재료비, 공과금이 있습니다.',
+            '메뉴': '메뉴 구성 시 원가 계산이 핵심입니다. 식재료 원가율을 30-40%로 유지하고, 인건비와 운영비를 고려한 적정 가격을 설정하시기 바랍니다. 시즌별 메뉴 변경도 고려해보세요.',
+            '마케팅': '외식업 마케팅은 온라인과 오프라인을 병행하는 것이 효과적입니다. SNS 마케팅, 배달 플랫폼 활용, 지역 커뮤니티 참여를 통해 브랜드 인지도를 높이실 수 있습니다.',
+            '인력': '직원 채용 시 업무 경험과 인성을 모두 고려하시기 바랍니다. 체계적인 교육 프로그램을 마련하고, 적절한 보상 체계를 구축하여 이직률을 낮추는 것이 중요합니다.',
+            '에너지': '에너지 비용 절약을 위해 인덕션 도입을 고려해보시기 바랍니다. 가스비 대비 30-40% 절약 효과가 있으며, 초기 설치비는 200-500만원 정도입니다.',
+            '위생': '식품위생 관리는 HACCP 시스템 도입과 정기적인 위생 교육이 핵심입니다. 식재료 보관, 조리 과정, 위생 관리 체크리스트를 구축하시기 바랍니다.',
             '칼국수': '칼국수 전문점 운영 시에는 메뉴 다양화와 계절별 메뉴 개발이 중요합니다. 또한 배달 서비스와 포장 서비스를 적극 활용하여 매출을 증대시킬 수 있습니다.',
-            '위치': '위치 선정은 외식업 성공의 핵심입니다. 유동인구, 경쟁업체, 접근성, 주차 공간을 종합적으로 분석하여 최적의 위치를 선택하세요.',
-            '원가': '원가 관리는 수익성 향상의 핵심입니다. 식재료 원가율을 30-40%로 유지하고, 정기적인 원가 분석을 통해 가격 경쟁력을 확보하세요.'
+            '위치': '위치 선정은 외식업 성공의 핵심입니다. 유동인구, 경쟁업체, 접근성, 주차 공간을 종합적으로 분석하여 최적의 위치를 선택하시기 바랍니다.',
+            '원가': '원가 관리는 수익성 향상의 핵심입니다. 식재료 원가율을 30-40%로 유지하고, 정기적인 원가 분석을 통해 가격 경쟁력을 확보하시기 바랍니다.'
         };
         
         for (const [keyword, response] of Object.entries(responses)) {
@@ -200,131 +200,11 @@ class YoalnamChatbot {
             }
         }
         
-        return '외식업에 대한 구체적인 질문을 해주시면 더 자세한 답변을 드릴 수 있습니다. 창업, 비용, 메뉴, 마케팅, 인력 관리, 에너지 비용 등 궁금한 부분이 있으시면 언제든 물어보세요!';
+        return '외식업에 대한 구체적인 질문을 해주시면 더 자세한 답변을 드릴 수 있습니다. 창업, 비용, 메뉴, 마케팅, 인력 관리, 에너지 비용 등 궁금한 부분이 있으시면 언제든 물어보시기 바랍니다.';
     }
 }
 
 // 챗봇 초기화
 document.addEventListener('DOMContentLoaded', () => {
     const chatbot = new YoalnamChatbot();
-});
-
-// 데이터 새로고침 함수
-async function refreshData() {
-    try {
-        const response = await fetch('/.netlify/functions/api', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                path: '/api/refresh-data',
-                httpMethod: 'POST'
-            })
-        });
-
-        const result = await response.json();
-        
-        if (result.success) {
-            showNotification('데이터가 성공적으로 새로고침되었습니다!', 'success');
-            console.log(`총 ${result.dataCount}개 항목 로드됨`);
-        } else {
-            showNotification('데이터 새로고침에 실패했습니다.', 'error');
-        }
-    } catch (error) {
-        console.error('데이터 새로고침 오류:', error);
-        showNotification('데이터 새로고침 중 오류가 발생했습니다.', 'error');
-    }
-}
-
-// 알림 표시 함수
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    
-    // 스타일 설정
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        z-index: 1000;
-        animation: slideIn 0.3s ease;
-        max-width: 300px;
-    `;
-    
-    if (type === 'success') {
-        notification.style.backgroundColor = '#28a745';
-    } else if (type === 'error') {
-        notification.style.backgroundColor = '#dc3545';
-    } else {
-        notification.style.backgroundColor = '#17a2b8';
-    }
-    
-    document.body.appendChild(notification);
-    
-    // 3초 후 자동 제거
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
-
-// CSS 애니메이션 추가
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// 페이지 로드 시 데이터 새로고침 버튼 추가
-document.addEventListener('DOMContentLoaded', function() {
-    // 데이터 새로고침 버튼 생성
-    const refreshButton = document.createElement('button');
-    refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i> 데이터 새로고침';
-    refreshButton.className = 'btn btn-outline-warning btn-sm';
-    refreshButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-        border-radius: 25px;
-        padding: 10px 15px;
-        font-size: 0.9rem;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    `;
-    
-    refreshButton.addEventListener('click', refreshData);
-    document.body.appendChild(refreshButton);
-    
-    // 툴팁 추가
-    refreshButton.title = 'data 폴더의 새로운 텍스트 파일을 AI 챗봇에 반영합니다';
 }); 
