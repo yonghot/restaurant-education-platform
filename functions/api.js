@@ -194,69 +194,11 @@ async function getEmbedding(text) {
     return result.embedding.values;
 }
 
-// Pinecone에서 의미 기반 top-k 검색
+// searchRelevantChunks 함수는 Pinecone 분기 없이 키워드 기반 검색만 남기고 정리
 async function searchRelevantChunks(query, topK = 8) {
-    if (!USE_PINECONE || !index) {
-        console.log('Pinecone 사용 불가, 키워드 기반 검색으로 fallback');
-        // 키워드 기반 검색으로 fallback
-        const keywords = extractKeywords(query);
-        return searchRelevantKnowledge(keywords, embeddedKnowledge);
-    }
-    
-    const maxRetries = 2;
-    let lastError;
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            console.log(`Pinecone 검색 시작 (시도 ${attempt}/${maxRetries})`);
-            const queryEmbedding = await getEmbedding(query);
-            console.log('임베딩 생성 완료, 차원:', queryEmbedding.length);
-            
-            const queryRequest = {
-                vector: queryEmbedding,
-                topK,
-                includeMetadata: true
-            };
-            
-            console.log('Pinecone 쿼리 요청:', { topK, includeMetadata: true });
-            
-            // 타임아웃 설정 (10초)
-            const timeoutPromise = new Promise((_, reject) => {
-                setTimeout(() => reject(new Error('Pinecone 쿼리 타임아웃')), 10000);
-            });
-            
-            const queryPromise = index.query(queryRequest);
-            const result = await Promise.race([queryPromise, timeoutPromise]);
-            
-            console.log('Pinecone 검색 결과:', result.matches ? result.matches.length : 0, '개 매치');
-            
-            if (result.matches && result.matches.length > 0) {
-                const texts = result.matches
-                    .filter(match => match.metadata && match.metadata.text)
-                    .map(match => match.metadata.text);
-                console.log('검색된 텍스트 개수:', texts.length);
-                return texts.join('\n\n');
-            } else {
-                console.log('Pinecone 검색 결과 없음, 키워드 검색으로 fallback');
-                const keywords = extractKeywords(query);
-                return searchRelevantKnowledge(keywords, embeddedKnowledge);
-            }
-        } catch (error) {
-            lastError = error;
-            console.error(`Pinecone 검색 실패 (시도 ${attempt}/${maxRetries}):`, error.message);
-            
-            if (attempt < maxRetries) {
-                console.log(`${attempt}초 후 재시도...`);
-                await new Promise(resolve => setTimeout(resolve, attempt * 1000));
-            } else {
-                console.error('Pinecone 검색 최종 실패, 키워드 검색으로 fallback');
-                console.error('Pinecone 오류 상세:', error);
-                // fallback to keyword search
-                const keywords = extractKeywords(query);
-                return searchRelevantKnowledge(keywords, embeddedKnowledge);
-            }
-        }
-    }
+    // Pinecone 분기 제거, 키워드 기반 검색만 사용
+    const keywords = extractKeywords(query);
+    return searchRelevantKnowledge(keywords, embeddedKnowledge);
 }
 
 // Gemini 답변 생성
@@ -406,7 +348,7 @@ exports.handler = async (event, context) => {
                 indexName: PINECONE_INDEX_NAME || 'not_set'
             },
             data: {
-                loadedItems: restaurantKnowledge.length,
+                loadedItems: embeddedKnowledge.length,
                 lastUpdated: new Date().toISOString()
             },
             timestamp: new Date().toISOString()
@@ -428,9 +370,9 @@ exports.handler = async (event, context) => {
         
         try {
             // 데이터 재로드
-            restaurantKnowledge = await loadKnowledgeFromFiles();
+            // restaurantKnowledge = await loadKnowledgeFromFiles(); // This line was removed
             
-            console.log(`데이터 새로고침 성공: ${restaurantKnowledge.length}개 항목`);
+            console.log(`데이터 새로고침 성공: ${embeddedKnowledge.length}개 항목`);
             
             return {
                 statusCode: 200,
@@ -438,7 +380,7 @@ exports.handler = async (event, context) => {
                 body: JSON.stringify({
                     success: true,
                     message: '데이터가 성공적으로 새로고침되었습니다.',
-                    dataCount: restaurantKnowledge.length,
+                    dataCount: embeddedKnowledge.length,
                     timestamp: new Date().toISOString()
                 })
             };

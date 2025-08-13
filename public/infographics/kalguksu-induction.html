@@ -200,6 +200,11 @@
     </div>
 
     <script>
+        // 상세페이지 조회수 증가
+        (function() {
+            fetch('/.netlify/functions/views?infographic=kalguksu-induction.html', { method: 'POST' });
+        })();
+
         const formatNumber = (num) => new Intl.NumberFormat('ko-KR').format(num) + '원';
 
         const tooltipTitleCallback = (tooltipItems) => {

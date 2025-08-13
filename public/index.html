@@ -3,371 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>요알남 외식업 교육 플랫폼</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>요알남 - 외식업 교육 플랫폼</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System -->
+    <link href="css/design-system.css" rel="stylesheet">
+    
     <style>
-        :root {
-            --primary-orange: #ff7c43;
-            --secondary-orange: #ff6b35;
-            --dark-orange: #e55a2b;
-            --light-orange: #ff9d6b;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --card-bg: #1a1a1a;
-            --card-border: #2a2a2a;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --text-muted: #888888;
-            --accent-orange: #ff8c42;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
-            color: var(--text-primary);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background: rgba(26, 26, 26, 0.95) !important;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--card-border);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .navbar-brand {
-            color: var(--primary-orange) !important;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .navbar-nav .nav-link {
-            color: var(--text-secondary) !important;
-            transition: color 0.3s ease;
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: var(--primary-orange) !important;
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
-            border-bottom: 2px solid var(--primary-orange);
-            position: relative;
-            overflow: hidden;
-            min-height: 100vh;
-            display: flex;
+        /* Page-specific styles */
+        .badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 124, 67, 0.1) 50%, transparent 70%);
-            animation: shimmer 4s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 2;
-            position: relative;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 900;
-            color: var(--primary-orange);
-            text-shadow: 0 0 30px rgba(255, 124, 67, 0.5);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
-            border: none;
+            padding: 0.125rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--color-accent-primary);
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 124, 67, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary-custom::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(255, 124, 67, 0.4);
-            color: white;
-        }
-
-        .btn-primary-custom:hover::before {
-            left: 100%;
-        }
-
-        .btn-secondary-custom {
-            background: transparent;
-            border: 2px solid var(--primary-orange);
-            color: var(--primary-orange);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary-custom:hover {
-            background: var(--primary-orange);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 124, 67, 0.3);
-        }
-
-        .features-section {
-            padding: 5rem 0;
-            background: var(--card-bg);
-        }
-
-        .feature-card {
-            background: linear-gradient(145deg, var(--card-bg), #222);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-orange);
-            box-shadow: 0 20px 40px rgba(255, 124, 67, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary-orange);
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .feature-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .footer {
-            background: var(--darker-bg);
-            border-top: 1px solid var(--card-border);
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .footer-content {
-            color: var(--text-muted);
-        }
-
-        .beta-badge {
-            background: linear-gradient(135deg, #ff6b35, #ff8c42);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            border-radius: var(--radius-full);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-left: 1rem;
-            display: inline-block;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            letter-spacing: 0.025em;
+            margin-left: 0.5rem;
         }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 25px rgba(255, 107, 53, 0.8);
-            }
-            100% {
-                box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
-            }
+        
+        .mobile-menu-btn {
+            display: none;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--color-text-primary);
+            cursor: pointer;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 스크롤바 스타일링 */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-orange);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-orange);
-        }
-
-        /* 반응형 디자인 */
+        
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn-primary-custom,
-            .btn-secondary-custom {
-                width: 100%;
-                max-width: 300px;
+            .mobile-menu-btn {
+                display: block;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-fire me-2"></i>요알남
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-utensils"></i>
+                <span>요알남</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            
+            <ul class="navbar-menu">
+                <li>
+                    <a href="/" class="navbar-link active">
+                        <i class="fas fa-home"></i>
+                        <span>홈</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="infographics.html" class="navbar-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>인포그래픽</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calculator/index.html" class="navbar-link">
+                        <i class="fas fa-calculator"></i>
+                        <span>창업 계산기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="checklist.html" class="navbar-link">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>체크리스트</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">
-                            <i class="fas fa-home me-1"></i>홈
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="infographics.html">
-                            <i class="fas fa-chart-line me-1"></i>인포그래픽
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">외식업 창업과 운영, <span style="color:var(--primary-orange)">요알남</span>과 함께</h1>
-            <p class="hero-subtitle">외식업 창업과 운영에 필요한 모든 정보와 인사이트를 한 곳에서.<br>최신 트렌드, 실전 전략, 데이터 기반 인포그래픽, 그리고 AI 챗봇까지!</p>
-            <div class="cta-buttons">
-                <a href="infographics.html" class="btn-primary-custom">
-                    <i class="fas fa-chart-pie me-2"></i>인포그래픽
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="features-section">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-chart-pie"></i></div>
-                        <div class="feature-title">시각적 인포그래픽</div>
-                        <div class="feature-description">복잡한 데이터를 한눈에! 외식업 창업과 운영에 필요한 핵심 정보를 시각적으로 제공합니다.</div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
-                        <div class="feature-title">전략적 가이드</div>
-                        <div class="feature-description">실전에서 바로 쓸 수 있는 창업/운영 전략과 팁을 체계적으로 안내합니다.</div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                        <div class="feature-title">AI 챗봇 <span class="beta-badge" style="font-size: 0.6rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Beta</span></div>
-                        <div class="feature-description">전자책, Q&A, 보고서 기반의 외식업 전문 AI 챗봇이 실시간으로 궁금증을 해결해드립니다.</div>
-                    </div>
+            <div class="hero-content animate-fadeIn">
+                <h1 class="hero-title">
+                    외식업 성공의 모든 것
+                </h1>
+                <p class="hero-subtitle">
+                    데이터 기반 인사이트, AI 컨설팅, 실전 계산기까지<br>
+                    외식업 창업과 운영을 위한 완벽한 솔루션
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="infographics.html" class="btn btn-primary btn-lg">
+                        <i class="fas fa-chart-line"></i>
+                        인포그래픽 보기
+                    </a>
+                    <a href="chatbot.html" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-robot"></i>
+                        AI 챗봇
+                        <span class="badge">Beta</span>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="feature-title">데이터 인포그래픽</h3>
+                    <p class="feature-description">
+                        외식업 트렌드와 시장 분석을 시각적으로 전달하는 인포그래픽으로 빠른 인사이트를 얻으세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">AI 컨설팅</h3>
+                    <p class="feature-description">
+                        외식업 전문 AI가 실시간으로 창업과 운영에 관한 모든 질문에 답변해드립니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="feature-title">창업 계산기</h3>
+                    <p class="feature-description">
+                        투자금, 손익분기점, 수익률을 정확하게 계산하여 현실적인 사업 계획을 수립하세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="feature-title">체크리스트</h3>
+                    <p class="feature-description">
+                        사업가 기질 진단부터 창업 준비 사항까지 체계적인 체크리스트를 제공합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="feature-title">교육 콘텐츠</h3>
+                    <p class="feature-description">
+                        실전 경험을 바탕으로 한 체계적인 교육 콘텐츠로 외식업 전문가가 되세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">커뮤니티</h3>
+                    <p class="feature-description">
+                        외식업 창업자와 운영자들이 모여 경험을 공유하고 네트워킹하는 공간입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            © 2025 요알남. 외식업 교육 플랫폼. All rights reserved.<br>
-            <a href="mailto:contact@yoalnam.com" style="color: var(--primary-orange);">contact@yoalnam.com</a>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 요알남. 모든 권리 보유.</p>
+                <div class="footer-links">
+                    <a href="mailto:contact@yoalnam.com">contact@yoalnam.com</a>
+                    <a href="#">이용약관</a>
+                    <a href="#">개인정보처리방침</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+            });
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(9, 9, 11, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(9, 9, 11, 0.8)';
+            }
+        });
+    </script>
 </body>
 </html> 

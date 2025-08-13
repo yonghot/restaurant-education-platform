@@ -267,6 +267,13 @@
     </div>
 
     <script>
+        // 상세페이지 조회수 증가
+        (function() {
+            fetch('/.netlify/functions/views?infographic=restaurant-success-strategy.html', { method: 'POST' });
+        })();
+    </script>
+
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
 
             const darkOrangePalette = {

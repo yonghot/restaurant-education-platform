@@ -34,25 +34,6 @@ const userSchema = new mongoose.Schema({
     },
     emailVerificationToken: String,
     emailVerificationExpires: Date,
-    learningProgress: [{
-        courseId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course'
-        },
-        completed: {
-            type: Boolean,
-            default: false
-        },
-        lastAccessed: Date,
-        quizScores: [{
-            quizId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Quiz'
-            },
-            score: Number,
-            completedAt: Date
-        }]
-    }],
     createdAt: {
         type: Date,
         default: Date.now
@@ -80,48 +61,6 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
     } catch (error) {
         throw error;
     }
-};
-
-// 학습 진행도 업데이트 메서드
-userSchema.methods.updateLearningProgress = async function(courseId, completed = false) {
-    const progress = this.learningProgress.find(p => p.courseId.toString() === courseId.toString());
-    
-    if (progress) {
-        progress.completed = completed;
-        progress.lastAccessed = new Date();
-    } else {
-        this.learningProgress.push({
-            courseId,
-            completed,
-            lastAccessed: new Date()
-        });
-    }
-    
-    return this.save();
-};
-
-// 퀴즈 점수 업데이트 메서드
-userSchema.methods.updateQuizScore = async function(courseId, quizId, score) {
-    const progress = this.learningProgress.find(p => p.courseId.toString() === courseId.toString());
-    
-    if (progress) {
-        const quizScore = progress.quizScores.find(q => q.quizId.toString() === quizId.toString());
-        
-        if (quizScore) {
-            quizScore.score = score;
-            quizScore.completedAt = new Date();
-        } else {
-            progress.quizScores.push({
-                quizId,
-                score,
-                completedAt: new Date()
-            });
-        }
-        
-        return this.save();
-    }
-    
-    throw new Error('Course progress not found');
 };
 
 module.exports = mongoose.model('User', userSchema); 

@@ -438,5 +438,12 @@
         });
     </script>
 
+    <script>
+        // 상세페이지 조회수 증가
+        (function() {
+            fetch('/.netlify/functions/views?infographic=induction-vs-highlight.html', { method: 'POST' });
+        })();
+    </script>
+
 </body>
 </html>

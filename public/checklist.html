@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사업가 기질 체크리스트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .checklist-card { max-width: 700px; margin: 2rem auto; background: var(--color-surface-light); border-radius: 20px; box-shadow: var(--shadow-lg); padding: 2rem; }
+        .checklist-title { color: var(--color-primary); font-weight: bold; font-size: 2rem; margin-bottom: 1.5rem; }
+        .checklist-item { margin-bottom: 1.2rem; }
+        .score-input { width: 70px; display: inline-block; margin-left: 1rem; }
+        .result-table { margin-top: 2rem; }
+        .percentile { font-size: 1.1rem; color: var(--color-primary-light); }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">요알남</a>
+        </div>
+    </nav>
+    <div class="checklist-card">
+        <div class="checklist-title">사업가 기질 체크리스트</div>
+        <form id="checklistForm">
+            <div class="checklist-item">1. 감기나 지병으로 고생한 게 살면서 몇 번 안 될 정도로 웬만해서는 잘 아프지 않고 건강하다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">2. 필요하면 2~3일쯤 밤새 일하는 것 정도는 가능하다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">3. 무언가를 배우는데 굳이 선생님이나 학원, 강의가 필요치 않고 혼자서도 어떻게든 잘 터득한다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">4. 문제를  마주하면  무기력하게  회피하기보다는  빠르게  집중하여  해결한다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">5. 무엇이 이득인지 판단하는 것이나, 원가, 인건비, 영업이익 등 각종 숫자 계산에 고루 강하다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">6. 정신적으로 힘든 일이 있어도 크게 스트레스를 받지 않거나, 아무리 힘들 어도 할 일은 한다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">7. 강한  자존심,  철학,  신념이  있더라도,  포기해야  할  때를  알고  과감하게 미련 없이 포기한다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">8. 위기가 오고 있음을 빠르게 감지하고, 적합한 조치를 신속, 정확하게 흔 들림 없이 즉시 실행한다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">9. 성공을 해내야만 하는 본인만의 명확하고 강렬한 동기, 명분, 야망이 있 다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <div class="checklist-item">10. 위의 각 항목에 본인이 해당하는지 아닌지를 헷갈리지 않고 5초 안에 판 단할 수 있다.
+                <input type="number" min="1" max="10" class="form-control score-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3 w-100">결과 확인</button>
+        </form>
+        <div id="resultSection" style="display:none;">
+            <h4 class="mt-4">결과표</h4>
+            <table class="table table-dark result-table">
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>내 점수</th>
+                        <th>하위 %</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTableBody"></tbody>
+                <tfoot>
+                    <tr style="font-weight:bold;">
+                        <td>총점</td>
+                        <td id="totalScore"></td>
+                        <td id="totalPercentile"></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="percentile" id="percentileComment"></div>
+            <button class="btn btn-secondary mt-3 w-100" onclick="location.reload()">다시하기</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/checklist.js"></script>
+</body>
+</html> 

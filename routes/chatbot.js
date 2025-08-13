@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { Pinecone } = require('@pinecone-database/pinecone');
 require('dotenv').config();
 
 // Gemini API 초기화
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// Pinecone 초기화
-const pinecone = new Pinecone({
-    apiKey: process.env.PINECONE_API_KEY
-});
 
 // 외식업 관련 지식 데이터베이스 (실제로는 Pinecone에 저장된 데이터)
 const restaurantKnowledge = [
@@ -96,14 +90,6 @@ router.post('/chat', async (req, res) => {
 // 관련 지식 검색 함수
 async function searchRelevantKnowledge(query) {
     try {
-        // Pinecone 벡터 검색 (실제 구현 시)
-        // const index = pinecone.index(process.env.PINECONE_INDEX);
-        // const queryResponse = await index.query({
-        //     vector: await textToVector(query),
-        //     topK: 3,
-        //     includeMetadata: true
-        // });
-        
         // 현재는 키워드 기반 검색으로 대체
         const keywords = extractKeywords(query);
         const relevantDocs = restaurantKnowledge.filter(doc => 

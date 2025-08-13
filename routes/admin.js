@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Course = require('../models/Course');
-const Quiz = require('../models/Quiz');
 const { protect, authorize } = require('../middleware/auth');
 
 // 관리자 권한 확인 미들웨어
@@ -13,37 +11,15 @@ router.use(authorize('admin'));
 router.get('/dashboard', async (req, res, next) => {
     try {
         const totalUsers = await User.countDocuments();
-        const totalCourses = await Course.countDocuments();
-        const totalQuizzes = await Quiz.countDocuments();
-        
         const recentUsers = await User.find()
             .sort('-createdAt')
             .limit(5)
             .select('name email createdAt');
-            
-        const recentCourses = await Course.find()
-            .sort('-createdAt')
-            .limit(5)
-            .select('title category createdAt');
-            
-        const courseStats = await Course.aggregate([
-            {
-                $group: {
-                    _id: '$category',
-                    count: { $sum: 1 }
-                }
-            }
-        ]);
-
         res.json({
             success: true,
             data: {
                 totalUsers,
-                totalCourses,
-                totalQuizzes,
-                recentUsers,
-                recentCourses,
-                courseStats
+                recentUsers
             }
         });
     } catch (error) {
@@ -124,92 +100,6 @@ router.delete('/users/:id', async (req, res, next) => {
     }
 });
 
-// 교육과정 관리
-router.get('/courses', async (req, res, next) => {
-    try {
-        const courses = await Course.find()
-            .populate('author', 'name')
-            .sort('-createdAt');
-
-        res.json({
-            success: true,
-            data: courses
-        });
-    } catch (error) {
-        next(error);
-    }
-});
-
-// 교육과정 게시 상태 변경
-router.put('/courses/:id/publish', async (req, res, next) => {
-    try {
-        const { isPublished } = req.body;
-        
-        const course = await Course.findByIdAndUpdate(
-            req.params.id,
-            { isPublished },
-            { new: true }
-        );
-
-        if (!course) {
-            return res.status(404).json({
-                success: false,
-                message: '교육과정을 찾을 수 없습니다.'
-            });
-        }
-
-        res.json({
-            success: true,
-            data: course
-        });
-    } catch (error) {
-        next(error);
-    }
-});
-
-// 퀴즈 관리
-router.get('/quizzes', async (req, res, next) => {
-    try {
-        const quizzes = await Quiz.find()
-            .populate('course', 'title')
-            .sort('-createdAt');
-
-        res.json({
-            success: true,
-            data: quizzes
-        });
-    } catch (error) {
-        next(error);
-    }
-});
-
-// 퀴즈 게시 상태 변경
-router.put('/quizzes/:id/publish', async (req, res, next) => {
-    try {
-        const { isPublished } = req.body;
-        
-        const quiz = await Quiz.findByIdAndUpdate(
-            req.params.id,
-            { isPublished },
-            { new: true }
-        );
-
-        if (!quiz) {
-            return res.status(404).json({
-                success: false,
-                message: '퀴즈를 찾을 수 없습니다.'
-            });
-        }
-
-        res.json({
-            success: true,
-            data: quiz
-        });
-    } catch (error) {
-        next(error);
-    }
-});
-
 // 학습 통계
 router.get('/statistics', async (req, res, next) => {
     try {
@@ -231,44 +121,10 @@ router.get('/statistics', async (req, res, next) => {
             }
         ]);
 
-        const courseStats = await Course.aggregate([
-            {
-                $group: {
-                    _id: '$category',
-                    count: { $sum: 1 },
-                    totalDuration: { $sum: '$duration' }
-                }
-            }
-        ]);
-
-        const quizStats = await Quiz.aggregate([
-            {
-                $unwind: '$attempts'
-            },
-            {
-                $group: {
-                    _id: '$_id',
-                    averageScore: { $avg: '$attempts.score' },
-                    totalAttempts: { $sum: 1 },
-                    passCount: {
-                        $sum: {
-                            $cond: [
-                                { $gte: ['$attempts.score', '$passingScore'] },
-                                1,
-                                0
-                            ]
-                        }
-                    }
-                }
-            }
-        ]);
-
         res.json({
             success: true,
             data: {
-                userStats: userStats[0],
-                courseStats,
-                quizStats
+                userStats: userStats[0]
             }
         });
     } catch (error) {
