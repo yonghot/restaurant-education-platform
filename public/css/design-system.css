@@ -8,30 +8,32 @@
    CSS Variables - Design Tokens
    ============================================ */
 :root {
-  /* Primary Colors */
-  --color-bg-primary: #09090b;
-  --color-bg-secondary: #18181b;
-  --color-bg-tertiary: #27272a;
-  --color-bg-elevated: #1c1c1f;
+  /* Primary Colors - Black Theme */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-bg-tertiary: #1f1f1f;
+  --color-bg-elevated: #1a1a1a;
   
   /* Text Colors */
-  --color-text-primary: #fafafa;
-  --color-text-secondary: #a1a1aa;
-  --color-text-tertiary: #71717a;
-  --color-text-quaternary: #52525b;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b3b3b3;
+  --color-text-tertiary: #808080;
+  --color-text-quaternary: #666666;
   
-  /* Accent Colors */
-  --color-accent-primary: #3b82f6;
-  --color-accent-hover: #2563eb;
-  --color-accent-active: #1d4ed8;
+  /* Accent Colors - Orange Theme */
+  --color-accent-primary: #ff6b35;
+  --color-accent-hover: #ff5722;
+  --color-accent-active: #e64a19;
+  --color-accent-light: #ff8c42;
+  --color-accent-dark: #cc5528;
   --color-success: #22c55e;
   --color-warning: #f97316;
   --color-error: #ef4444;
   
   /* Border Colors */
-  --color-border-primary: #27272a;
-  --color-border-secondary: #3f3f46;
-  --color-border-hover: #52525b;
+  --color-border-primary: #2a2a2a;
+  --color-border-secondary: #404040;
+  --color-border-hover: #595959;
   
   /* Typography */
   --font-family-primary: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;

@@ -3,17 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전기 vs. 도시가스: 에너지 비용 인포그래픽 (다크모드)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>전기 vs. 도시가스: 에너지 비용 인포그래픽 - 요알남</title>
+    
+    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Design System -->
+    <link href="../css/design-system.css" rel="stylesheet">
     <style>
+        /* Page-specific styles */
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
+            font-family: 'Noto Sans KR', var(--font-family-primary);
+        }
+        
+        .page-header {
+            padding: var(--spacing-24) 0 var(--spacing-16);
+            background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+            border-bottom: 1px solid var(--color-border-primary);
+            margin-top: 64px;
+        }
+        
+        .infographic-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-8) var(--spacing-6);
         }
         .chart-container {
             position: relative;
@@ -29,43 +50,42 @@
                 height: 450px;
             }
         }
-        .card {
-            background-color: #1e1e1e;
-            border-radius: 0.75rem;
-            border: 1px solid rgba(255, 152, 0, 0.2);
-            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.4);
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .infographic-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-6);
+            transition: all var(--transition-base);
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px -3px rgba(255, 152, 0, 0.15);
+        .infographic-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--color-accent-primary);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.15);
         }
         .text-gradient {
-            background-image: linear-gradient(to right, #ff9800, #ffb74d);
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-fill-color: transparent;
         }
         .kpi-value {
-            font-weight: 900;
-            font-size: 2.5rem;
-            line-height: 1.2;
-            color: #ff9800;
+            font-weight: var(--font-weight-bold);
+            font-size: var(--font-size-3xl);
+            line-height: var(--line-height-tight);
+            color: var(--color-accent-primary);
         }
         .flowchart-step {
-            border: 2px solid #ff9800;
-            padding: 1rem;
-            border-radius: 0.5rem;
+            border: 2px solid var(--color-accent-primary);
+            padding: var(--spacing-4);
+            border-radius: var(--radius-lg);
             text-align: center;
             position: relative;
-            background-color: #2a2a2a;
+            background: var(--color-bg-tertiary);
         }
         .flowchart-arrow::after {
             content: '▼';
-            font-size: 1.5rem;
-            color: #ff9800;
+            font-size: var(--font-size-xl);
+            color: var(--color-accent-primary);
             position: absolute;
             left: 50%;
             bottom: -2rem;
@@ -73,35 +93,98 @@
         }
         .btn-infographic {
             display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: #2a2a2a;
-            color: #ff7c43;
-            border-radius: 9999px;
-            font-weight: 700;
-            border: 1px solid #ff7c43;
-            transition: background 0.2s, color 0.2s;
-            margin: 0.25rem;
+            padding: var(--spacing-3) var(--spacing-6);
+            background: var(--color-bg-tertiary);
+            color: var(--color-accent-primary);
+            border-radius: var(--radius-full);
+            font-weight: var(--font-weight-semibold);
+            border: 1px solid var(--color-accent-primary);
+            transition: all var(--transition-fast);
+            margin: var(--spacing-2);
+            text-decoration: none;
         }
         .btn-infographic:hover {
-            background: #ff7c43;
-            color: #fff;
+            background: var(--color-accent-primary);
+            color: white;
+        }
+        
+        /* Grid layouts */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="text-gray-200">
-    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
-        <!-- 인포그래픽 목록으로 돌아가기 (상단) -->
-        <a href="/infographics" class="inline-block mb-8 text-[#FF8C00] hover:text-[#FF4500] transition-colors duration-300">
-            <i class="fas fa-arrow-left mr-2"></i>인포그래픽 목록으로
-        </a>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-utensils"></i>
+                <span>요알남</span>
+            </a>
+            
+            <ul class="navbar-menu">
+                <li>
+                    <a href="/" class="navbar-link">
+                        <i class="fas fa-home"></i>
+                        <span>홈</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../infographics.html" class="navbar-link active">
+                        <i class="fas fa-chart-line"></i>
+                        <span>인포그래픽</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../calculator/index.html" class="navbar-link">
+                        <i class="fas fa-calculator"></i>
+                        <span>창업 계산기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../checklist.html" class="navbar-link">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>체크리스트</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../chatbot.html" class="navbar-link">
+                        <i class="fas fa-robot"></i>
+                        <span>AI 챗봇</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
-        <header class="bg-black/50 backdrop-blur-sm shadow-lg sticky top-0 z-50">
-            <div class="container mx-auto px-6 py-4">
-                <h1 class="text-2xl md:text-3xl font-bold text-center text-gradient">전기 vs. 도시가스: 당신의 지갑을 위한 진짜 에너지 승자는?</h1>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title animate-fadeIn text-gradient">전기 vs. 도시가스: 당신의 지갑을 위한 진짜 에너지 승자는?</h1>
+            <div class="mt-4">
+                <a href="../infographics.html" class="btn-infographic">
+                    <i class="fas fa-arrow-left"></i> 인포그래픽 목록으로
+                </a>
             </div>
-        </header>
+        </div>
+    </section>
 
-        <main class="container mx-auto px-6 py-12">
+    <!-- Main Content -->
+    <div class="infographic-container">
 
             <section id="intro" class="text-center mb-16">
                 <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-400">
@@ -111,8 +194,8 @@
 
             <section id="fee-system" class="mb-20">
                 <h2 class="text-3xl font-bold text-center mb-10">핵심은 다른 요금 체계: 누진제 vs 단일 요금제</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card">
+                <div class="info-grid">
+                    <div class="infographic-card">
                         <h3 class="text-2xl font-bold mb-4 text-center">⚡️ 전기: 사용량이 늘수록 비싸지는 <span class="text-gradient">계단식 구조</span></h3>
                         <p class="text-center text-gray-400 mb-6">전기 요금은 '누진제'가 적용되어, 특정 사용량을 초과하면 kWh당 단가가 급격히 상승합니다. 에너지 절약을 유도하지만, 자칫하면 '요금 폭탄'을 맞을 수 있습니다.</p>
                         <div class="space-y-8">
@@ -131,7 +214,7 @@
                         </div>
                         <p class="text-xs text-gray-500 mt-4 text-center">*주택용 저압, 기타계절 기준 전력량 요금</p>
                     </div>
-                    <div class="card">
+                    <div class="infographic-card">
                         <h3 class="text-2xl font-bold mb-4 text-center">🔥 도시가스: 예측 가능한 <span class="text-gradient">단일 요금제</span></h3>
                         <p class="text-center text-gray-400 mb-6">도시가스는 사용량에 관계없이 MJ당 요금이 거의 일정합니다. 특히 난방 등으로 사용량이 많은 겨울철에도 요금 예측이 쉬워 안정적인 비용 관리가 가능합니다.</p>
                         <div class="flex flex-col items-center justify-center h-full pt-6">
@@ -187,19 +270,19 @@
             <section id="recommendations">
                 <h2 class="text-3xl font-bold text-center mb-10">소비자를 위한 스마트 에너지 전략</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="card">
+                    <div class="infographic-card">
                         <h3 class="font-bold text-xl mb-2 text-orange-400">1. 난방/온수는 도시가스</h3>
                         <p class="text-gray-400">에너지 소비가 가장 큰 난방과 온수는 단위당 비용이 저렴한 도시가스 기반 시스템(가스 보일러 등)을 사용하는 것이 절대적으로 유리합니다.</p>
                     </div>
-                    <div class="card">
+                    <div class="infographic-card">
                         <h3 class="font-bold text-xl mb-2 text-orange-400">2. 누진 구간 경계하기</h3>
                         <p class="text-gray-400">전기 사용량을 주기적으로 확인하고, 2단계(200kWh), 3단계(400kWh) 누진 구간을 넘지 않도록 여름철 냉방 등을 전략적으로 사용하세요.</p>
                     </div>
-                    <div class="card">
+                    <div class="infographic-card">
                         <h3 class="font-bold text-xl mb-2 text-orange-400">3. 고효율 가전제품 투자</h3>
                         <p class="text-gray-400">에너지 소비 효율 1등급 가전제품으로 교체하는 것은 장기적으로 전기와 가스 요금 모두를 절약하는 가장 확실한 방법입니다.</p>
                     </div>
-                    <div class="card">
+                    <div class="infographic-card">
                         <h3 class="font-bold text-xl mb-2 text-orange-400">4. 정책 변화 주시하기</h3>
                         <p class="text-gray-400">동결된 전기 요금은 언젠가 인상될 가능성이 높습니다. 정부의 에너지 정책 발표에 지속적으로 관심을 가지는 것이 중요합니다.</p>
                     </div>

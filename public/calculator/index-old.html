@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>창업 비용 계산기 - 요알남</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System -->
+    <link href="../css/design-system.css" rel="stylesheet">
+    
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* Page-specific styles */
+        .page-header {
+            padding: var(--spacing-24) 0 var(--spacing-16);
+            background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+            border-bottom: 1px solid var(--color-border-primary);
+            margin-top: 64px;
+        }
+        
+        .calculator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-8) var(--spacing-6);
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+        
+        @media (max-width: 968px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .calculator-section {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-6);
+            transition: all var(--transition-base);
+        }
+        
+        .calculator-section:hover {
+            border-color: var(--color-accent-primary);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.1);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-5);
+            padding-bottom: var(--spacing-3);
+            border-bottom: 1px solid var(--color-border-primary);
+        }
+        
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-accent-primary);
+            border-radius: var(--radius-lg);
+            color: white;
+            font-size: var(--font-size-lg);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+        }
+        
+        .input-group {
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .input-label {
+            display: block;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: var(--spacing-3) var(--spacing-4);
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--radius-md);
+            color: var(--color-text-primary);
+            font-size: var(--font-size-base);
+            transition: all var(--transition-fast);
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--color-accent-primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .input-suffix {
+            position: absolute;
+            right: var(--spacing-4);
+            color: var(--color-text-tertiary);
+            font-size: var(--font-size-sm);
+            pointer-events: none;
+        }
+        
+        .tooltip-icon {
+            margin-left: var(--spacing-2);
+            color: var(--color-text-tertiary);
+            cursor: help;
+            font-size: var(--font-size-sm);
+        }
+        
+        .tooltip-icon:hover {
+            color: var(--color-accent-primary);
+        }
+        
+        /* Results Section */
+        .results-section {
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-accent-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-8);
+            margin-top: var(--spacing-8);
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .results-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-accent-primary);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .result-card {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-4);
+            text-align: center;
+        }
+        
+        .result-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-tertiary);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .result-value {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+        }
+        
+        .result-value.accent {
+            color: var(--color-accent-primary);
+        }
+        
+        .result-value.success {
+            color: var(--color-success);
+        }
+        
+        .result-value.warning {
+            color: var(--color-warning);
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-3);
+            justify-content: center;
+            margin-top: var(--spacing-6);
+        }
+        
+        .btn-calculate {
+            padding: var(--spacing-3) var(--spacing-6);
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .btn-secondary {
+            padding: var(--spacing-3) var(--spacing-6);
+            background: transparent;
+            color: var(--color-accent-primary);
+            border: 2px solid var(--color-accent-primary);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-accent-primary);
+            color: white;
+        }
+        
+        /* Reference Table */
+        .reference-section {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-6);
+            margin-top: var(--spacing-8);
+        }
+        
+        .reference-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-4);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+        }
+        
+        .reference-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+        }
+        
+        .reference-table thead {
+            background: var(--color-bg-tertiary);
+        }
+        
+        .reference-table th {
+            padding: var(--spacing-3) var(--spacing-4);
+            text-align: left;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-secondary);
+            border-bottom: 1px solid var(--color-border-primary);
+        }
+        
+        .reference-table td {
+            padding: var(--spacing-3) var(--spacing-4);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-primary);
+            border-bottom: 1px solid var(--color-border-primary);
+        }
+        
+        .reference-table tbody tr:hover {
+            background: var(--color-bg-tertiary);
+        }
+        
+        .reference-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: var(--spacing-1) var(--spacing-2);
+            background: var(--color-accent-primary);
+            color: white;
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        /* Progress Indicator */
+        .progress-section {
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--color-bg-tertiary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-light));
+            border-radius: var(--radius-full);
+            transition: width var(--transition-slow);
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-3);
+        }
+        
+        .progress-step {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-tertiary);
+        }
+        
+        .progress-step.active {
+            color: var(--color-accent-primary);
+            font-weight: var(--font-weight-medium);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-utensils"></i>
+                <span>요알남</span>
+            </a>
+            
+            <ul class="navbar-menu">
+                <li>
+                    <a href="/" class="navbar-link">
+                        <i class="fas fa-home"></i>
+                        <span>홈</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../infographics.html" class="navbar-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>인포그래픽</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html" class="navbar-link active">
+                        <i class="fas fa-calculator"></i>
+                        <span>창업 계산기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../checklist.html" class="navbar-link">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>체크리스트</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title animate-fadeIn">외식업 창업 비용 계산기</h1>
+            <p class="page-subtitle animate-fadeIn">정확한 창업 비용 산출과 손익분기점 분석</p>
+        </div>
+    </section>
+
+    <!-- Calculator Container -->
+    <div class="calculator-container">
+        <!-- Progress Indicator -->
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 25%"></div>
+            </div>
+            <div class="progress-steps">
+                <span class="progress-step active">초기 투자</span>
+                <span class="progress-step">운영 비용</span>
+                <span class="progress-step">매출 예상</span>
+                <span class="progress-step">결과 분석</span>
+            </div>
+        </div>
+
+        <!-- Calculator Grid -->
+        <div class="calculator-grid">
+            <!-- Initial Investment Section -->
+            <div class="calculator-section animate-fadeIn">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h2 class="section-title">초기 투자 비용</h2>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        보증금
+                        <i class="fas fa-info-circle tooltip-icon" title="임대 보증금"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="deposit" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        권리금
+                        <i class="fas fa-info-circle tooltip-icon" title="기존 점포 인수 비용"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="premium" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        인테리어 비용
+                        <i class="fas fa-info-circle tooltip-icon" title="내부 공사 및 디자인 비용"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="interior" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        주방 설비
+                        <i class="fas fa-info-circle tooltip-icon" title="조리 기구 및 설비 구매 비용"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="equipment" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        기타 초기 비용
+                        <i class="fas fa-info-circle tooltip-icon" title="간판, 홍보물, 식기류 등"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="otherInitial" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Operating Cost Section -->
+            <div class="calculator-section animate-fadeIn">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="section-title">월 운영 비용</h2>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        월세
+                        <i class="fas fa-info-circle tooltip-icon" title="매월 지불하는 임대료"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="rent" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        인건비
+                        <i class="fas fa-info-circle tooltip-icon" title="직원 급여 총액"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="labor" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        재료비
+                        <i class="fas fa-info-circle tooltip-icon" title="식재료 구매 비용"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="materials" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        공과금
+                        <i class="fas fa-info-circle tooltip-icon" title="전기, 가스, 수도 등"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="utilities" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        기타 운영비
+                        <i class="fas fa-info-circle tooltip-icon" title="마케팅, 소모품 등"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="otherMonthly" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">만원</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expected Revenue Section -->
+            <div class="calculator-section animate-fadeIn">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h2 class="section-title">예상 매출</h2>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        일 평균 고객 수
+                        <i class="fas fa-info-circle tooltip-icon" title="하루 평균 방문 고객 수"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="dailyCustomers" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">명</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        객단가
+                        <i class="fas fa-info-circle tooltip-icon" title="고객 1인당 평균 결제 금액"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="avgPrice" placeholder="0" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">원</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        월 영업일수
+                        <i class="fas fa-info-circle tooltip-icon" title="한 달 평균 영업 일수"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="businessDays" placeholder="25" value="25" onchange="formatNumber(this); calculate()">
+                        <span class="input-suffix">일</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Goals Section -->
+            <div class="calculator-section animate-fadeIn">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h2 class="section-title">재무 목표</h2>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        목표 순이익률
+                        <i class="fas fa-info-circle tooltip-icon" title="매출 대비 목표 순이익 비율"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="targetProfit" placeholder="20" value="20" onchange="calculate()">
+                        <span class="input-suffix">%</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">
+                        투자 회수 기간
+                        <i class="fas fa-info-circle tooltip-icon" title="초기 투자금 회수 목표 기간"></i>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" class="input-field" id="paybackPeriod" placeholder="24" value="24" onchange="calculate()">
+                        <span class="input-suffix">개월</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-calculate" onclick="calculate()">
+                <i class="fas fa-calculator"></i> 계산하기
+            </button>
+            <button class="btn-secondary" onclick="resetCalculator()">
+                <i class="fas fa-redo"></i> 초기화
+            </button>
+            <button class="btn-secondary" onclick="exportPDF()">
+                <i class="fas fa-file-pdf"></i> PDF 저장
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results" style="display: none;">
+            <div class="results-header">
+                <h2 class="results-title">
+                    <i class="fas fa-chart-pie"></i> 창업 비용 분석 결과
+                </h2>
+            </div>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-label">총 초기 투자금</div>
+                    <div class="result-value accent" id="totalInitial">0</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">월 운영비용</div>
+                    <div class="result-value" id="totalMonthly">0</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">예상 월 매출</div>
+                    <div class="result-value success" id="monthlyRevenue">0</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">예상 월 순이익</div>
+                    <div class="result-value" id="monthlyProfit">0</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">손익분기점</div>
+                    <div class="result-value warning" id="breakeven">0</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-label">투자 회수 기간</div>
+                    <div class="result-value" id="roi">0</div>
+                </div>
+            </div>
+            
+            <div class="result-analysis" id="analysis">
+                <!-- Analysis will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Reference Table -->
+        <div class="reference-section">
+            <h3 class="reference-title">
+                <i class="fas fa-info-circle"></i>
+                업종별 평균 창업 비용 참고
+            </h3>
+            <table class="reference-table">
+                <thead>
+                    <tr>
+                        <th>업종</th>
+                        <th>평균 초기 투자</th>
+                        <th>평균 월 운영비</th>
+                        <th>평균 객단가</th>
+                        <th>손익분기점</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>치킨/피자</td>
+                        <td>8,000~15,000만원</td>
+                        <td>1,500~2,500만원</td>
+                        <td>25,000원</td>
+                        <td>6~12개월</td>
+                    </tr>
+                    <tr>
+                        <td>카페/디저트</td>
+                        <td>5,000~10,000만원</td>
+                        <td>1,000~1,800만원</td>
+                        <td>8,000원</td>
+                        <td>8~15개월</td>
+                    </tr>
+                    <tr>
+                        <td>한식당</td>
+                        <td>7,000~12,000만원</td>
+                        <td>1,200~2,000만원</td>
+                        <td>12,000원</td>
+                        <td>10~18개월</td>
+                    </tr>
+                    <tr>
+                        <td>분식/김밥</td>
+                        <td>3,000~6,000만원</td>
+                        <td>800~1,500만원</td>
+                        <td>6,000원</td>
+                        <td>6~10개월</td>
+                    </tr>
+                    <tr>
+                        <td>고깃집</td>
+                        <td>10,000~20,000만원</td>
+                        <td>2,000~3,500만원</td>
+                        <td>35,000원</td>
+                        <td>12~24개월</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 요알남. 모든 권리 보유.</p>
+                <div class="footer-links">
+                    <a href="mailto:contact@yoalnam.com">contact@yoalnam.com</a>
+                    <a href="#">이용약관</a>
+                    <a href="#">개인정보처리방침</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Number formatting with thousand separator
+        function formatNumber(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+            if (value) {
+                input.value = parseInt(value).toLocaleString('ko-KR');
+            }
+        }
+        
+        // Parse formatted number
+        function parseNumber(value) {
+            return parseInt(value.replace(/[^\d]/g, '') || 0);
+        }
+        
+        // Calculate results
+        function calculate() {
+            // Get input values
+            const deposit = parseNumber(document.getElementById('deposit').value);
+            const premium = parseNumber(document.getElementById('premium').value);
+            const interior = parseNumber(document.getElementById('interior').value);
+            const equipment = parseNumber(document.getElementById('equipment').value);
+            const otherInitial = parseNumber(document.getElementById('otherInitial').value);
+            
+            const rent = parseNumber(document.getElementById('rent').value);
+            const labor = parseNumber(document.getElementById('labor').value);
+            const materials = parseNumber(document.getElementById('materials').value);
+            const utilities = parseNumber(document.getElementById('utilities').value);
+            const otherMonthly = parseNumber(document.getElementById('otherMonthly').value);
+            
+            const dailyCustomers = parseNumber(document.getElementById('dailyCustomers').value);
+            const avgPrice = parseNumber(document.getElementById('avgPrice').value);
+            const businessDays = parseNumber(document.getElementById('businessDays').value) || 25;
+            
+            // Calculate totals
+            const totalInitial = deposit + premium + interior + equipment + otherInitial;
+            const totalMonthly = rent + labor + materials + utilities + otherMonthly;
+            const monthlyRevenue = (dailyCustomers * avgPrice * businessDays) / 10000; // Convert to 만원
+            const monthlyProfit = monthlyRevenue - totalMonthly;
+            
+            // Calculate breakeven and ROI
+            let breakeven = 0;
+            let roi = 0;
+            
+            if (monthlyProfit > 0) {
+                breakeven = Math.ceil(totalMonthly / (monthlyRevenue / 100)); // As percentage
+                roi = Math.ceil(totalInitial / monthlyProfit); // Months
+            }
+            
+            // Update progress bar
+            let progress = 25;
+            if (totalInitial > 0) progress += 25;
+            if (totalMonthly > 0) progress += 25;
+            if (monthlyRevenue > 0) progress += 25;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Display results
+            if (totalInitial > 0 || totalMonthly > 0 || monthlyRevenue > 0) {
+                document.getElementById('results').style.display = 'block';
+                
+                document.getElementById('totalInitial').textContent = totalInitial.toLocaleString('ko-KR') + '만원';
+                document.getElementById('totalMonthly').textContent = totalMonthly.toLocaleString('ko-KR') + '만원';
+                document.getElementById('monthlyRevenue').textContent = monthlyRevenue.toLocaleString('ko-KR') + '만원';
+                document.getElementById('monthlyProfit').textContent = monthlyProfit.toLocaleString('ko-KR') + '만원';
+                document.getElementById('breakeven').textContent = breakeven + '%';
+                document.getElementById('roi').textContent = roi > 0 ? roi + '개월' : '계산 불가';
+                
+                // Color code profit
+                const profitElement = document.getElementById('monthlyProfit');
+                if (monthlyProfit > 0) {
+                    profitElement.className = 'result-value success';
+                } else if (monthlyProfit < 0) {
+                    profitElement.className = 'result-value warning';
+                } else {
+                    profitElement.className = 'result-value';
+                }
+            }
+        }
+        
+        // Reset calculator
+        function resetCalculator() {
+            document.querySelectorAll('.input-field').forEach(input => {
+                if (input.id !== 'businessDays' && input.id !== 'targetProfit' && input.id !== 'paybackPeriod') {
+                    input.value = '';
+                }
+            });
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('progressBar').style.width = '25%';
+        }
+        
+        // Export to PDF
+        function exportPDF() {
+            const element = document.getElementById('results');
+            if (element.style.display === 'none') {
+                alert('먼저 계산을 실행해주세요.');
+                return;
+            }
+            
+            const opt = {
+                margin: 1,
+                filename: '창업비용분석_' + new Date().toLocaleDateString('ko-KR') + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+            });
+        }
+        
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>

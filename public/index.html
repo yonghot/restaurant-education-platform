@@ -8,109 +8,432 @@
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Design System -->
-    <link href="css/design-system.css" rel="stylesheet">
+    <!-- shadcn/ui inspired Design System -->
+    <link href="css/shadcn-design.css" rel="stylesheet">
     
     <style>
-        /* Page-specific styles */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.125rem 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            background: var(--color-accent-primary);
-            color: white;
-            border-radius: var(--radius-full);
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
-            margin-left: 0.5rem;
+        /* Custom styles for this page */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
         
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--secondary)) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+        
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: hsl(var(--primary) / 0.1);
+            color: hsl(var(--primary));
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Features Grid */
+        .features {
+            padding: 4rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            background: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-description {
+            font-size: 1.125rem;
+            color: hsl(var(--muted-foreground));
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid hsl(var(--border));
+            background: hsl(var(--card));
+            transition: all 200ms;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                hsl(var(--primary)), 
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 500ms;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px hsl(var(--foreground) / 0.1);
+            border-color: hsl(var(--primary) / 0.3);
+        }
+        
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .feature-icon {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: hsl(var(--primary) / 0.1);
+            color: hsl(var(--primary));
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: hsl(var(--muted-foreground));
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: 4rem 0;
+            background: hsl(var(--secondary) / 0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: hsl(var(--primary));
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--secondary)) 100%);
+        }
+        
+        .cta-content {
+            text-align: center;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-description {
+            font-size: 1.125rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid hsl(var(--border));
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 150ms;
+        }
+        
+        .footer-link:hover {
+            color: hsl(var(--foreground));
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .social-link {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            background: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            transition: all 150ms;
+        }
+        
+        .social-link:hover {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            transform: translateY(-2px);
+        }
+        
+        /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
-            padding: 0.5rem;
-            background: transparent;
-            border: none;
-            color: var(--color-text-primary);
-            cursor: pointer;
         }
         
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
+            .hero-title {
+                font-size: 2.5rem;
             }
+            
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: hsl(var(--background));
+                border-bottom: 1px solid hsl(var(--border));
+                padding: 1rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Animations */
+        .animate-in {
+            animation: fadeIn 600ms ease-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 100ms;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 200ms;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 300ms;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container navbar-container">
-            <a href="/" class="navbar-brand">
-                <i class="fas fa-utensils"></i>
-                <span>요알남</span>
-            </a>
-            
-            <ul class="navbar-menu">
-                <li>
-                    <a href="/" class="navbar-link active">
-                        <i class="fas fa-home"></i>
-                        <span>홈</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="infographics.html" class="navbar-link">
-                        <i class="fas fa-chart-line"></i>
-                        <span>인포그래픽</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="calculator/index.html" class="navbar-link">
-                        <i class="fas fa-calculator"></i>
-                        <span>창업 계산기</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="checklist.html" class="navbar-link">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>체크리스트</span>
-                    </a>
-                </li>
-            </ul>
-            
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+    <nav class="nav">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="/" class="nav-brand">
+                    <i class="fas fa-utensils"></i>
+                    <span>요알남</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link active">홈</a></li>
+                    <li><a href="infographics.html" class="nav-link">인포그래픽</a></li>
+                    <li><a href="calculator/index.html" class="nav-link">창업 계산기</a></li>
+                    <li><a href="checklist.html" class="nav-link">체크리스트</a></li>
+                    <li><a href="chatbot.html" class="nav-link">AI 챗봇</a></li>
+                </ul>
+                
+                <div class="flex items-center gap-2">
+                    <button class="btn btn-ghost btn-icon theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <button class="btn btn-ghost btn-icon mobile-menu-btn" aria-label="Menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content animate-fadeIn">
-                <h1 class="hero-title">
-                    외식업 성공의 모든 것
+            <div class="hero-content">
+                <div class="hero-badge animate-in">
+                    <i class="fas fa-sparkles"></i>
+                    <span>AI 기반 외식업 컨설팅</span>
+                </div>
+                
+                <h1 class="hero-title animate-in animate-delay-1">
+                    외식업 성공의<br>모든 것을 담다
                 </h1>
-                <p class="hero-subtitle">
-                    데이터 기반 인사이트, AI 컨설팅, 실전 계산기까지<br>
-                    외식업 창업과 운영을 위한 완벽한 솔루션
+                
+                <p class="hero-subtitle animate-in animate-delay-2">
+                    데이터 기반 인사이트부터 AI 컨설팅까지,<br>
+                    외식업 창업과 운영을 위한 완벽한 솔루션을 제공합니다
                 </p>
                 
-                <div class="hero-actions">
-                    <a href="infographics.html" class="btn btn-primary btn-lg">
+                <div class="hero-actions animate-in animate-delay-3">
+                    <a href="infographics.html" class="btn btn-default btn-lg">
                         <i class="fas fa-chart-line"></i>
                         인포그래픽 보기
                     </a>
-                    <a href="chatbot.html" class="btn btn-secondary btn-lg">
+                    <a href="chatbot.html" class="btn btn-outline btn-lg">
                         <i class="fas fa-robot"></i>
-                        AI 챗봇
-                        <span class="badge">Beta</span>
+                        AI 챗봇 시작하기
                     </a>
                 </div>
             </div>
@@ -120,65 +443,118 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Features</span>
+                <h2 class="section-title">강력한 기능들</h2>
+                <p class="section-description">
+                    외식업 창업부터 운영까지, 성공을 위한 모든 도구를 제공합니다
+                </p>
+            </div>
+            
             <div class="features-grid">
-                <div class="feature-card animate-fadeIn">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-pie"></i>
                     </div>
                     <h3 class="feature-title">데이터 인포그래픽</h3>
                     <p class="feature-description">
-                        외식업 트렌드와 시장 분석을 시각적으로 전달하는 인포그래픽으로 빠른 인사이트를 얻으세요.
+                        최신 외식업 트렌드와 시장 분석을 한눈에 볼 수 있는 시각화 자료를 제공합니다
                     </p>
                 </div>
                 
-                <div class="feature-card animate-fadeIn">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-robot"></i>
                     </div>
-                    <h3 class="feature-title">AI 컨설팅</h3>
+                    <h3 class="feature-title">AI 컨설팅 챗봇</h3>
                     <p class="feature-description">
-                        외식업 전문 AI가 실시간으로 창업과 운영에 관한 모든 질문에 답변해드립니다.
+                        Google Gemini 기반 AI가 실시간으로 외식업 관련 모든 질문에 답변합니다
                     </p>
                 </div>
                 
-                <div class="feature-card animate-fadeIn">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
-                    <h3 class="feature-title">창업 계산기</h3>
+                    <h3 class="feature-title">창업 비용 계산기</h3>
                     <p class="feature-description">
-                        투자금, 손익분기점, 수익률을 정확하게 계산하여 현실적인 사업 계획을 수립하세요.
+                        초기 투자금부터 손익분기점까지 정확한 계산으로 현실적인 사업 계획을 세우세요
                     </p>
                 </div>
                 
-                <div class="feature-card animate-fadeIn">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-clipboard-check"></i>
                     </div>
                     <h3 class="feature-title">체크리스트</h3>
                     <p class="feature-description">
-                        사업가 기질 진단부터 창업 준비 사항까지 체계적인 체크리스트를 제공합니다.
+                        창업 전 확인해야 할 모든 사항을 체계적으로 점검할 수 있습니다
                     </p>
                 </div>
                 
-                <div class="feature-card animate-fadeIn">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-book"></i>
+                        <i class="fas fa-book-open"></i>
                     </div>
                     <h3 class="feature-title">교육 콘텐츠</h3>
                     <p class="feature-description">
-                        실전 경험을 바탕으로 한 체계적인 교육 콘텐츠로 외식업 전문가가 되세요.
+                        실전 경험을 바탕으로 한 체계적인 교육 자료로 전문가가 되어보세요
                     </p>
                 </div>
                 
-                <div class="feature-card animate-fadeIn">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3 class="feature-title">커뮤니티</h3>
                     <p class="feature-description">
-                        외식업 창업자와 운영자들이 모여 경험을 공유하고 네트워킹하는 공간입니다.
+                        같은 꿈을 가진 창업자들과 경험을 공유하고 네트워킹할 수 있습니다
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1,000+</div>
+                    <div class="stat-label">활성 사용자</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">인포그래픽 자료</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">AI 컨설팅</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">만족도</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">지금 바로 시작하세요</h2>
+                <p class="cta-description">
+                    외식업 성공을 위한 첫걸음, 요알남과 함께 시작하세요.
+                    AI 기반 컨설팅과 데이터 분석으로 여러분의 꿈을 현실로 만들어드립니다.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="chatbot.html" class="btn btn-default btn-lg">
+                        무료로 시작하기
+                    </a>
+                    <a href="#" class="btn btn-outline btn-lg">
+                        더 알아보기
+                    </a>
                 </div>
             </div>
         </div>
@@ -188,26 +564,74 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>© 2025 요알남. 모든 권리 보유.</p>
+                <div>
+                    <div class="footer-brand">
+                        <i class="fas fa-utensils"></i>
+                        <span>요알남</span>
+                    </div>
+                    <p class="text-sm text-muted mt-2">
+                        © 2025 요알남. 모든 권리 보유.
+                    </p>
+                </div>
+                
                 <div class="footer-links">
-                    <a href="mailto:contact@yoalnam.com">contact@yoalnam.com</a>
-                    <a href="#">이용약관</a>
-                    <a href="#">개인정보처리방침</a>
+                    <a href="#" class="footer-link">회사 소개</a>
+                    <a href="#" class="footer-link">이용약관</a>
+                    <a href="#" class="footer-link">개인정보처리방침</a>
+                    <a href="mailto:contact@yoalnam.com" class="footer-link">문의하기</a>
+                </div>
+                
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navbarMenu = document.querySelector('.navbar-menu');
+        // Theme Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
         
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                navbarMenu.classList.toggle('active');
-            });
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
         }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            const isDark = body.classList.contains('dark');
+            
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
         
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -220,15 +644,36 @@
             });
         });
         
-        // Add scroll effect to navbar
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(9, 9, 11, 0.95)';
-            } else {
-                navbar.style.background = 'rgba(9, 9, 11, 0.8)';
-            }
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `all 600ms ease-out ${index * 100}ms`;
+            observer.observe(card);
+        });
+        
+        // Observe stat items
+        document.querySelectorAll('.stat-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `all 600ms ease-out ${index * 100}ms`;
+            observer.observe(item);
         });
     </script>
 </body>
-</html> 
+</html>

@@ -7,6 +7,11 @@
 
 [[redirects]]
   from = "/api/*"
+  to = "/.netlify/functions/server/:splat"
+  status = 200
+  
+[[redirects]]
+  from = "/api/chatbot/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
 

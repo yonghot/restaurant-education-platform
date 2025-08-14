@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요알남 - 외식업 교육 플랫폼</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Design System -->
+    <link href="css/design-system.css" rel="stylesheet">
+    
+    <style>
+        /* Page-specific styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--color-accent-primary);
+            color: white;
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            margin-left: 0.5rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--color-text-primary);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-utensils"></i>
+                <span>요알남</span>
+            </a>
+            
+            <ul class="navbar-menu">
+                <li>
+                    <a href="/" class="navbar-link active">
+                        <i class="fas fa-home"></i>
+                        <span>홈</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="infographics.html" class="navbar-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>인포그래픽</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calculator/index.html" class="navbar-link">
+                        <i class="fas fa-calculator"></i>
+                        <span>창업 계산기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="checklist.html" class="navbar-link">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>체크리스트</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate-fadeIn">
+                <h1 class="hero-title">
+                    외식업 성공의 모든 것
+                </h1>
+                <p class="hero-subtitle">
+                    데이터 기반 인사이트, AI 컨설팅, 실전 계산기까지<br>
+                    외식업 창업과 운영을 위한 완벽한 솔루션
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="infographics.html" class="btn btn-primary btn-lg">
+                        <i class="fas fa-chart-line"></i>
+                        인포그래픽 보기
+                    </a>
+                    <a href="chatbot.html" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-robot"></i>
+                        AI 챗봇
+                        <span class="badge">Beta</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="feature-title">데이터 인포그래픽</h3>
+                    <p class="feature-description">
+                        외식업 트렌드와 시장 분석을 시각적으로 전달하는 인포그래픽으로 빠른 인사이트를 얻으세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">AI 컨설팅</h3>
+                    <p class="feature-description">
+                        외식업 전문 AI가 실시간으로 창업과 운영에 관한 모든 질문에 답변해드립니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="feature-title">창업 계산기</h3>
+                    <p class="feature-description">
+                        투자금, 손익분기점, 수익률을 정확하게 계산하여 현실적인 사업 계획을 수립하세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="feature-title">체크리스트</h3>
+                    <p class="feature-description">
+                        사업가 기질 진단부터 창업 준비 사항까지 체계적인 체크리스트를 제공합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="feature-title">교육 콘텐츠</h3>
+                    <p class="feature-description">
+                        실전 경험을 바탕으로 한 체계적인 교육 콘텐츠로 외식업 전문가가 되세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card animate-fadeIn">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">커뮤니티</h3>
+                    <p class="feature-description">
+                        외식업 창업자와 운영자들이 모여 경험을 공유하고 네트워킹하는 공간입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 요알남. 모든 권리 보유.</p>
+                <div class="footer-links">
+                    <a href="mailto:contact@yoalnam.com">contact@yoalnam.com</a>
+                    <a href="#">이용약관</a>
+                    <a href="#">개인정보처리방침</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+            });
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(9, 9, 11, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(9, 9, 11, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html> 
