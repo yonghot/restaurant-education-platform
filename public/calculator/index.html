@@ -13,33 +13,52 @@
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- shadcn/ui inspired Design System -->
-    <link href="../css/shadcn-design.css" rel="stylesheet">
+    <!-- Dark Theme Design System -->
+    <link href="../css/dark-theme.css" rel="stylesheet">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
-        
         /* Page Header */
         .page-header {
             padding: 3rem 0 2rem;
-            background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--secondary) / 0.3) 100%);
-            border-bottom: 1px solid hsl(var(--border));
+            background: linear-gradient(135deg, var(--background) 0%, var(--background-tertiary) 100%);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, var(--color-orange-subtle) 0%, transparent 50%);
+            opacity: 0.3;
+        }
+        
+        .page-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
         
         .page-title {
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .page-description {
             font-size: 1.125rem;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-secondary);
         }
         
         /* Calculator Layout */
@@ -64,16 +83,35 @@
         
         /* Input Cards */
         .input-card {
-            background: hsl(var(--card));
-            border: 1px solid hsl(var(--border));
-            border-radius: var(--radius);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
-            transition: all 200ms;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
         }
         
         .input-card:hover {
-            box-shadow: 0 4px 12px hsl(var(--foreground) / 0.05);
-            border-color: hsl(var(--primary) / 0.3);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .input-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+        
+        .input-card:hover::before {
+            transform: translateX(100%);
         }
         
         .card-header {
@@ -82,7 +120,7 @@
             gap: 0.75rem;
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid hsl(var(--border));
+            border-bottom: 1px solid var(--border);
         }
         
         .card-icon {
@@ -91,15 +129,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: hsl(var(--primary) / 0.1);
-            color: hsl(var(--primary));
-            border-radius: calc(var(--radius) - 2px);
+            background: var(--color-orange-subtle);
+            color: var(--primary);
+            border-radius: var(--radius-md);
             font-size: 1.125rem;
         }
         
         .card-title {
             font-size: 1.125rem;
             font-weight: 600;
+            color: var(--text);
         }
         
         /* Form Groups */
@@ -111,29 +150,30 @@
             display: block;
             font-size: 0.875rem;
             font-weight: 500;
-            color: hsl(var(--foreground));
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
         
         .form-input {
             width: 100%;
-            padding: 0.625rem 0.875rem;
-            background: hsl(var(--background));
-            border: 1px solid hsl(var(--input));
-            border-radius: calc(var(--radius) - 2px);
+            padding: 0.75rem 1rem;
+            background: var(--color-dark-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             font-size: 0.9375rem;
-            color: hsl(var(--foreground));
-            transition: all 150ms;
+            color: var(--text);
+            transition: all var(--transition-base);
         }
         
         .form-input:focus {
             outline: none;
-            border-color: hsl(var(--ring));
-            box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+            border-color: var(--primary);
+            background: var(--color-dark-3);
+            box-shadow: 0 0 0 3px var(--color-orange-subtle);
         }
         
         .form-input::placeholder {
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
         }
         
         /* Input with Unit */
@@ -146,7 +186,7 @@
             right: 0.875rem;
             top: 50%;
             transform: translateY(-50%);
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
             font-size: 0.875rem;
             pointer-events: none;
         }
@@ -158,40 +198,42 @@
         /* Select */
         .form-select {
             width: 100%;
-            padding: 0.625rem 2.5rem 0.625rem 0.875rem;
-            background: hsl(var(--background));
-            border: 1px solid hsl(var(--input));
-            border-radius: calc(var(--radius) - 2px);
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            background: var(--color-dark-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             font-size: 0.9375rem;
-            color: hsl(var(--foreground));
+            color: var(--text);
             cursor: pointer;
-            transition: all 150ms;
+            transition: all var(--transition-base);
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L2 5h8z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff6b35' d='M6 9L2 5h8z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.875rem center;
         }
         
         .form-select:focus {
             outline: none;
-            border-color: hsl(var(--ring));
-            box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+            border-color: var(--primary);
+            background: var(--color-dark-3);
+            box-shadow: 0 0 0 3px var(--color-orange-subtle);
         }
         
         /* Helper Text */
         .helper-text {
             font-size: 0.75rem;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
             margin-top: 0.25rem;
         }
         
         /* Results Section */
         .results-section {
-            background: hsl(var(--card));
-            border: 2px solid hsl(var(--primary) / 0.2);
-            border-radius: var(--radius);
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-lg);
             padding: 2rem;
             margin-bottom: 2rem;
+            box-shadow: var(--shadow-glow);
         }
         
         .results-header {
@@ -203,10 +245,14 @@
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .results-subtitle {
-            color: hsl(var(--muted-foreground));
+            color: var(--text-secondary);
         }
         
         /* Result Cards */
@@ -218,29 +264,37 @@
         }
         
         .result-card {
-            background: hsl(var(--secondary) / 0.3);
+            background: var(--color-dark-4);
             padding: 1.25rem;
-            border-radius: calc(var(--radius) - 2px);
+            border-radius: var(--radius-md);
             text-align: center;
+            border: 1px solid var(--border);
+            transition: all var(--transition-base);
+        }
+        
+        .result-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
         }
         
         .result-label {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
         
         .result-value {
             font-size: 1.75rem;
             font-weight: 700;
-            color: hsl(var(--primary));
+            color: var(--primary);
         }
         
         .result-unit {
             font-size: 0.875rem;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-secondary);
             margin-left: 0.25rem;
         }
         
@@ -262,66 +316,68 @@
         
         .calculate-btn {
             padding: 0.875rem 2rem;
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
+            background: linear-gradient(135deg, var(--primary) 0%, var(--color-orange-hover) 100%);
+            color: var(--color-black);
             border: none;
-            border-radius: calc(var(--radius) - 2px);
+            border-radius: var(--radius-lg);
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 150ms;
+            transition: all var(--transition-base);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         
         .calculate-btn:hover {
-            background: hsl(var(--primary) / 0.9);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
         
         .reset-btn {
             padding: 0.875rem 2rem;
             background: transparent;
-            color: hsl(var(--foreground));
-            border: 1px solid hsl(var(--border));
-            border-radius: calc(var(--radius) - 2px);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             font-weight: 500;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 150ms;
+            transition: all var(--transition-base);
         }
         
         .reset-btn:hover {
-            background: hsl(var(--secondary));
-            border-color: hsl(var(--secondary));
+            background: var(--color-dark-4);
+            border-color: var(--primary);
+            color: var(--primary);
         }
         
         .export-btn {
             padding: 0.875rem 2rem;
-            background: hsl(var(--secondary));
-            color: hsl(var(--secondary-foreground));
-            border: none;
-            border-radius: calc(var(--radius) - 2px);
+            background: var(--color-dark-4);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             font-weight: 500;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 150ms;
+            transition: all var(--transition-base);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         
         .export-btn:hover {
-            background: hsl(var(--secondary) / 0.8);
+            background: var(--color-dark-5);
+            border-color: var(--primary);
+            color: var(--primary);
         }
         
         /* Info Box */
         .info-box {
-            background: hsl(var(--secondary) / 0.2);
-            border: 1px solid hsl(var(--border));
-            border-radius: calc(var(--radius) - 2px);
+            background: var(--color-orange-subtle);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-lg);
             padding: 1rem;
             margin-top: 1rem;
             display: flex;
@@ -330,7 +386,7 @@
         }
         
         .info-icon {
-            color: hsl(var(--primary));
+            color: var(--primary);
             font-size: 1.125rem;
             flex-shrink: 0;
         }
@@ -338,8 +394,12 @@
         .info-content {
             flex: 1;
             font-size: 0.875rem;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-secondary);
             line-height: 1.6;
+        }
+        
+        .info-content strong {
+            color: var(--primary);
         }
         
         /* Tabs */
@@ -349,10 +409,11 @@
         
         .tabs-list {
             display: flex;
-            background: hsl(var(--secondary) / 0.3);
+            background: var(--color-dark-3);
             padding: 0.25rem;
-            border-radius: calc(var(--radius) - 2px);
+            border-radius: var(--radius-lg);
             margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
         }
         
         .tab-trigger {
@@ -360,22 +421,22 @@
             padding: 0.625rem 1rem;
             background: transparent;
             border: none;
-            border-radius: calc(var(--radius) - 4px);
+            border-radius: var(--radius-md);
             font-size: 0.875rem;
             font-weight: 500;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
             cursor: pointer;
-            transition: all 150ms;
+            transition: all var(--transition-base);
         }
         
         .tab-trigger:hover {
-            color: hsl(var(--foreground));
+            color: var(--text);
         }
         
         .tab-trigger.active {
-            background: hsl(var(--background));
-            color: hsl(var(--foreground));
-            box-shadow: 0 1px 3px hsl(var(--foreground) / 0.1);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--color-orange-hover) 100%);
+            color: var(--color-black);
+            box-shadow: var(--shadow-md);
         }
         
         .tab-content {
@@ -386,8 +447,39 @@
             display: block;
         }
         
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--background-secondary);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+            
             .page-title {
                 font-size: 2rem;
             }
@@ -423,7 +515,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: hsl(var(--background) / 0.8);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(4px);
             display: none;
             align-items: center;
@@ -438,10 +530,16 @@
         .loading-spinner {
             width: 3rem;
             height: 3rem;
-            border: 3px solid hsl(var(--muted));
-            border-top-color: hsl(var(--primary));
+            border: 3px solid var(--color-dark-4);
+            border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
         
         /* Tooltips */
@@ -452,7 +550,7 @@
         }
         
         .tooltip-icon {
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
             font-size: 0.875rem;
             margin-left: 0.25rem;
         }
@@ -462,17 +560,18 @@
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            background: hsl(var(--foreground));
-            color: hsl(var(--background));
+            background: var(--primary);
+            color: var(--color-black);
             padding: 0.5rem 0.75rem;
-            border-radius: calc(var(--radius) - 2px);
+            border-radius: var(--radius);
             font-size: 0.75rem;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 150ms;
+            transition: opacity var(--transition-base);
             margin-bottom: 0.5rem;
             z-index: 10;
+            font-weight: 500;
         }
         
         .tooltip:hover .tooltip-content {
@@ -483,37 +582,29 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <div class="container">
-            <div class="flex items-center justify-between">
-                <a href="/" class="nav-brand">
-                    <i class="fas fa-utensils"></i>
-                    <span>요알남</span>
-                </a>
-                
-                <ul class="nav-menu">
-                    <li><a href="/" class="nav-link">홈</a></li>
-                    <li><a href="../infographics.html" class="nav-link">인포그래픽</a></li>
-                    <li><a href="index.html" class="nav-link active">창업 계산기</a></li>
-                    <li><a href="../checklist.html" class="nav-link">체크리스트</a></li>
-                    <li><a href="../chatbot.html" class="nav-link">AI 챗봇</a></li>
-                </ul>
-                
-                <div class="flex items-center gap-2">
-                    <button class="btn btn-ghost btn-icon theme-toggle" aria-label="Toggle theme">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    
-                    <button class="btn btn-ghost btn-icon mobile-menu-btn" aria-label="Menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <i class="fas fa-utensils"></i>
+                <span>요알남</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="../infographics.html" class="nav-link">인포그래픽</a></li>
+                <li><a href="index.html" class="nav-link active">창업 계산기</a></li>
+                <li><a href="../checklist.html" class="nav-link">체크리스트</a></li>
+                <li><a href="../chatbot.html" class="nav-link">AI 챗봇</a></li>
+            </ul>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
     <!-- Page Header -->
     <div class="page-header">
-        <div class="container">
+        <div class="page-container">
             <h1 class="page-title">
                 <i class="fas fa-calculator"></i>
                 창업 비용 계산기
@@ -848,33 +939,6 @@
     </div>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
-        const icon = themeToggle.querySelector('i');
-        
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            body.classList.add('dark');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark');
-            const isDark = body.classList.contains('dark');
-            
-            if (isDark) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-        
         // Mobile Menu
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navMenu = document.querySelector('.nav-menu');
@@ -1031,23 +1095,26 @@
                         {
                             label: '매출',
                             data: revenueData,
-                            borderColor: 'rgb(59, 130, 246)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            tension: 0.1
+                            borderColor: '#ff6b35',
+                            backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                            tension: 0.1,
+                            borderWidth: 2
                         },
                         {
                             label: '비용',
                             data: costData,
-                            borderColor: 'rgb(239, 68, 68)',
+                            borderColor: '#ef4444',
                             backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                            tension: 0.1
+                            tension: 0.1,
+                            borderWidth: 2
                         },
                         {
                             label: '순이익',
                             data: profitData,
-                            borderColor: 'rgb(34, 197, 94)',
+                            borderColor: '#22c55e',
                             backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                            tension: 0.1
+                            tension: 0.1,
+                            borderWidth: 2
                         }
                     ]
                 },
@@ -1057,19 +1124,42 @@
                     plugins: {
                         legend: {
                             position: 'top',
+                            labels: {
+                                color: '#ffffff',
+                                font: {
+                                    size: 12
+                                }
+                            }
                         },
                         title: {
                             display: true,
-                            text: '12개월 수익 예측'
+                            text: '12개월 수익 예측',
+                            color: '#ffffff',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
                             ticks: {
+                                color: '#b0b0b0',
                                 callback: function(value) {
                                     return value.toLocaleString() + '만원';
                                 }
+                            },
+                            grid: {
+                                color: '#2a2a2a'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: '#2a2a2a'
                             }
                         }
                     }

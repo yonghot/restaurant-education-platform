@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>요알남 AI 챗봇 - 외식업 교육 플랫폼</title>
+    <title>AI 챗봇 - 요알남</title>
     
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +13,12 @@
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- shadcn/ui inspired Design System -->
-    <link href="css/shadcn-design.css" rel="stylesheet">
+    <!-- Dark Theme Design System -->
+    <link href="css/dark-theme.css" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: hsl(var(--background));
-        }
-        
-        /* Chat Container */
-        .chat-wrapper {
+        /* Chat Specific Styles */
+        .chat-container {
             max-width: 900px;
             margin: 0 auto;
             padding: 2rem 1rem;
@@ -37,69 +32,76 @@
         
         .chat-title {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
         
         .chat-subtitle {
-            color: hsl(var(--muted-foreground));
+            color: var(--text-secondary);
             font-size: 1rem;
         }
         
-        /* Main Chat Card */
-        .chat-card {
-            background: hsl(var(--card));
-            border: 1px solid hsl(var(--border));
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: 0 2px 10px hsl(var(--foreground) / 0.05);
-            height: calc(100vh - 200px);
-            max-height: 700px;
-            display: flex;
-            flex-direction: column;
+        .beta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--color-orange-subtle);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
-        /* Chat Messages Area */
+        /* Chat Window */
+        .chat-window {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            height: calc(100vh - 250px);
+            max-height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* Messages Area */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 1.5rem;
-            background: hsl(var(--background));
-            scroll-behavior: smooth;
+            background: var(--background);
         }
         
         .chat-messages::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         
         .chat-messages::-webkit-scrollbar-track {
-            background: hsl(var(--secondary));
+            background: var(--color-dark-2);
         }
         
         .chat-messages::-webkit-scrollbar-thumb {
-            background: hsl(var(--muted-foreground) / 0.3);
-            border-radius: 3px;
+            background: var(--color-dark-6);
+            border-radius: var(--radius);
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
         
         /* Messages */
         .message {
             margin-bottom: 1.5rem;
-            animation: messageSlide 300ms ease-out;
-        }
-        
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            animation: slideUp 0.3s ease-out;
         }
         
         .message-wrapper {
@@ -113,60 +115,115 @@
         }
         
         .message-avatar {
-            width: 2rem;
-            height: 2rem;
-            border-radius: var(--radius);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius-full);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.875rem;
+            font-size: 1rem;
             flex-shrink: 0;
         }
         
         .bot .message-avatar {
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
+            background: linear-gradient(135deg, var(--primary) 0%, var(--color-orange-hover) 100%);
+            color: var(--color-black);
         }
         
         .user .message-avatar {
-            background: hsl(var(--secondary));
-            color: hsl(var(--secondary-foreground));
+            background: var(--color-dark-5);
+            color: var(--text-secondary);
         }
         
         .message-content {
             flex: 1;
-            max-width: 75%;
+            max-width: 70%;
         }
         
         .message-bubble {
             padding: 0.75rem 1rem;
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             font-size: 0.9375rem;
             line-height: 1.6;
             word-wrap: break-word;
         }
         
         .bot .message-bubble {
-            background: hsl(var(--secondary));
-            color: hsl(var(--secondary-foreground));
-            border-bottom-left-radius: 4px;
+            background: var(--color-dark-3);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 0.25rem;
         }
         
         .user .message-bubble {
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
-            border-bottom-right-radius: 4px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--color-orange-hover) 100%);
+            color: var(--color-black);
+            border-bottom-right-radius: 0.25rem;
+            font-weight: 500;
         }
         
         .message-time {
             font-size: 0.75rem;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
             margin-top: 0.25rem;
-            display: block;
         }
         
         .user .message-time {
             text-align: right;
+        }
+        
+        /* Welcome Message */
+        .welcome-message {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .welcome-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-text {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        /* Suggested Questions */
+        .suggested-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        .suggested-btn {
+            padding: 0.625rem 1.25rem;
+            background: var(--color-dark-4);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .suggested-btn:hover {
+            background: var(--color-orange-subtle);
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
         
         /* Typing Indicator */
@@ -174,17 +231,18 @@
             display: flex;
             gap: 0.25rem;
             padding: 0.75rem 1rem;
-            background: hsl(var(--secondary));
-            border-radius: var(--radius);
+            background: var(--color-dark-3);
+            border-radius: var(--radius-lg);
             width: fit-content;
+            border: 1px solid var(--border);
         }
         
         .typing-dot {
             width: 0.5rem;
             height: 0.5rem;
-            background: hsl(var(--muted-foreground));
+            background: var(--primary);
             border-radius: 50%;
-            animation: typing 1.4s infinite;
+            animation: pulse 1.4s infinite;
         }
         
         .typing-dot:nth-child(2) {
@@ -195,67 +253,57 @@
             animation-delay: 0.4s;
         }
         
-        @keyframes typing {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 0.5;
-            }
-            30% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-        }
-        
         /* Chat Input Area */
         .chat-input-wrapper {
-            padding: 1rem;
-            background: hsl(var(--card));
-            border-top: 1px solid hsl(var(--border));
+            padding: 1.5rem;
+            background: var(--card);
+            border-top: 1px solid var(--border);
         }
         
         .chat-form {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
         
         .chat-input {
             flex: 1;
-            padding: 0.75rem 1rem;
-            background: hsl(var(--background));
-            border: 1px solid hsl(var(--input));
-            border-radius: calc(var(--radius) - 2px);
+            padding: 0.875rem 1rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            color: var(--text);
             font-size: 0.9375rem;
-            color: hsl(var(--foreground));
-            transition: all 150ms;
+            transition: all var(--transition-base);
         }
         
         .chat-input:focus {
             outline: none;
-            border-color: hsl(var(--ring));
-            box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+            border-color: var(--primary);
+            background: var(--color-dark-2);
+            box-shadow: 0 0 0 3px var(--color-orange-subtle);
         }
         
         .chat-input::placeholder {
-            color: hsl(var(--muted-foreground));
+            color: var(--text-muted);
         }
         
         .send-btn {
-            padding: 0.75rem 1.5rem;
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--color-orange-hover) 100%);
+            color: var(--color-black);
             border: none;
-            border-radius: calc(var(--radius) - 2px);
-            font-weight: 500;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
             cursor: pointer;
-            transition: all 150ms;
+            transition: all var(--transition-base);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         
         .send-btn:hover:not(:disabled) {
-            background: hsl(var(--primary) / 0.9);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
         
         .send-btn:disabled {
@@ -263,112 +311,47 @@
             cursor: not-allowed;
         }
         
-        /* Welcome Message */
-        .welcome-message {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: hsl(var(--muted-foreground));
-        }
-        
-        .welcome-icon {
-            font-size: 3rem;
-            color: hsl(var(--primary));
-            margin-bottom: 1rem;
-        }
-        
-        .welcome-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: hsl(var(--foreground));
-            margin-bottom: 0.5rem;
-        }
-        
-        .welcome-text {
-            font-size: 0.9375rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        /* Suggested Questions */
-        .suggested-questions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-        
-        .suggested-btn {
-            padding: 0.5rem 1rem;
-            background: hsl(var(--secondary));
-            color: hsl(var(--secondary-foreground));
-            border: 1px solid hsl(var(--border));
-            border-radius: calc(var(--radius) - 2px);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 150ms;
-        }
-        
-        .suggested-btn:hover {
-            background: hsl(var(--secondary) / 0.8);
-            border-color: hsl(var(--primary) / 0.3);
-            transform: translateY(-1px);
-        }
-        
-        /* Beta Badge */
-        .beta-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.625rem;
-            background: hsl(var(--destructive) / 0.1);
-            color: hsl(var(--destructive));
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
-        }
-        
-        /* Alert */
-        .beta-alert {
+        /* Info Alert */
+        .info-alert {
             margin-bottom: 1.5rem;
             padding: 1rem;
-            background: hsl(var(--secondary) / 0.5);
-            border: 1px solid hsl(var(--border));
-            border-radius: var(--radius);
+            background: var(--color-orange-subtle);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-lg);
             display: flex;
             gap: 0.75rem;
             align-items: flex-start;
         }
         
-        .beta-alert-icon {
-            color: hsl(var(--primary));
+        .info-alert-icon {
+            color: var(--primary);
             font-size: 1.125rem;
             flex-shrink: 0;
         }
         
-        .beta-alert-content {
+        .info-alert-content {
             flex: 1;
         }
         
-        .beta-alert-title {
-            font-weight: 600;
+        .info-alert-title {
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 0.25rem;
         }
         
-        .beta-alert-description {
+        .info-alert-text {
             font-size: 0.875rem;
-            color: hsl(var(--muted-foreground));
+            color: var(--text-secondary);
         }
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .chat-wrapper {
+            .chat-container {
                 padding: 1rem 0.5rem;
             }
             
-            .chat-card {
-                height: calc(100vh - 120px);
+            .chat-window {
+                height: calc(100vh - 200px);
                 border-radius: 0;
                 border-left: none;
                 border-right: none;
@@ -378,56 +361,41 @@
                 max-width: 85%;
             }
             
+            .chat-title {
+                font-size: 1.5rem;
+            }
+            
             .suggested-questions {
                 padding: 0 1rem;
             }
-        }
-        
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 1rem;
-            height: 1rem;
-            border: 2px solid hsl(var(--muted));
-            border-top-color: hsl(var(--primary));
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <div class="container">
-            <div class="flex items-center justify-between">
-                <a href="/" class="nav-brand">
-                    <i class="fas fa-utensils"></i>
-                    <span>요알남</span>
-                </a>
-                
-                <ul class="nav-menu">
-                    <li><a href="/" class="nav-link">홈</a></li>
-                    <li><a href="infographics.html" class="nav-link">인포그래픽</a></li>
-                    <li><a href="calculator/index.html" class="nav-link">창업 계산기</a></li>
-                    <li><a href="checklist.html" class="nav-link">체크리스트</a></li>
-                    <li><a href="chatbot.html" class="nav-link active">AI 챗봇</a></li>
-                </ul>
-                
-                <div class="flex items-center gap-2">
-                    <button class="btn btn-ghost btn-icon theme-toggle" aria-label="Toggle theme">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    
-                    <button class="btn btn-ghost btn-icon mobile-menu-btn" aria-label="Menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <i class="fas fa-utensils"></i>
+                <span>요알남</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">홈</a></li>
+                <li><a href="infographics.html" class="nav-link">인포그래픽</a></li>
+                <li><a href="calculator/index.html" class="nav-link">창업 계산기</a></li>
+                <li><a href="checklist.html" class="nav-link">체크리스트</a></li>
+                <li><a href="chatbot.html" class="nav-link active">AI 챗봇</a></li>
+            </ul>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
     <!-- Chat Container -->
-    <div class="chat-wrapper">
+    <div class="chat-container">
         <div class="chat-header">
             <h1 class="chat-title">
                 <i class="fas fa-robot"></i>
@@ -440,20 +408,20 @@
             <p class="chat-subtitle">외식업 창업과 운영에 관한 모든 질문에 답해드립니다</p>
         </div>
         
-        <!-- Beta Alert -->
-        <div class="beta-alert">
-            <i class="fas fa-info-circle beta-alert-icon"></i>
-            <div class="beta-alert-content">
-                <div class="beta-alert-title">베타 서비스 안내</div>
-                <div class="beta-alert-description">
+        <!-- Info Alert -->
+        <div class="info-alert">
+            <i class="fas fa-info-circle info-alert-icon"></i>
+            <div class="info-alert-content">
+                <div class="info-alert-title">베타 서비스 안내</div>
+                <div class="info-alert-text">
                     현재 베타 테스트 중인 서비스입니다. 답변의 정확성을 높이기 위해 지속적으로 개선하고 있습니다.
                     피드백은 언제든지 환영합니다!
                 </div>
             </div>
         </div>
         
-        <!-- Chat Card -->
-        <div class="chat-card">
+        <!-- Chat Window -->
+        <div class="chat-window">
             <!-- Messages Area -->
             <div class="chat-messages" id="chatMessages">
                 <!-- Welcome Message -->
@@ -470,15 +438,19 @@
                     <!-- Suggested Questions -->
                     <div class="suggested-questions">
                         <button class="suggested-btn" onclick="sendSuggestedQuestion('카페 창업 비용은 얼마나 드나요?')">
+                            <i class="fas fa-coffee"></i>
                             카페 창업 비용
                         </button>
                         <button class="suggested-btn" onclick="sendSuggestedQuestion('음식점 입지 선정 기준이 뭔가요?')">
+                            <i class="fas fa-map-marker-alt"></i>
                             입지 선정 기준
                         </button>
                         <button class="suggested-btn" onclick="sendSuggestedQuestion('배달 앱 수수료는 얼마인가요?')">
+                            <i class="fas fa-motorcycle"></i>
                             배달 앱 수수료
                         </button>
                         <button class="suggested-btn" onclick="sendSuggestedQuestion('음식점 마케팅 방법을 알려주세요')">
+                            <i class="fas fa-bullhorn"></i>
                             마케팅 방법
                         </button>
                     </div>
@@ -505,34 +477,6 @@
     </div>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
-        const icon = themeToggle.querySelector('i');
-        
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            body.classList.add('dark');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark');
-            const isDark = body.classList.contains('dark');
-            
-            if (isDark) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-        
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navMenu = document.querySelector('.nav-menu');
@@ -576,7 +520,7 @@
                     </div>
                     <div class="message-content">
                         <div class="message-bubble">${content}</div>
-                        <span class="message-time">${formatTime()}</span>
+                        <div class="message-time">${formatTime()}</div>
                     </div>
                 </div>
             `;
